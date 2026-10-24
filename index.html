@@ -441,7 +441,7 @@ window.dash = (() => {
   const API = 'https://script.google.com/macros/s/AKfycbyj53w3aTvhD9rsJN94nDGqpJDcqHmBZaRm_txhB8J8z62wTmomvRsxGgPID4nhOsJjrQ/exec';
   const TOKEN = (new URLSearchParams(location.search).get('p') || '').trim();
   window.pkToken = TOKEN;
-  if (TOKEN) { const b = document.getElementById('tab-mypicks'); if (b) b.hidden = false; }
+  if (TOKEN) { const b = document.getElementById('tab-mypicks'); if (b) b.hidden = false; ['tab-week', 'tab-insights'].forEach((id) => { const t = document.getElementById(id); if (t) t.hidden = true; }); }
   const redraw = () => { if (window.pkRedraw) window.pkRedraw(); };
   const getJSON = (q) => fetch(API + (q ? '?' + q : ''), { cache: 'no-store' }).then((r) => r.json());
   const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
@@ -913,7 +913,7 @@ window.dash = (() => {
   });
 
   // ---------- tabs ----------
-  const TABS = ['mypicks', 'standings', 'week', 'insights'];
+  const TABS = window.pkToken ? ['mypicks', 'standings'] : ['mypicks', 'standings', 'week', 'insights'];
   const tabs = [...document.querySelectorAll('.pk-tab')];
   let tab = TABS.includes(location.hash.slice(1)) ? location.hash.slice(1) : (window.pkToken ? 'mypicks' : 'standings');
   const applyTab = () => {
