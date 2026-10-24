@@ -280,8 +280,6 @@
 <div class="pk">
   <header class="pk-head" id="top">
     <h1>2026 NFL Pick'em League</h1>
-    <p class="pk-take" id="takeaway"><span class="dash-skeleton">—</span></p>
-    <p class="pk-sub">Standings as of Saturday, October 24, 2026, from the league workbook. From Week 7 on, picks are made on this site and show up for everyone as each game kicks off.</p>
   </header>
 
   <nav class="pk-tabs" role="tablist" aria-label="Sections">
@@ -549,7 +547,8 @@ window.dash = (() => {
       return;
     }
     const head = el('div', 'pk-mp-head');
-    head.append(el('h2', '', d.player === d.me ? 'Your picks' : 'Picks for ' + d.player));
+    head.append(el('h2', '', d.player + '\u2019s picks'));
+    document.title = d.me + '\u2019s picks \u00b7 2026 NFL Pick\u2019em League';
     const controls = el('div', 'pk-mp-controls');
     const wl = el('label', '', 'Week');
     const ws = el('select', 'pk-select');
@@ -938,6 +937,7 @@ window.dash = (() => {
   // ---------- header ----------
   function drawHeader() {
     const box = document.getElementById('takeaway');
+    if (!box) return;
     if (failed('standings', 'week_status', 'week7_feed')) { box.replaceChildren(el('span', '', 'Some numbers didn’t load.')); return; }
     if (!ready('standings', 'week_status', 'week7_feed')) { box.replaceChildren(el('span', 'dash-skeleton', '—')); return; }
     const rows = dash.data('standings').data;
