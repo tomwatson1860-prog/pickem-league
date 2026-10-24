@@ -144,6 +144,29 @@
   .pk-link { display: inline-block; max-width: 14rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: bottom; color: var(--color-fg); text-decoration: underline; text-underline-offset: 2px; }
   .pk-fail { display: flex; align-items: center; justify-content: center; gap: var(--cds-gap-xs); min-height: 6rem; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
   .pk-fail::before { content: ""; width: .375rem; height: .375rem; border-radius: 50%; background: var(--color-bad); }
+  .pk-mp-head { display: flex; flex-wrap: wrap; align-items: center; gap: var(--cds-gap-sm) var(--cds-gap-md); }
+  .pk-mp-head h2 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; }
+  .pk-mp-controls { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm) var(--cds-gap-md); align-items: center; margin-top: var(--cds-gap-sm); }
+  .pk-mp-controls label { display: inline-flex; gap: var(--cds-gap-xs); align-items: center; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .pk-select { font: inherit; font-size: var(--cds-font-size-body); color: var(--color-fg); background: var(--color-bg); border: 1px solid var(--color-border-line); border-radius: 8px; padding: .45rem .6rem; min-width: 9.5rem; max-width: 100%; }
+  .pk-select:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 1px; }
+  .pk-select:disabled { color: var(--color-fg-muted); background: var(--color-panel); }
+  .pk-mp-list { display: flex; flex-direction: column; margin-top: var(--cds-gap-md); border-top: 1px solid var(--color-border-line); }
+  .pk-mp-row { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr) auto 7.5rem; gap: var(--cds-gap-sm) var(--cds-gap-md); align-items: center; padding: var(--cds-pad-sm) 0; border-bottom: 1px solid var(--color-border-line); }
+  .pk-mp-time { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
+  .pk-mp-game { font-weight: var(--cds-font-weight-medium); min-width: 0; }
+  .pk-mp-state { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); text-align: right; }
+  .pk-mp-state.ok { color: var(--color-ok); }
+  .pk-mp-state.bad { color: var(--color-bad); }
+  .pk-mp-msg { padding: var(--cds-pad-md); border-radius: var(--cds-radius); background: var(--color-bg); border: 1px solid var(--color-border-line); }
+  .pk-mp-msg button, .pk-btn { font: inherit; font-size: var(--cds-font-size-caption); padding: .35rem .7rem; border-radius: 999px; border: 1px solid var(--color-border-line); background: var(--color-panel); color: var(--color-fg); cursor: pointer; margin-left: var(--cds-gap-sm); }
+  .pk-mp-everyone { margin-top: var(--cds-gap-lg); }
+  .pk-mp-everyone h3 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0; }
+  @media (max-width: 560px) {
+    .pk-mp-row { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "time state" "game game" "pick pick"; }
+    .pk-mp-time { grid-area: time; } .pk-mp-game { grid-area: game; } .pk-mp-pick { grid-area: pick; } .pk-mp-state { grid-area: state; }
+    .pk-mp-pick .pk-select { width: 100%; }
+  }
 </style>
 </head>
 <body>
@@ -152,15 +175,21 @@
   <header class="pk-head" id="top">
     <h1>2026 NFL Pick'em League</h1>
     <p class="pk-take" id="takeaway"><span class="dash-skeleton">—</span></p>
-    <p class="pk-sub">Snapshot as of Saturday, October 24, 2026. Built from the NFL_2026_Pickem_League_shared workbook; a result the workbook hasn't recorded yet comes from the SportRadar NFL scores feed and is tagged “feed”.</p>
+    <p class="pk-sub">Standings as of Saturday, October 24, 2026, from the league workbook. From Week 7 on, picks are made on this site and show up for everyone as each game kicks off.</p>
   </header>
 
   <nav class="pk-tabs" role="tablist" aria-label="Sections">
+    <button class="pk-tab" role="tab" data-tab="mypicks" aria-selected="false" id="tab-mypicks" hidden>My picks</button>
     <button class="pk-tab" role="tab" data-tab="standings" aria-selected="true" id="tab-standings">Standings</button>
     <button class="pk-tab" role="tab" data-tab="week" aria-selected="false" id="tab-week">Picks by week</button>
     <button class="pk-tab" role="tab" data-tab="insights" aria-selected="false" id="tab-insights">Upsets &amp; Ditkatron</button>
-    <button class="pk-tab" role="tab" data-tab="players" aria-selected="false" id="tab-players">Players</button>
   </nav>
+
+  <section class="pk-panel" id="mypicks" hidden>
+    <div class="pk-card" id="mypicks-card">
+      <div id="mypicks-body"><p class="pk-note">Loading your picks…</p></div>
+    </div>
+  </section>
 
   <section class="pk-panel" id="standings">
     <div class="pk-tiles">
@@ -265,24 +294,6 @@
       </div>
     </div>
   </section>
-
-  <section class="pk-panel" id="players" hidden>
-    <div class="pk-card pk-narrow" id="players-card">
-      <h2>Players</h2>
-      <p class="pk-note" id="players-note">Each player's phone numbers and pick-entry link. Anyone who has this file can see them.</p>
-      <div class="pk-scroll">
-        <table class="pk-table pk-contacts" id="players-table" data-source="players" data-row-key="player">
-          <thead><tr>
-            <th data-field="player" class="stick">Player</th>
-            <th data-field="phone_1">Phone 1</th>
-            <th data-field="phone_2">Phone 2</th>
-            <th data-field="link">Link</th>
-          </tr></thead>
-          <tbody id="players-body"><tr><td class="dash-skeleton" colspan="4">—</td></tr></tbody>
-        </table>
-      </div>
-    </div>
-  </section>
   <footer class="pk-credits">
     <p><strong>Sources.</strong> Schedule, winners, picks, dates and byes: the league's NFL_2026_Pickem_League_shared workbook (Weeks 1–18 tabs). Week 7 kickoff times, Thursday's final (Bears 30, Patriots 24) and pregame win probabilities: SportRadar NFL scores feed, looked up October 24, 2026. Weeks 1–6 winners in the workbook were checked against official final scores and all match.</p>
     <p>Scoring follows the workbook: a correct pick is a win, a wrong pick a loss, and ties or missing picks count for nobody.</p>
@@ -319,6 +330,209 @@ window.dash = (() => {
     setLink(name) { try { history.replaceState(null, '', '#' + name); } catch (e) {} },
     refresh() {},
   };
+})();
+</script>
+<script>(() => {
+  const API = 'https://script.google.com/macros/s/AKfycbyj53w3aTvhD9rsJN94nDGqpJDcqHmBZaRm_txhB8J8z62wTmomvRsxGgPID4nhOsJjrQ/exec';
+  const TOKEN = (new URLSearchParams(location.search).get('p') || '').trim();
+  window.pkToken = TOKEN;
+  if (TOKEN) { const b = document.getElementById('tab-mypicks'); if (b) b.hidden = false; }
+  const redraw = () => { if (window.pkRedraw) window.pkRedraw(); };
+  const getJSON = (q) => fetch(API + (q ? '?' + q : ''), { cache: 'no-store' }).then((r) => r.json());
+  const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
+  const ET = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+
+  // ---------- live picks for the public "Picks by week" tab ----------
+  const weekCache = {}, inflight = {};
+  function loadPublic(week) {
+    const c = weekCache[week];
+    if (inflight[week] || (c && !c.failed) || (c && c.failed && Date.now() - c.at < 60000)) return;
+    inflight[week] = true;
+    getJSON('week=' + week)
+      .then((d) => { weekCache[week] = d && d.ok ? d : { failed: true, at: Date.now() }; })
+      .catch(() => { weekCache[week] = { failed: true, at: Date.now() }; })
+      .finally(() => { inflight[week] = false; redraw(); });
+  }
+  const live = (week) => { const d = weekCache[week]; return d && !d.failed ? d : null; };
+  window.pkOverlay = (week, rows) => {
+    if (week < 7) return rows;
+    const d = live(week);
+    if (!d) { loadPublic(week); return rows; }
+    const byGame = {};
+    d.games.forEach((g) => { byGame[g.game] = g; });
+    return rows.map((r) => {
+      const g = byGame[r.game];
+      if (!g) return r;
+      const out = Object.assign({}, r);
+      if (!out.kickoff) out.kickoff = g.kickoff;
+      if (!out.winner && g.winner) { out.winner = g.winner; out.winner_from = 'sheet'; }
+      (d.picks[r.game] || []).forEach((p) => { if (p.player in out) out[p.player] = p.pick; });
+      return out;
+    });
+  };
+  window.pkCounts = (week, rows) => {
+    const d = week >= 7 ? live(week) : null;
+    if (!d) return rows;
+    return Object.keys(d.entered).map((player) => ({ week, player, entered: d.entered[player] }));
+  };
+  window.pkStatus = (week, s) => {
+    const d = week >= 7 ? live(week) : null;
+    if (!d || !s) return s;
+    return Object.assign({}, s, { pickers: Object.keys(d.entered).length, decided: d.games.filter((g) => g.winner).length, games: d.games.length });
+  };
+  // refresh the live week every few minutes so picks open at kickoff without a reload
+  setInterval(() => { Object.keys(weekCache).forEach((w) => { delete weekCache[w]; }); redraw(); }, 180000);
+
+  // ---------- My picks (only with a player link) ----------
+  if (!TOKEN) return;
+  const state = { me: null, week: 0, as: '', loading: false, error: '', status: {}, pending: {} };
+
+  function load() {
+    state.loading = true;
+    render();
+    let q = 'action=me&token=' + encodeURIComponent(TOKEN);
+    if (state.week) q += '&week=' + state.week;
+    if (state.as) q += '&as=' + encodeURIComponent(state.as);
+    getJSON(q)
+      .then((d) => {
+        if (d && d.ok) { state.me = d; state.week = d.week; state.error = ''; }
+        else { state.me = null; state.error = (d && d.error) || 'Something went wrong loading your picks.'; }
+      })
+      .catch(() => { state.error = "Couldn't reach the pick sheet. Check your connection and try again."; })
+      .finally(() => { state.loading = false; render(); });
+  }
+
+  function save(game, team) {
+    const d = state.me;
+    if (!d) return;
+    state.pending[game] = team;
+    state.status[game] = { text: 'Saving…', cls: '' };
+    render();
+    const body = { action: 'save', token: TOKEN, week: d.week, picks: {} };
+    body.picks[game] = team;
+    if (d.commissioner && d.player !== d.me) body.player = d.player;
+    fetch(API, { method: 'POST', body: JSON.stringify(body) })
+      .then((r) => r.json())
+      .then((res) => {
+        if (!res || !res.ok) { state.status[game] = { text: (res && res.error) || 'Not saved', cls: 'bad' }; return; }
+        const skipped = (res.skipped || []).find((s) => s.game === game);
+        state.me = res;
+        state.status[game] = skipped ? { text: 'Not saved: ' + skipped.reason, cls: 'bad' } : { text: team ? 'Saved' : 'Cleared', cls: 'ok' };
+        delete weekCache[res.week];
+      })
+      .catch(() => { state.status[game] = { text: 'Not saved. Check your connection.', cls: 'bad' }; })
+      .finally(() => { delete state.pending[game]; render(); });
+  }
+
+  function render() {
+    const box = document.getElementById('mypicks-body');
+    if (!box) return;
+    const d = state.me;
+    if (!d) {
+      if (state.error) {
+        const msg = el('p', 'pk-mp-msg', state.error);
+        const retry = el('button', '', 'Try again');
+        retry.type = 'button';
+        retry.addEventListener('click', load);
+        msg.append(retry);
+        box.replaceChildren(msg);
+      } else {
+        box.replaceChildren(el('p', 'pk-note', 'Loading your picks…'));
+      }
+      return;
+    }
+    const head = el('div', 'pk-mp-head');
+    head.append(el('h2', '', d.player === d.me ? 'Your picks' : 'Picks for ' + d.player));
+    const controls = el('div', 'pk-mp-controls');
+    const wl = el('label', '', 'Week');
+    const ws = el('select', 'pk-select');
+    ws.id = 'mp-week';
+    d.weeks.forEach((w) => { const o = new Option('Week ' + w + (w === d.currentWeek ? ' (this week)' : ''), String(w)); ws.append(o); });
+    ws.value = String(d.week);
+    ws.addEventListener('change', () => { state.week = +ws.value; state.status = {}; load(); });
+    wl.append(ws);
+    controls.append(wl);
+    if (d.commissioner) {
+      const pl = el('label', '', 'Picking for');
+      const ps = el('select', 'pk-select');
+      ps.id = 'mp-player';
+      d.roster.forEach((name) => ps.append(new Option(name === d.me ? name + ' (you)' : name, name)));
+      ps.value = d.player;
+      ps.addEventListener('change', () => { state.as = ps.value === d.me ? '' : ps.value; state.status = {}; load(); });
+      pl.append(ps);
+      controls.append(pl);
+    }
+    if (state.loading) controls.append(el('span', 'pk-note', 'Loading…'));
+
+    const intro = el('p', 'pk-note', d.commissioner
+      ? 'You are a commissioner: you can enter picks for anyone, including games that have started. Each choice saves as soon as you make it.'
+      : 'Choose a team for each game. Each choice saves as soon as you make it. A game locks at kickoff (Eastern time), and nobody sees your picks until then.');
+
+    const list = el('div', 'pk-mp-list');
+    d.games.forEach((g) => {
+      const row = el('div', 'pk-mp-row');
+      row.append(el('span', 'pk-mp-time', g.kickoffEt || ET.format(new Date(g.kickoff))));
+      row.append(el('span', 'pk-mp-game', g.away + ' @ ' + g.home));
+      const pickWrap = el('span', 'pk-mp-pick');
+      const sel = el('select', 'pk-select');
+      sel.setAttribute('aria-label', 'Pick for ' + g.away + ' at ' + g.home);
+      sel.append(new Option('Pick a team', ''), new Option(g.away, g.away), new Option(g.home, g.home));
+      const current = g.game in state.pending ? state.pending[g.game] : g.pick;
+      sel.value = current || '';
+      const canEdit = !g.locked || d.commissioner;
+      sel.disabled = !canEdit || state.loading;
+      sel.addEventListener('change', () => save(g.game, sel.value));
+      pickWrap.append(sel);
+      row.append(pickWrap);
+      const st = state.status[g.game];
+      let text = '', cls = '';
+      if (st) { text = st.text; cls = st.cls; }
+      else if (g.winner && g.winner !== 'TIE' && g.pick) { text = g.pick === g.winner ? 'Correct' : 'Wrong'; cls = g.pick === g.winner ? 'ok' : 'bad'; }
+      else if (g.winner === 'TIE') text = 'Tie';
+      else if (g.locked) text = 'Locked';
+      row.append(el('span', 'pk-mp-state' + (cls ? ' ' + cls : ''), text));
+      list.append(row);
+    });
+
+    const made = d.games.filter((g) => g.pick).length;
+    const tally = el('p', 'pk-note', made + ' of ' + d.games.length + ' picked for Week ' + d.week + '.');
+
+    const parts = [head, controls, intro, tally, list];
+    const shown = d.games.filter((g) => (d.picks[g.game] || []).length);
+    if (shown.length) {
+      const names = [];
+      shown.forEach((g) => d.picks[g.game].forEach((p) => { if (names.indexOf(p.player) < 0) names.push(p.player); }));
+      const wrap = el('div', 'pk-mp-everyone');
+      wrap.append(el('h3', '', d.commissioner ? "Everyone's picks" : "Everyone's picks for games that have kicked off"));
+      const sc = el('div', 'pk-scroll');
+      const t = el('table', 'pk-table pk-picks');
+      const hr = el('tr');
+      hr.append(el('th', 'stick', 'Game'));
+      names.forEach((n) => hr.append(el('th', 'pl ctr', n)));
+      const thead = el('thead');
+      thead.append(hr);
+      const tb = el('tbody');
+      shown.forEach((g) => {
+        const tr = el('tr');
+        tr.append(el('td', 'stick game', g.away + ' @ ' + g.home));
+        names.forEach((n) => {
+          const p = (d.picks[g.game] || []).find((x) => x.player === n);
+          const pick = p ? p.pick : '';
+          const cls = !pick ? 'none' : !g.winner || g.winner === 'TIE' ? '' : pick === g.winner ? 'win' : 'loss';
+          tr.append(el('td', 'p ' + cls, pick));
+        });
+        tb.append(tr);
+      });
+      t.append(thead, tb);
+      sc.append(t);
+      wrap.append(sc);
+      parts.push(wrap);
+    }
+    parts.push(el('p', 'pk-foot', 'This link is just for ' + d.me + '. Anyone who has it can change these picks, so please don’t forward it.'));
+    box.replaceChildren(...parts);
+  }
+
+  window.pkDrawMyPicks = () => { if (!state.me && !state.loading && !state.error) load(); else render(); };
 })();
 </script>
 <script>
@@ -545,9 +759,9 @@ window.dash = (() => {
   });
 
   // ---------- tabs ----------
-  const TABS = ['standings', 'week', 'insights', 'players'];
+  const TABS = ['mypicks', 'standings', 'week', 'insights'];
   const tabs = [...document.querySelectorAll('.pk-tab')];
-  let tab = TABS.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'standings';
+  let tab = TABS.includes(location.hash.slice(1)) ? location.hash.slice(1) : (window.pkToken ? 'mypicks' : 'standings');
   const applyTab = () => {
     tabs.forEach((t) => t.setAttribute('aria-selected', String(t.dataset.tab === tab)));
     TABS.forEach((id) => { document.getElementById(id).hidden = id !== tab; });
@@ -695,7 +909,7 @@ window.dash = (() => {
     }));
 
     const W = weeks.find((w) => +w.week === sel);
-    const S = stat.get(sel);
+    const S = window.pkStatus ? window.pkStatus(sel, stat.get(sel)) : stat.get(sel);
     const wq = 'week=' + sel;
     document.getElementById('week-title').replaceChildren('Week ', span(String(sel), 'weeks', 'week', wq));
     const meta = document.getElementById('week-meta');
@@ -715,7 +929,8 @@ window.dash = (() => {
     const scoresBox = document.getElementById('week-scores');
     const wk = dash.data('weekly').data.filter((r) => r.week === sel).sort((a, b) => b.wins - a.wins || a.losses - b.losses);
     const best = wk.length && S && S.decided ? d3.max(wk, (r) => r.wins) : null;
-    const grid = dash.data('pick_grid').data.filter((r) => r.week === sel);
+    const baseGrid = dash.data('pick_grid').data.filter((r) => r.week === sel);
+    const grid = window.pkOverlay ? window.pkOverlay(sel, baseGrid) : baseGrid;
     const allPlayers = grid.length ? Object.keys(grid[0]).filter((k) => !['week', 'game', 'matchup', 'winner', 'winner_from', 'kickoff', 'favorite', 'final_score'].includes(k)) : [];
     const chips = wk.map((r) => {
       const c = el('span', 'pk-score' + (best != null && r.wins === best && S.decided === S.games ? ' best' : ''));
@@ -727,7 +942,7 @@ window.dash = (() => {
 
     // who has entered picks (teams stay hidden until kickoff)
     const enteredBox = document.getElementById('week-entered');
-    const counts = dash.data('pick_counts').data.filter((c) => +c.week === sel && +c.entered > 0).sort((a, b) => b.entered - a.entered);
+    const counts = (window.pkCounts ? window.pkCounts(sel, dash.data('pick_counts').data) : dash.data('pick_counts').data).filter((c) => +c.week === sel && +c.entered > 0).sort((a, b) => b.entered - a.entered);
     const inParts = [];
     if (S && S.decided < S.games && counts.length) {
       inParts.push(el('span', 'pk-waiting', 'Picks in, teams hidden until kickoff:'));
@@ -935,11 +1150,12 @@ window.dash = (() => {
     drawHeader();
     if (tab === 'standings') drawStandings();
     else if (tab === 'week') drawWeek();
-    else if (tab === 'players') drawPlayers();
+    else if (tab === 'mypicks') { if (window.pkDrawMyPicks) window.pkDrawMyPicks(); }
     else drawInsights();
   }
 
   dash.onData(draw);
+  window.pkRedraw = draw;
 
   const named = document.getElementById(location.hash.slice(1));
   if (named && !TABS.includes(named.id)) named.scrollIntoView();

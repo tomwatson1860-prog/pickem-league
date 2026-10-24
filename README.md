@@ -4,4 +4,4 @@ Family pick'em standings for the 2026 NFL season: season standings, picks by wee
 
 The site is a single page, `index.html`, served with GitHub Pages at https://tomwatson1860-prog.github.io/pickem-league/
 
-Picks for games that haven't kicked off yet are left out of this page, so nobody sees them early. They're added after kickoff when the page is updated.
+From Week 7 on, players make picks on this site through their own private link (`?p=...`). Picks are saved to the commissioner's Google Sheet through a Google Apps Script web app, lock at kickoff, and only show up for everyone once each game kicks off. Private links are never stored in this repository.
