@@ -273,6 +273,74 @@
     .pk-chart { min-height: 220px; }
     .pk-credits { font-size: .75rem; }
   }
+  /* ---------- Ditkatron Thoughts ---------- */
+  :root { --series-2: #c2410c; --series-3: #0f766e; --on-accent: #ffffff; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --series-2: #fb923c; --series-3: #2dd4bf; --on-accent: #0e1116; } }
+  :root[data-theme="dark"] { --series-2: #fb923c; --series-3: #2dd4bf; --on-accent: #0e1116; }
+
+  .dk-take { border-left: 0; }
+  .dk-kicker { margin: 0 0 .2rem; font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: var(--series-1); font-weight: var(--cds-font-weight-medium); }
+  .dk-title { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title) !important; margin: 0; }
+  .dk-written { margin: .25rem 0 0; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+  .dk-paras { margin-top: var(--cds-gap-md); max-width: 70ch; display: flex; flex-direction: column; gap: .7rem; }
+  .dk-paras p { margin: 0; line-height: 1.55; }
+
+  .dk-factgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--cds-gap-sm); }
+  @media (max-width: 900px) { .dk-factgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .dk-fact { border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: .8rem .9rem; background: var(--color-bg); display: flex; flex-direction: column; gap: .15rem; }
+  .dk-fact .big { font-family: var(--font-anthropic-serif); font-size: 1.9rem; line-height: 1.05; font-variant-numeric: tabular-nums; }
+  .dk-fact .lbl { font-weight: var(--cds-font-weight-medium); font-size: .9rem; }
+  .dk-fact .det { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); line-height: 1.4; }
+
+  .dk-lines { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .9rem 2rem; }
+  @media (max-width: 760px) { .dk-lines { grid-template-columns: minmax(0, 1fr); } }
+  .dk-line-top { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem; font-size: .9rem; }
+  .dk-team { font-weight: var(--cds-font-weight-medium); min-width: 0; }
+  .dk-team small { color: var(--color-fg-muted); font-weight: 400; font-variant-numeric: tabular-nums; margin-left: .25rem; }
+  .dk-team.r { text-align: right; }
+  .dk-bar { display: flex; height: 24px; border-radius: 6px; overflow: hidden; margin-top: .3rem; background: var(--color-bg); }
+  .dk-seg { display: flex; align-items: center; padding: 0 .45rem; font-size: .75rem; font-variant-numeric: tabular-nums; background: color-mix(in srgb, var(--cds-chart-muted) 45%, transparent); color: var(--color-fg); white-space: nowrap; overflow: hidden; }
+  .dk-seg.r { justify-content: flex-end; }
+  .dk-seg.fav { background: var(--series-1); color: var(--on-accent); font-weight: var(--cds-font-weight-medium); }
+  .dk-line-meta { display: flex; gap: .4rem; justify-content: center; flex-wrap: wrap; margin-top: .3rem; color: var(--color-fg-muted); font-size: .75rem; }
+  .dk-tag { border: 1px solid var(--color-border-line); border-radius: 999px; padding: 0 .4rem; }
+  .dk-tag.final { color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
+
+  .dk-legend { display: flex; flex-wrap: wrap; gap: .25rem .9rem; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin-bottom: .4rem; }
+  .dk-legend i { display: inline-block; width: 14px; height: 3px; border-radius: 2px; margin-right: .35rem; vertical-align: middle; }
+  .dk-race-chart { min-height: 240px; }
+
+  .dk-weekly { display: flex; flex-direction: column; }
+  .dk-wrow { display: grid; grid-template-columns: 3rem minmax(0, 1fr) 3.4rem; gap: .6rem; align-items: center; padding: .5rem 0; border-bottom: 1px solid var(--color-border-line); }
+  .dk-wrow:last-child { border-bottom: 0; }
+  .dk-wk { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+  .dk-who { font-weight: var(--cds-font-weight-medium); font-size: .9rem; line-height: 1.35; }
+  .dk-score { text-align: right; font-variant-numeric: tabular-nums; font-size: .9rem; }
+  .dk-mini { grid-column: 2 / 4; height: 4px; border-radius: 2px; background: var(--color-bg); overflow: hidden; margin-top: -.15rem; }
+  .dk-mini span { display: block; height: 100%; background: color-mix(in srgb, var(--color-warn) 70%, transparent); }
+
+  .dk-pulse { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--cds-gap-sm); }
+  .dk-ptile { border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: .75rem .85rem; background: var(--color-bg); }
+  .dk-ptile .big { font-family: var(--font-anthropic-serif); font-size: 1.8rem; line-height: 1.05; font-variant-numeric: tabular-nums; }
+  .dk-ptile .lbl { font-weight: var(--cds-font-weight-medium); font-size: .875rem; margin-top: .15rem; }
+  .dk-ptile .det { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+
+  .dk-crowd { display: flex; flex-direction: column; gap: .45rem; }
+  .dk-crow { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr) 3rem; gap: .6rem; align-items: center; font-size: .875rem; }
+  .dk-cname { font-weight: var(--cds-font-weight-medium); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .dk-cbar { position: relative; height: 16px; }
+  .dk-cbar::before { content: ""; position: absolute; left: 50%; top: -3px; bottom: -3px; width: 1px; background: var(--cds-chart-axis, var(--color-border-line)); }
+  .dk-cbar .l, .dk-cbar .w { position: absolute; top: 0; bottom: 0; border-radius: 3px; }
+  .dk-cbar .l { right: 50%; background: color-mix(in srgb, var(--color-bad) 55%, transparent); }
+  .dk-cbar .w { left: 50%; background: color-mix(in srgb, var(--color-ok) 60%, transparent); }
+  .dk-crec { text-align: right; font-variant-numeric: tabular-nums; color: var(--color-fg-muted); }
+
+  @media (max-width: 640px) {
+    .dk-factgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .dk-fact .big { font-size: 1.55rem; }
+    .dk-crow { grid-template-columns: 6.6rem minmax(0, 1fr) 2.6rem; }
+    .dk-race-chart { min-height: 220px; }
+  }
 </style>
 </head>
 <body>
@@ -286,7 +354,7 @@
     <button class="pk-tab" role="tab" data-tab="mypicks" aria-selected="false" id="tab-mypicks" hidden>My picks</button>
     <button class="pk-tab" role="tab" data-tab="standings" aria-selected="true" id="tab-standings">Standings</button>
     <button class="pk-tab" role="tab" data-tab="week" aria-selected="false" id="tab-week"><span class="t-long">Picks by week</span><span class="t-short">By week</span></button>
-    <button class="pk-tab" role="tab" data-tab="insights" aria-selected="false" id="tab-insights"><span class="t-long">Upsets &amp; Ditkatron</span><span class="t-short">Upsets</span></button>
+    <button class="pk-tab" role="tab" data-tab="insights" aria-selected="false" id="tab-insights"><span class="t-long">Ditkatron Thoughts</span><span class="t-short">Ditkatron</span></button>
   </nav>
 
   <section class="pk-panel" id="mypicks" hidden>
@@ -352,52 +420,52 @@
   </section>
 
   <section class="pk-panel" id="insights" hidden>
-    <div class="pk-card" id="bot-card">
-      <h2>Ditkatron 9000 against the family</h2>
-      <p class="pk-note" id="bot-note"><span class="dash-skeleton">—</span></p>
-      <div class="pk-chart" id="bot-chart" data-source="weekly bot_vs_family"></div>
-      <div class="pk-legend" id="bot-legend">
-        <span><i id="lg-bot"></i>Ditkatron 9000</span>
-        <span><i style="background: var(--cds-chart-muted)"></i>Each family player</span>
-        <span><i class="line"></i>Family average</span>
+    <div class="pk-card dk-take" id="dk-take">
+      <p class="dk-kicker">Ditkatron 9000 readout</p>
+      <h2 class="dk-title">Ditkatron Thoughts</h2>
+      <p class="dk-written" id="dk-written"></p>
+      <div class="dk-paras" id="dk-paras"></div>
+    </div>
+
+    <div class="pk-card" id="dk-facts">
+      <h2>This week in the NFL</h2>
+      <p class="pk-note" id="dk-byes"></p>
+      <div class="dk-factgrid" id="dk-factgrid"></div>
+    </div>
+
+    <div class="pk-card" id="dk-lines">
+      <h2>Week 7 at a glance</h2>
+      <p class="pk-note">Each team's chance to win, from the betting lines. The favorite is shaded.</p>
+      <div class="dk-lines" id="dk-lines-list"></div>
+    </div>
+
+    <div class="pk-grid">
+      <div class="pk-card" id="dk-race">
+        <h2>The race</h2>
+        <p class="pk-note">Games behind first place after each finished week. Tap or hover a week for everyone.</p>
+        <div class="dk-legend" id="dk-race-legend"></div>
+        <div class="pk-chart dk-race-chart" id="dk-race-chart"></div>
+      </div>
+      <div class="pk-card" id="dk-weekly">
+        <h2>Weekly high scores</h2>
+        <p class="pk-note">The best record each week; ties share the top spot.</p>
+        <div class="dk-weekly" id="dk-weekly-list"></div>
       </div>
     </div>
 
     <div class="pk-grid">
-      <div class="pk-card" id="upsets-card">
-        <h2>Upsets that fooled the room</h2>
-        <p class="pk-note">Finished games where 2 or fewer of the 9 players picked the winner.</p>
-        <div class="pk-scroll tall">
-          <table class="pk-table" id="upsets-table" data-source="upsets" data-row-key="week,game">
-            <thead><tr>
-              <th data-field="week" class="num">Wk</th>
-              <th data-field="matchup">Game</th>
-              <th data-field="winner">Winner</th>
-              <th data-field="picked_right" class="num">Right</th>
-              <th data-field="who">Who called it</th>
-            </tr></thead>
-            <tbody id="upsets-body"><tr><td class="dash-skeleton" colspan="5">—</td></tr></tbody>
-          </table>
-        </div>
+      <div class="pk-card" id="dk-pulse">
+        <h2>League pulse</h2>
+        <p class="pk-note">Weeks 1–6, every finished game.</p>
+        <div class="dk-pulse" id="dk-pulse-grid"></div>
       </div>
-
-      <div class="pk-card" id="crowd-card">
+      <div class="pk-card" id="dk-crowd">
         <h2>Going against the crowd</h2>
-        <p class="pk-note">Picks that a third or fewer of the players made, in finished games, and how they turned out.</p>
-        <div class="pk-scroll">
-          <table class="pk-table" id="crowd-table" data-source="crowd" data-row-key="player">
-            <thead><tr>
-              <th data-field="player">Player</th>
-              <th data-field="minority_picks" class="num">Picks</th>
-              <th data-field="record" class="num">W–L</th>
-              <th data-field="hit_rate" class="num">Hit rate</th>
-            </tr></thead>
-            <tbody id="crowd-body"><tr><td class="dash-skeleton" colspan="4">—</td></tr></tbody>
-          </table>
-        </div>
-        <p class="pk-foot" id="consensus-line"><span class="dash-skeleton">—</span></p>
+        <p class="pk-note">Picks that a third or fewer of the league made: wins to the right, losses to the left.</p>
+        <div class="dk-crowd" id="dk-crowd-list"></div>
       </div>
     </div>
+    <p class="pk-foot" id="dk-sources"></p>
   </section>
   <footer class="pk-credits">
     <p><strong>Sources.</strong> Schedule, winners, picks, dates and byes: the league's NFL_2026_Pickem_League_shared workbook (Weeks 1–18 tabs). Week 7 kickoff times, Thursday's final (Bears 30, Patriots 24) and pregame win probabilities: SportRadar NFL scores feed, looked up October 24, 2026. Weeks 1–6 winners in the workbook were checked against official final scores and all match.</p>
@@ -437,6 +505,476 @@ window.dash = (() => {
   };
 })();
 </script>
+<script>window.__PK_THOUGHTS = {
+ "written": "Week 7 · written Saturday, Oct 24, 2026",
+ "take": [
+  "Ditkatron has reviewed the tape. Michael & Katie lead the league at 60–32, one game ahead of Jen. Six more players sit within four games of first, and only seven games separate first from last. One bad Sunday can flip this table.",
+  "The leaders' edge is nerve. When Michael & Katie took a team that a third or fewer of the league picked, they went 8–5. Everyone else combined is 20–25 on those picks. Going against the crowd only pays if you're right, and so far they have been.",
+  "Consensus feels safe and mostly is. When all nine of you picked the same team, that team went 31–13. Roughly one sure thing in three still lost.",
+  "Week 7 is under way. Tommy & Haley, Dad and Ditkatron 9000 had the Bears on Thursday night, and all three cashed it. Everyone else: Sunday starts early, with Steelers–Saints kicking off in Paris at 9:30 AM Eastern, and each game locks at kickoff.",
+  "Ditkatron itself is 57–36, in third place. Two humans are ahead of the machine. This is being investigated."
+ ],
+ "facts": [
+  {
+   "big": "3",
+   "label": "unbeaten teams left",
+   "detail": "49ers (6–0), Vikings (5–0), Chiefs (5–0)"
+  },
+  {
+   "big": "0–6",
+   "label": "Chargers, still winless",
+   "detail": "Dolphins 0–5 also without a win"
+  },
+  {
+   "big": "80%",
+   "label": "Texans to beat the Giants",
+   "detail": "The week's biggest favorite, even at 2–4 against the 3–2–1 Giants"
+  },
+  {
+   "big": "54/46",
+   "label": "Browns at Titans",
+   "detail": "The closest game on the board"
+  },
+  {
+   "big": "9:30 AM",
+   "label": "Steelers vs. Saints in Paris",
+   "detail": "Sunday morning at Stade de France (Eastern time)"
+  },
+  {
+   "big": "5",
+   "label": "division games",
+   "detail": "Bengals–Ravens, Buccaneers–Panthers, Dolphins–Jets, Packers–Lions, Cowboys–Eagles"
+  },
+  {
+   "big": "58–35",
+   "label": "favorites this season",
+   "detail": "Betting favorites have won 62% of decided games"
+  },
+  {
+   "big": "30–24",
+   "label": "Bears over Patriots",
+   "detail": "Thursday night; Chicago is 5–2"
+  }
+ ],
+ "byes": "Bills, Chargers, Commanders, Jaguars",
+ "lines": [
+  {
+   "away": "Patriots",
+   "home": "Bears",
+   "away_pct": 42,
+   "home_pct": 58,
+   "away_rec": "4–3",
+   "home_rec": "5–2",
+   "div": false,
+   "site": "",
+   "kick": "Thu 8:15 PM",
+   "final": [
+    24,
+    30
+   ]
+  },
+  {
+   "away": "Steelers",
+   "home": "Saints",
+   "away_pct": 60,
+   "home_pct": 40,
+   "away_rec": "4–2",
+   "home_rec": "2–4",
+   "div": false,
+   "site": "Paris",
+   "kick": "Sun 9:30 AM",
+   "final": null
+  },
+  {
+   "away": "49ers",
+   "home": "Falcons",
+   "away_pct": 57,
+   "home_pct": 43,
+   "away_rec": "6–0",
+   "home_rec": "2–4",
+   "div": false,
+   "site": "",
+   "kick": "Sun 1:00 PM",
+   "final": null
+  },
+  {
+   "away": "Bengals",
+   "home": "Ravens",
+   "away_pct": 57,
+   "home_pct": 43,
+   "away_rec": "3–2",
+   "home_rec": "4–2",
+   "div": true,
+   "site": "",
+   "kick": "Sun 1:00 PM",
+   "final": null
+  },
+  {
+   "away": "Buccaneers",
+   "home": "Panthers",
+   "away_pct": 42,
+   "home_pct": 58,
+   "away_rec": "1–5",
+   "home_rec": "3–2",
+   "div": true,
+   "site": "",
+   "kick": "Sun 1:00 PM",
+   "final": null
+  },
+  {
+   "away": "Giants",
+   "home": "Texans",
+   "away_pct": 20,
+   "home_pct": 80,
+   "away_rec": "3–2–1",
+   "home_rec": "2–4",
+   "div": false,
+   "site": "",
+   "kick": "Sun 1:00 PM",
+   "final": null
+  },
+  {
+   "away": "Colts",
+   "home": "Vikings",
+   "away_pct": 27,
+   "home_pct": 73,
+   "away_rec": "2–4",
+   "home_rec": "5–0",
+   "div": false,
+   "site": "",
+   "kick": "Sun 1:00 PM",
+   "final": null
+  },
+  {
+   "away": "Dolphins",
+   "home": "Jets",
+   "away_pct": 34,
+   "home_pct": 66,
+   "away_rec": "0–5",
+   "home_rec": "2–4",
+   "div": true,
+   "site": "",
+   "kick": "Sun 1:00 PM",
+   "final": null
+  },
+  {
+   "away": "Browns",
+   "home": "Titans",
+   "away_pct": 54,
+   "home_pct": 46,
+   "away_rec": "4–2",
+   "home_rec": "1–5",
+   "div": false,
+   "site": "",
+   "kick": "Sun 1:00 PM",
+   "final": null
+  },
+  {
+   "away": "Broncos",
+   "home": "Cardinals",
+   "away_pct": 66,
+   "home_pct": 34,
+   "away_rec": "4–2",
+   "home_rec": "2–4",
+   "div": false,
+   "site": "",
+   "kick": "Sun 4:05 PM",
+   "final": null
+  },
+  {
+   "away": "Packers",
+   "home": "Lions",
+   "away_pct": 38,
+   "home_pct": 62,
+   "away_rec": "4–2",
+   "home_rec": "3–2",
+   "div": true,
+   "site": "",
+   "kick": "Sun 4:25 PM",
+   "final": null
+  },
+  {
+   "away": "Rams",
+   "home": "Raiders",
+   "away_pct": 61,
+   "home_pct": 39,
+   "away_rec": "2–4",
+   "home_rec": "3–3",
+   "div": false,
+   "site": "",
+   "kick": "Sun 4:25 PM",
+   "final": null
+  },
+  {
+   "away": "Chiefs",
+   "home": "Seahawks",
+   "away_pct": 43,
+   "home_pct": 57,
+   "away_rec": "5–0",
+   "home_rec": "3–3",
+   "div": false,
+   "site": "",
+   "kick": "Sun 8:20 PM",
+   "final": null
+  },
+  {
+   "away": "Cowboys",
+   "home": "Eagles",
+   "away_pct": 66,
+   "home_pct": 34,
+   "away_rec": "2–4",
+   "home_rec": "2–4",
+   "div": true,
+   "site": "",
+   "kick": "Mon 8:15 PM",
+   "final": null
+  }
+ ],
+ "race": {
+  "weeks": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "series": [
+   {
+    "player": "Michael & Katie",
+    "back": [
+     3,
+     2,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "player": "Jen",
+    "back": [
+     0,
+     0,
+     1,
+     3,
+     3,
+     1
+    ]
+   },
+   {
+    "player": "Ditkatron 9000",
+    "back": [
+     0,
+     1,
+     1,
+     3,
+     5,
+     4
+    ]
+   },
+   {
+    "player": "Brady",
+    "back": [
+     2,
+     2,
+     2,
+     2,
+     5,
+     4
+    ]
+   },
+   {
+    "player": "Leet",
+    "back": [
+     1,
+     1,
+     2,
+     2,
+     3,
+     4
+    ]
+   },
+   {
+    "player": "Jenna",
+    "back": [
+     2,
+     3,
+     2,
+     4,
+     6,
+     4
+    ]
+   },
+   {
+    "player": "Dad",
+    "back": [
+     0,
+     1,
+     2,
+     4,
+     5,
+     5
+    ]
+   },
+   {
+    "player": "Tommy & Haley",
+    "back": [
+     4,
+     5,
+     5,
+     6,
+     8,
+     6
+    ]
+   },
+   {
+    "player": "Ryan",
+    "back": [
+     2,
+     4,
+     5,
+     6,
+     9,
+     7
+    ]
+   }
+  ],
+  "highlight": [
+   "Michael & Katie",
+   "Jen",
+   "Ditkatron 9000"
+  ]
+ },
+ "weekly": [
+  {
+   "week": 1,
+   "score": 12,
+   "of": 16,
+   "who": [
+    "Dad",
+    "Jen",
+    "Ditkatron 9000"
+   ]
+  },
+  {
+   "week": 2,
+   "score": 13,
+   "of": 16,
+   "who": [
+    "Michael & Katie"
+   ]
+  },
+  {
+   "week": 3,
+   "score": 10,
+   "of": 16,
+   "who": [
+    "Michael & Katie"
+   ]
+  },
+  {
+   "week": 4,
+   "score": 11,
+   "of": 16,
+   "who": [
+    "Brady",
+    "Leet",
+    "Michael & Katie"
+   ]
+  },
+  {
+   "week": 5,
+   "score": 10,
+   "of": 14,
+   "who": [
+    "Jen",
+    "Michael & Katie"
+   ]
+  },
+  {
+   "week": 6,
+   "score": 9,
+   "of": 14,
+   "who": [
+    "Tommy & Haley",
+    "Ryan",
+    "Jen",
+    "Jenna"
+   ]
+  }
+ ],
+ "pulse": [
+  {
+   "big": "31–13",
+   "label": "When all nine agreed",
+   "detail": "70% of unanimous picks won"
+  },
+  {
+   "big": "Week 3",
+   "label": "Toughest week",
+   "detail": "Family average 7.9 of 16 right"
+  },
+  {
+   "big": "13–3",
+   "label": "Best single week",
+   "detail": "Michael & Katie, Week 2"
+  },
+  {
+   "big": "4",
+   "label": "Most weekly top scores",
+   "detail": "Michael & Katie"
+  }
+ ],
+ "crowd": [
+  {
+   "player": "Michael & Katie",
+   "w": 8,
+   "l": 5
+  },
+  {
+   "player": "Tommy & Haley",
+   "w": 6,
+   "l": 9
+  },
+  {
+   "player": "Jen",
+   "w": 3,
+   "l": 1
+  },
+  {
+   "player": "Leet",
+   "w": 3,
+   "l": 3
+  },
+  {
+   "player": "Ryan",
+   "w": 3,
+   "l": 5
+  },
+  {
+   "player": "Brady",
+   "w": 2,
+   "l": 2
+  },
+  {
+   "player": "Jenna",
+   "w": 2,
+   "l": 2
+  },
+  {
+   "player": "Dad",
+   "w": 1,
+   "l": 2
+  },
+  {
+   "player": "Ditkatron 9000",
+   "w": 0,
+   "l": 1
+  }
+ ],
+ "sources": "NFL records, schedule and betting lines: nflverse (github.com/nflverse/nfldata), checked against the NFL standings feed, Oct 24, 2026. League numbers: the league workbook and this site."
+};</script>
 <script>(() => {
   const API = 'https://script.google.com/macros/s/AKfycbyj53w3aTvhD9rsJN94nDGqpJDcqHmBZaRm_txhB8J8z62wTmomvRsxGgPID4nhOsJjrQ/exec';
   const TOKEN = (new URLSearchParams(location.search).get('p') || '').trim();
@@ -687,6 +1225,144 @@ window.dash = (() => {
     const top = head.getBoundingClientRect().bottom + window.scrollY;
     if (window.scrollY > top) window.scrollTo(0, top);
   });
+})();
+</script>
+<script>(() => {
+  const T = window.__PK_THOUGHTS;
+  if (!T) return;
+  const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
+  const $ = (id) => document.getElementById(id);
+  let built = false;
+
+  function buildStatic() {
+    $('dk-written').textContent = T.written;
+    $('dk-paras').replaceChildren(...T.take.map((t) => el('p', '', t)));
+    $('dk-byes').textContent = 'On bye: ' + T.byes + '.';
+    $('dk-factgrid').replaceChildren(...T.facts.map((f) => {
+      const c = el('div', 'dk-fact');
+      c.append(el('span', 'big', f.big), el('span', 'lbl', f.label));
+      if (f.detail) c.append(el('span', 'det', f.detail));
+      return c;
+    }));
+    $('dk-lines-list').replaceChildren(...T.lines.map((g) => {
+      const row = el('div', 'dk-line');
+      const top = el('div', 'dk-line-top');
+      const a = el('span', 'dk-team', g.away); a.append(el('small', '', g.away_rec));
+      const h = el('span', 'dk-team r', g.home); h.append(el('small', '', g.home_rec));
+      top.append(a, h);
+      const bar = el('div', 'dk-bar');
+      bar.setAttribute('role', 'img');
+      bar.setAttribute('aria-label', g.away + ' ' + g.away_pct + ' percent, ' + g.home + ' ' + g.home_pct + ' percent');
+      const awayFav = g.away_pct > g.home_pct;
+      const sa = el('span', 'dk-seg' + (awayFav ? ' fav' : ''), g.away_pct + '%'); sa.style.width = g.away_pct + '%';
+      const sh = el('span', 'dk-seg r' + (!awayFav ? ' fav' : ''), g.home_pct + '%'); sh.style.width = g.home_pct + '%';
+      bar.append(sa, sh);
+      const meta = el('div', 'dk-line-meta');
+      if (g.final) {
+        const won = g.final[1] > g.final[0] ? g.home : g.away;
+        meta.append(el('span', 'dk-tag final', 'Final: ' + won + ' ' + Math.max(g.final[0], g.final[1]) + '–' + Math.min(g.final[0], g.final[1])));
+      } else meta.append(el('span', '', g.kick + ' ET'));
+      if (g.div) meta.append(el('span', 'dk-tag', 'Division'));
+      if (g.site) meta.append(el('span', 'dk-tag', g.site));
+      row.append(top, bar, meta);
+      return row;
+    }));
+    $('dk-weekly-list').replaceChildren(...T.weekly.map((w) => {
+      const r = el('div', 'dk-wrow');
+      const mini = el('div', 'dk-mini'); const fill = el('span'); fill.style.width = Math.round(100 * w.score / w.of) + '%'; mini.append(fill);
+      r.append(el('span', 'dk-wk', 'Wk ' + w.week), el('span', 'dk-who', w.who.join(', ')), el('span', 'dk-score', w.score + '–' + (w.of - w.score)), el('span'), mini);
+      return r;
+    }));
+    $('dk-pulse-grid').replaceChildren(...T.pulse.map((p) => {
+      const c = el('div', 'dk-ptile');
+      c.append(el('div', 'big', p.big), el('div', 'lbl', p.label), el('div', 'det', p.detail));
+      return c;
+    }));
+    const maxSide = Math.max(1, ...T.crowd.map((r) => Math.max(r.w, r.l)));
+    $('dk-crowd-list').replaceChildren(...T.crowd.filter((r) => r.w + r.l > 0).map((r) => {
+      const row = el('div', 'dk-crow');
+      const bar = el('div', 'dk-cbar');
+      bar.setAttribute('role', 'img');
+      bar.setAttribute('aria-label', r.player + ': ' + r.w + ' wins, ' + r.l + ' losses');
+      const l = el('span', 'l'); l.style.width = (50 * r.l / maxSide) + '%';
+      const w = el('span', 'w'); w.style.width = (50 * r.w / maxSide) + '%';
+      bar.append(l, w);
+      row.append(el('span', 'dk-cname', r.player), bar, el('span', 'dk-crec', r.w + '–' + r.l));
+      return row;
+    }));
+    $('dk-sources').textContent = 'Sources: ' + T.sources;
+    built = true;
+  }
+
+  const tip = el('div', 'pk-tip');
+  tip.hidden = true;
+  function drawRace() {
+    const box = $('dk-race-chart');
+    const width = box.clientWidth;
+    if (!width) return;
+    const R = T.race;
+    const narrow = width < 520;
+    const height = narrow ? 220 : 240;
+    const colors = ['var(--series-1)', 'var(--series-2)', 'var(--series-3)'];
+    const hi = R.highlight;
+    $('dk-race-legend').replaceChildren(...hi.map((p, i) => { const s = el('span'); const sw = el('i'); sw.style.background = colors[i]; s.append(sw, p); return s; }),
+      (() => { const s = el('span'); const sw = el('i'); sw.style.background = 'var(--cds-chart-muted)'; s.append(sw, 'Everyone else'); return s; })());
+    const maxBack = Math.max(2, ...R.series.flatMap((s) => s.back));
+    const svg = d3.create('svg').attr('width', '100%').attr('height', height).attr('viewBox', `0 0 ${width} ${height}`);
+    box.replaceChildren(svg.node(), tip);
+    const probe = svg.append('text').attr('font-size', 12).text('Lead');
+    const leftW = Math.ceil(probe.node().getComputedTextLength()) + 10; probe.remove();
+    let rightW = 12;
+    if (!narrow) {
+      const pr = svg.append('text').attr('font-size', 12);
+      hi.forEach((p) => { pr.text(p); rightW = Math.max(rightW, pr.node().getComputedTextLength() + 16); });
+      pr.remove();
+    }
+    const m = { l: leftW, r: Math.ceil(rightW), t: 10, b: 26 };
+    const x = d3.scalePoint(R.weeks, [m.l + 8, width - m.r - 6]);
+    const y = d3.scaleLinear([0, maxBack], [m.t, height - m.b]);
+    const ticks = y.ticks(Math.min(5, maxBack)).filter(Number.isInteger);
+    svg.append('g').selectAll('line').data(ticks).join('line').attr('x1', m.l).attr('x2', width - m.r).attr('y1', (d) => y(d)).attr('y2', (d) => y(d)).attr('stroke', 'var(--cds-chart-grid)');
+    svg.append('g').selectAll('text').data(ticks).join('text').attr('x', m.l - 6).attr('y', (d) => y(d)).attr('dy', '0.32em').attr('text-anchor', 'end').attr('font-size', 12).attr('fill', 'var(--color-fg-muted)').text((d) => d === 0 ? 'Lead' : d);
+    svg.append('g').selectAll('text').data(R.weeks).join('text').attr('x', (d) => x(d)).attr('y', height - 6).attr('text-anchor', 'middle').attr('font-size', 12).attr('fill', 'var(--color-fg-muted)').text((d) => 'Wk ' + d);
+    const line = d3.line().x((d, i) => x(R.weeks[i])).y((d) => y(d));
+    const rest = R.series.filter((s) => hi.indexOf(s.player) < 0);
+    svg.append('g').selectAll('path').data(rest).join('path').attr('d', (s) => line(s.back)).attr('fill', 'none').attr('stroke', 'var(--cds-chart-muted)').attr('stroke-width', 1.5).attr('stroke-opacity', 0.7).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round');
+    const top = hi.map((p) => R.series.find((s) => s.player === p)).filter(Boolean);
+    top.slice().reverse().forEach((s) => {
+      const c = colors[hi.indexOf(s.player)];
+      svg.append('path').attr('d', line(s.back)).attr('fill', 'none').attr('stroke', c).attr('stroke-width', 2.5).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round');
+      svg.append('g').selectAll('circle').data(s.back).join('circle').attr('cx', (d, i) => x(R.weeks[i])).attr('cy', (d) => y(d)).attr('r', 3).attr('fill', c);
+    });
+    if (!narrow) {
+      // end labels, nudged apart so they never overlap
+      const ends = top.map((s) => ({ p: s.player, c: colors[hi.indexOf(s.player)], y: y(s.back[s.back.length - 1]) })).sort((a, b) => a.y - b.y);
+      for (let i = 1; i < ends.length; i++) if (ends[i].y - ends[i - 1].y < 14) ends[i].y = ends[i - 1].y + 14;
+      svg.append('g').selectAll('text').data(ends).join('text').attr('x', width - m.r + 8).attr('y', (d) => d.y).attr('dy', '0.32em').attr('font-size', 12).attr('fill', (d) => d.c).attr('font-weight', 600).text((d) => d.p);
+    }
+    const hl = svg.append('rect').attr('fill', 'var(--cds-chart-grid)').attr('opacity', 0).lower();
+    const step = R.weeks.length > 1 ? x(R.weeks[1]) - x(R.weeks[0]) : 60;
+    svg.append('g').selectAll('rect').data(R.weeks).join('rect')
+      .attr('x', (d) => x(d) - step / 2).attr('y', 0).attr('width', step).attr('height', height).attr('fill', 'transparent')
+      .on('pointerenter pointermove', (event, wk) => {
+        const i = R.weeks.indexOf(wk);
+        hl.attr('x', x(wk) - step / 2 + 2).attr('y', m.t - 6).attr('width', step - 4).attr('height', height - m.t - m.b + 10).attr('opacity', 0.7);
+        const rows = R.series.map((s) => ({ p: s.player, b: s.back[i] })).sort((a, b) => a.b - b.b);
+        tip.replaceChildren(el('div', 't', 'After Week ' + wk), ...rows.map((r) => { const d = el('div', 'r'); d.append(el('span', '', r.p), el('span', '', r.b === 0 ? 'Lead' : r.b + ' back')); return d; }));
+        tip.hidden = false;
+        const tw = tip.offsetWidth;
+        let left = x(wk) + step / 2;
+        if (left + tw > width) left = x(wk) - step / 2 - tw;
+        tip.style.left = Math.max(0, left) + 'px';
+        tip.style.top = '4px';
+      })
+      .on('pointerleave', () => { tip.hidden = true; hl.attr('opacity', 0); });
+  }
+
+  window.pkDrawThoughts = () => {
+    if (!built) buildStatic();
+    drawRace();
+  };
 })();
 </script>
 <script>
@@ -1311,7 +1987,7 @@ window.dash = (() => {
     if (tab === 'standings') drawStandings();
     else if (tab === 'week') drawWeek();
     else if (tab === 'mypicks') { if (window.pkDrawMyPicks) window.pkDrawMyPicks(); }
-    else drawInsights();
+    else if (window.pkDrawThoughts) window.pkDrawThoughts();
   }
 
   dash.onData(draw);
