@@ -7,6 +7,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap">
+<meta name="theme-color" content="#f4f6f9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e1116" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-title" content="Pick'em">
+<meta name="description" content="Standings and weekly picks for the family's 2026 NFL pick'em league.">
+<link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAErklEQVR42u2WXW8VVRSGn7X3njPno+0pPbSEQiklELR8KuHGBpHEjwAhkcQEIv4A461/wAT1H4A/wpB4YxBjojeiNIAkEkMgBCza0pa2tOejZ87M7OXFOS1tKYrccNN9MWuy92TNu9d+371e6f/oDeUlDsNLHmsA1gC8dADu/3wsCtBSrcjyRX2iZl259qIARAS8gjSTJlZQBAVE/SIWALUGQRAUo4rx2gRlDKr6YgDqjQiXzaIKQRTTOV+nrR6RTxIKcYLzzcRehErgqDtLOQyp5EKibAZxlqQ+T8YGmGcAeSaAVD2HXhuauTP8c3HjxKTpjWOKKKERrBGMyDIGaSMmrSuNuTnmVBgPAu53trP7rfemfv3j6rpGVDfG2P8GYES03KjLqaGjE/237rie+/dMqZBDcw4vgip4IEWXHQFWECAU2KCw0XsGxh/ScfV6uPOd42PnfrywKYeg6LNVIMC8T+SV/LroXQ2iiSvfd3V1tmtsLYmC99rkhSpGDAIY04qteRASVRoitBc7tHL7atvg33/Zw90D5Wpcb363GgBR8M5pfmqGD9p7Ko/u3mwXZ0k9iCoCWOto1KqICI35pdE8ibVqi4yQpqm4XIGR2zeKJzs3VDZMTpM4q6KrVUDAq/Lqoxl2bO6LxsdGctY6QBchz06OcfDEh/g04cDRU6RJzIFjp0jiBgeOnSaJIw6eOIP3SVOmqljnmB4fC0vdpXR/pa4SxaJmFQ54I4TzkfQi2LY2H83NOrEWVFFVgkzI4TOfcOj0x3T1bmHX4WOUNg+w58hxSpu2sufICUq9W9j39vvcHv6JyvQExgUIlqReM6kYerM5XyhXbLmrE5ekqKzkgOqTiZZkFs5cxNDdv51MNkdp8wBhrsD6vgEyuTzr+7YtxiCbx2UyqG8eWytZi+BgVkjRdu7t+wzAKMRBoMXJR3JgcF95YnQkF1XnrBiDiODThN++u0Ch2MXF858j1nLxqy+wLuDiubPNeP4sQZjl1i8/YIOguQlVTBDqwOD+8vC1K8VbPSUxZsnJLzgiUUgzTgsjD+TTfW9OpvOPw7vXL3cEuYKiXgCMdSSNOjYISeMIF4Qkq0TjgkVFpEmDrk390Y69Q1NfXvq69+H2reoaiSww60nFBWycykxPN9/MTrRtHBgsaxJjrEFbRfRpgnUB6lOsC/CrROMCVJtqN85qUq+xZduuuUsz4/k/N3QRJH4JrVdwQFHyLtDh6mTuWmeHrNvxern2eFYygDUCIvgFMK2fLIstjVsjZATiSkUypf5oaufu+W8n7xXz2Ty+Vc2nOLCELuIQbo7eL/QcHJq79nA0F1dqEjQSAu9xqtjmxYdFmu+A9YrxKRqnVKOU0QRutLVROn5y+sLvl7vnK2VrzdM3v6zmipukS0nUY8IQiRPytTqd1TrFKCKfphTSFNfavSJUraXmLHOZDI/zWSr5LD7MoHED8Ypz7vmbkaoixpDBQpygItTaC1Q62niAIl4xqUcWEgqk1qIiiAiGZjt2cQxiwMkzW/K/tmNFF42H9R7bYjYCamUJhZRAtekdmm4BlSXG5EX9wApuLHdBS93R4vriY82UrgFYA/Dc4x/c3TxHOPCaPQAAAABJRU5ErkJggg==">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAEwElEQVR42u3doXLUQBzA4TRTiWPQRSCYwWFuphjeAlOeBM2ToHgLDKIGxwwCUTSDqy+qMyEkaXqX7P539/vpDvQ2X/Z209zl7OLq8q6TKqk3BAJaAloCWgJaQEtAS0BLQEtAC2gJaAloCWgJaAEtAS0BLQEtAS2gJaAloCWgJaAFtAS0BLQEtAS0gJaAloCWgJaAFtAS0BLQEtACWgJaAloCWgJaQEtAS0BLQEtAC2gJaClG54bgtA7ffmz+b16/fmlggS4H7Kn/J/BAh4S79e8KesOgtwL84tmTzX+3n79vN3lNLQI/u7i6vAM4Ldhc4FsAXjXoxyCOCHdP6LXiLgr0zaev18/fvzlsgbgGwFsBfwj3mnEH+gjMXdd1cwO7BnILiE/BPQX7ftyXxh7oIzFPDewS5JYBnwJ8CHtp7IHeEDPI6WCXhDo06Km3uznIEO+Hewp2VNRhQY8HD+QYsKOj7qNjnpuVXzx7AvNOzY3t+DiMjxPQKzC/e/X0AHIc2OPjEQ116NtHh4MHchzYY9RAr5idx5gVA/bU8Yk0S4cBbZ1c1/q6adCHbz+6z9///DM7gxwf9nCW/vz9z3UE1H0EzEtvbSpjCRJlpu4jYB7Oziq3++OYE3WfG/O4D28vDmiU09zxyoW6j4RZdZXjOPe5X+RwuWF2Ln+WHi8fU6POuoa2+Wtns1gl6OHZCnM7qFPO0j3Mqgl1nxrzsI9fflk/V7iOHh7X1OvpPudZK+vp4kC7RKeUHs5rPluP7eOXX+O302p+NtcsfeyX44RfckjFgl66smFD2NbGMNUVDzO0zNBSc6D9IUVLFwX2WnaYoVVVzX7h+fhSV40/G+3ynTW0BLSAloCWbArDVNP9GdHv5TBDS9FADx9rkOpOK8Vu6GCvp3CZoWWGlpoEvbTsWPMZNJXV0i3BKZYbZmhVV9LLdj9/3xZx591jLnuV9rO5N4PFr6FbeGC64njoaz5b1dbsnAz03FlpY9jGhjDlu3WyGdofWtqenVMtPZMuOaCGuSrQ1tPWzdWBHp+twycpWUeXv34eP5Qz9VWuLDO0S3ltlOM499FerFm63Nk5wqTVRziDIz87Wuu7P44534Gz38sx9eJtFsvd/OVeToa4Oen69cv/HrMLdXzM48dZR9gbhflM4dJM7avEYs/KkTb6oW4fff7+zeTz7szW8TAPj8/wuAG90Bg12Pkgz2GOVjjQ47N9PHhg54M8dTwizc5hZ+jxIM2tr8FOB3nqOETD3HVdd3ZxdXkXdWBvPn39b502973CNo77b/imjgfQJ6BeAxvubRDPQY6MuQjQDw0o2PtBLg1zMaCHAzs3oGsecdAy8DX7jam9SgnLjCJB3w/uQ4O69tkdLeBeu2l+6I8ia8Yd6AQ95sE0NQB/zFWfWm/hrRr0sbijQz/2cmUL96E3A3or4CnAb3V9vcUPUjQLei/gOfNJoIa/wX8thojQwQV6Nzx7gAcWaLOluq7zdboCWgJaAloCWkBLQEtAS0BLQAtoCWgJaAloCWgBLQEtAS0BLQEtoCWgJaAloCWgBbQEtAS0BLQEtICWgJaAloCWgBbQEtAS0BLQAtoQCGgJaAloCWgBLQEtAS0BLQEtoKWy+wuhsWfel28ZLAAAAABJRU5ErkJggg==">
 <style>
   /* Layout: one centered column, tabbed sections, cards on a cool neutral ground. */
   :root {
@@ -167,6 +173,106 @@
     .pk-mp-time { grid-area: time; } .pk-mp-game { grid-area: game; } .pk-mp-pick { grid-area: pick; } .pk-mp-state { grid-area: state; }
     .pk-mp-pick .pk-select { width: 100%; }
   }
+
+  /* ---------- website: phone + computer layout ---------- */
+  .pk-page { max-width: 1320px; }
+  .pk-tabs { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--color-bg); }
+  .t-short { display: none; }
+  .pk-tab { min-height: 44px; }
+  .pk-weeks { position: relative; }
+  .pk-select { font-size: 1rem; }
+  #mypicks-card { max-width: 880px; }
+
+  /* tables that scroll sideways get a soft edge shadow so it's clear there is more */
+  .pk-scroll {
+    background:
+      linear-gradient(to right, var(--color-panel) 30%, transparent) left / 32px 100% no-repeat local,
+      linear-gradient(to left, var(--color-panel) 30%, transparent) right / 32px 100% no-repeat local,
+      radial-gradient(farthest-side at 0 50%, rgba(20, 30, 50, .16), transparent) left / 12px 100% no-repeat scroll,
+      radial-gradient(farthest-side at 100% 50%, rgba(20, 30, 50, .16), transparent) right / 12px 100% no-repeat scroll;
+  }
+
+  /* picks table on a computer: one kickoff/result column, tighter player columns */
+  .pk-picks th.pl { min-width: 4.6rem; max-width: 5.6rem; }
+  .pk-picks td.p { padding-inline: .35rem; }
+  .pk-picks td.ko { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .pk-picks td.ko span { display: block; }
+  .pk-picks td.ko .fav { color: var(--color-fg-muted); font-size: .75rem; }
+
+  /* game cards replace the wide picks table on a phone */
+  .pk-cards { display: none; }
+  .pk-gcard { border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: .65rem .8rem; background: var(--color-bg); }
+  .pk-gcard-top { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem; }
+  .pk-gcard-game { font-weight: var(--cds-font-weight-medium); min-width: 0; }
+  .pk-gcard-meta { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .pk-gcard-sub { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); margin-top: 2px; }
+  .pk-gcard-sub b { color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
+  .pk-gcard-picks { display: flex; flex-wrap: wrap; gap: 6px; margin-top: .55rem; }
+  .pk-gcard-hidden { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); font-style: italic; }
+  .pk-pchip { display: inline-flex; gap: .35rem; align-items: baseline; font-size: var(--cds-font-size-caption); padding: 3px 9px; border-radius: 999px; border: 1px solid var(--color-border-line); background: var(--color-panel); }
+  .pk-pchip .n { color: var(--color-fg-muted); }
+  .pk-pchip b { font-weight: var(--cds-font-weight-medium); }
+  .pk-pchip.win { background: color-mix(in srgb, var(--color-ok) 15%, transparent); border-color: transparent; }
+  .pk-pchip.win b { color: var(--color-ok); }
+  .pk-pchip.loss { background: color-mix(in srgb, var(--color-bad) 12%, transparent); border-color: transparent; }
+  .pk-pchip.loss b { color: var(--color-bad); }
+  .pk-pchip.none b { color: var(--color-fg-muted); }
+
+  @media (pointer: coarse) {
+    .pk-chip { min-height: 40px; min-width: 44px; }
+  }
+
+  @media (max-width: 640px) {
+    .pk-page { padding-block: 18px 40px; }
+    .pk { gap: var(--cds-gap-md); }
+    .pk-head h1 { font-size: 1.5rem; }
+    .pk-card { padding: 1rem; }
+
+    /* tabs: one row of equal buttons with short names */
+    .pk-tabs { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 0; overflow: visible; margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); padding-inline: max(8px, env(safe-area-inset-left, 0px)); }
+    .pk-tab { padding: .55rem .2rem; font-size: .875rem; text-align: center; white-space: normal; line-height: 1.2; }
+    .t-long { display: none; }
+    .t-short { display: inline; }
+
+    /* standings tiles: compact rows */
+    .pk-tiles { gap: var(--cds-gap-sm); }
+    .pk-tile { min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "label big" "name big" "sub sub"; column-gap: .75rem; row-gap: 2px; padding: .8rem 1rem; }
+    .pk-tile-label { grid-area: label; }
+    .pk-tile-name { grid-area: name; }
+    .pk-big { grid-area: big; align-self: center; font-size: 2rem; }
+    .pk-tile-sub { grid-area: sub; }
+    .pk-standings td { font-size: .875rem; }
+
+    /* week buttons: one swipeable row */
+    .pk-weeks { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); padding: 2px max(16px, env(safe-area-inset-left, 0px)) 4px; scroll-snap-type: x proximity; }
+    .pk-weeks::-webkit-scrollbar { display: none; }
+    .pk-chip { flex: 0 0 auto; scroll-snap-align: center; min-height: 40px; min-width: 44px; }
+
+    /* picks by week: cards instead of the wide table */
+    #week-card .pk-scroll { display: none; }
+    .pk-cards { display: flex; flex-direction: column; gap: var(--cds-gap-sm); }
+    .pk-week-head h2 { font-size: 1.5rem; }
+
+    /* upsets: stacked rows, no scroll box inside the page */
+    #upsets-card .pk-scroll.tall { max-height: none; overflow: visible; background: none; }
+    #upsets-table thead { display: none; }
+    #upsets-table, #upsets-table tbody { display: block; }
+    #upsets-table tr { display: grid; grid-template-columns: 2.6rem minmax(0, 1fr) auto; grid-template-areas: "wk game right" "wk winner winner" "wk who who"; padding: .55rem 0; border-bottom: 1px solid var(--color-border-line); }
+    #upsets-table tbody tr:last-child { border-bottom: 0; }
+    #upsets-table td { border: 0; padding: 0; white-space: normal; min-width: 0; text-align: left; }
+    #upsets-table td:nth-child(1) { grid-area: wk; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); padding-top: 2px; }
+    #upsets-table td:nth-child(1)::before { content: "Wk "; }
+    #upsets-table td:nth-child(2) { grid-area: game; font-weight: var(--cds-font-weight-medium); }
+    #upsets-table td:nth-child(3) { grid-area: winner; font-size: var(--cds-font-size-caption); font-weight: 400; }
+    #upsets-table td:nth-child(3)::before { content: "Winner: "; color: var(--color-fg-muted); }
+    #upsets-table td:nth-child(4) { grid-area: right; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); text-align: right; }
+    #upsets-table td:nth-child(4)::after { content: " of 9 right"; }
+    #upsets-table td:nth-child(5) { grid-area: who; font-size: var(--cds-font-size-caption); }
+    #upsets-table td:nth-child(5)::before { content: "Called it: "; color: var(--color-fg-muted); }
+
+    .pk-chart { min-height: 220px; }
+    .pk-credits { font-size: .75rem; }
+  }
 </style>
 </head>
 <body>
@@ -181,8 +287,8 @@
   <nav class="pk-tabs" role="tablist" aria-label="Sections">
     <button class="pk-tab" role="tab" data-tab="mypicks" aria-selected="false" id="tab-mypicks" hidden>My picks</button>
     <button class="pk-tab" role="tab" data-tab="standings" aria-selected="true" id="tab-standings">Standings</button>
-    <button class="pk-tab" role="tab" data-tab="week" aria-selected="false" id="tab-week">Picks by week</button>
-    <button class="pk-tab" role="tab" data-tab="insights" aria-selected="false" id="tab-insights">Upsets &amp; Ditkatron</button>
+    <button class="pk-tab" role="tab" data-tab="week" aria-selected="false" id="tab-week"><span class="t-long">Picks by week</span><span class="t-short">By week</span></button>
+    <button class="pk-tab" role="tab" data-tab="insights" aria-selected="false" id="tab-insights"><span class="t-long">Upsets &amp; Ditkatron</span><span class="t-short">Upsets</span></button>
   </nav>
 
   <section class="pk-panel" id="mypicks" hidden>
@@ -242,6 +348,7 @@
           <tbody id="picks-body"><tr><td class="dash-skeleton" colspan="4">—</td></tr></tbody>
         </table>
       </div>
+      <div class="pk-cards" id="picks-cards"></div>
       <p class="pk-foot" id="week-foot">Green is a correct pick, red a wrong one. Picks stay hidden until a game kicks off.</p>
     </div>
   </section>
@@ -533,6 +640,54 @@ window.dash = (() => {
   }
 
   window.pkDrawMyPicks = () => { if (!state.me && !state.loading && !state.error) load(); else render(); };
+})();
+
+// ---------- phone/computer helpers (run with or without a player link) ----------
+(() => {
+  const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
+  const KO = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', weekday: 'short', hour: 'numeric', minute: '2-digit' });
+
+  // Picks by week as cards (shown on phones instead of the wide table)
+  window.pkWeekCards = (rows, players) => {
+    const box = document.getElementById('picks-cards');
+    if (!box) return;
+    box.replaceChildren(...rows.map((r) => {
+      const kicked = !!r.winner || (r.kickoff != null && Date.parse(r.kickoff) <= Date.now());
+      const card = el('div', 'pk-gcard');
+      const top = el('div', 'pk-gcard-top');
+      top.append(el('span', 'pk-gcard-game', r.matchup),
+        el('span', 'pk-gcard-meta', r.final_score ? 'Final ' + r.final_score : r.kickoff ? KO.format(new Date(r.kickoff)) + ' ET' : ''));
+      card.append(top);
+      const sub = el('div', 'pk-gcard-sub');
+      if (r.winner === 'TIE') sub.append(el('b', '', 'Tie'));
+      else if (r.winner) sub.append('Winner: ', el('b', '', r.winner));
+      else if (r.favorite) sub.append(r.favorite.replace(/ (\d+)%$/, ' favored ($1%)'));
+      if (sub.childNodes.length) card.append(sub);
+      const picks = el('div', 'pk-gcard-picks');
+      if (!kicked) picks.append(el('span', 'pk-gcard-hidden', 'Picks hidden until kickoff'));
+      else players.forEach((p) => {
+        const pick = r[p];
+        const cls = !pick ? 'none' : !r.winner || r.winner === 'TIE' ? '' : pick === r.winner ? 'win' : 'loss';
+        const chip = el('span', 'pk-pchip ' + cls);
+        chip.append(el('span', 'n', p), el('b', '', pick || '–'));
+        picks.append(chip);
+      });
+      card.append(picks);
+      return card;
+    }));
+    // keep the chosen week button in view in the swipeable row
+    const chip = document.querySelector('#week-chips [aria-pressed="true"]');
+    if (chip) { const row = chip.parentElement; if (row.scrollWidth > row.clientWidth) row.scrollLeft = chip.offsetLeft - row.clientWidth / 2 + chip.offsetWidth / 2; }
+  };
+
+  // after switching tabs, start the new section at the top instead of mid-page
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.pk-tab')) return;
+    const head = document.querySelector('.pk-head');
+    if (!head) return;
+    const top = head.getBoundingClientRect().bottom + window.scrollY;
+    if (window.scrollY > top) window.scrollTo(0, top);
+  });
 })();
 </script>
 <script>
@@ -963,7 +1118,7 @@ window.dash = (() => {
     const th = (text, field, cls) => { const n = el('th', cls, text); n.dataset.field = field; n.scope = 'col'; return n; };
     head.replaceChildren(
       th('Game', 'matchup', 'stick'),
-      ...(hasFeed ? [th('Kickoff (ET)', 'kickoff'), th('Favorite', 'favorite'), th('Final', 'final_score', 'num')] : []),
+      ...(hasFeed ? [th('Kickoff (ET) / result', 'kickoff')] : []),
       th('Winner', 'winner'),
       ...allPlayers.map((p) => th(p, p, 'pl ctr')));
     body.replaceChildren(...grid.map((r) => {
@@ -971,9 +1126,13 @@ window.dash = (() => {
       tr.dataset.key = r.week + ',' + r.game;
       tr.append(el('td', 'stick game', r.matchup));
       if (hasFeed) {
-        tr.append(el('td', r.kickoff ? '' : 'none', r.kickoff ? ET_TIME.format(new Date(r.kickoff)) : ''),
-          el('td', r.favorite ? 'muted' : 'none', r.favorite),
-          el('td', 'num' + (r.final_score ? '' : ' none'), r.final_score));
+        const ko = el('td', 'ko' + (r.final_score || r.kickoff ? '' : ' none'));
+        if (r.final_score) ko.append(el('span', '', 'Final ' + r.final_score));
+        else if (r.kickoff) {
+          ko.append(el('span', '', ET_TIME.format(new Date(r.kickoff))));
+          if (r.favorite) ko.append(el('span', 'fav', r.favorite + ' favored'));
+        }
+        tr.append(ko);
       }
       const wtd = el('td', 'winner' + (r.winner ? '' : ' none'), r.winner === 'TIE' ? 'TIE' : r.winner);
       if (r.winner_from === 'feed') { wtd.title = 'From the NFL scores feed; not yet entered in the workbook'; wtd.append(el('span', 'pk-tag', 'feed')); }
@@ -986,6 +1145,7 @@ window.dash = (() => {
       }
       return tr;
     }));
+    if (window.pkWeekCards) window.pkWeekCards(grid, allPlayers);
     const foot = document.getElementById('week-foot');
     foot.textContent = 'Green is a correct pick, red a wrong one. Picks stay hidden until a game kicks off.' + (hasFeed ? ' Kickoff, favorite (pregame win probability) and final score come from the NFL scores feed; a winner the workbook doesn’t have yet comes from there too.' : '');
   }
@@ -1082,7 +1242,7 @@ window.dash = (() => {
       const s = dash.data('bot_summary').data[0];
       const parts = [];
       if (B) parts.push('The robot is ', span(B.record, 'standings', 'record', 'player=' + enc(BOT)), ', ', B.rank_label.startsWith('T-') ? 'tied for ' : 'in ', ord(B.rank), ' place. ');
-      if (s) parts.push('It beat the family average in ', span(String(s.above), 'bot_summary', 'above', 'weeks=' + s.weeks), ' of ', span(String(s.weeks), 'bot_summary', 'weeks', 'weeks=' + s.weeks), ' finished weeks. Hover a week to see every score.');
+      if (s) parts.push('It beat the family average in ', span(String(s.above), 'bot_summary', 'above', 'weeks=' + s.weeks), ' of ', span(String(s.weeks), 'bot_summary', 'weeks', 'weeks=' + s.weeks), ' finished weeks. Tap or hover over a week to see every score.');
       note.replaceChildren(...parts);
     } else if (failed('standings', 'bot_summary')) note.replaceChildren('Failed to load');
 
