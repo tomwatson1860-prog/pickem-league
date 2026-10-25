@@ -597,7 +597,7 @@
     <p class="pk-foot" id="dk-sources"></p>
   </section>
   <footer class="pk-credits">
-    <p><strong>Sources.</strong> Schedule, winners, picks, dates and byes: the league's NFL_2026_Pickem_League_shared workbook (Weeks 1–18 tabs). Week 7 kickoff times, Thursday's final (Bears 30, Patriots 24) and pregame win probabilities: SportRadar NFL scores feed, looked up October 24, 2026. Weeks 1–6 winners in the workbook were checked against official final scores and all match.</p>
+    <p><strong>Sources.</strong> Weeks 1–6: the league's NFL_2026_Pickem_League_shared workbook; its winners were checked against official final scores and all match. From Week 7 on, picks, winners and final scores come live from the league's pick sheet, where winners fill in by themselves from ESPN's public scoreboard a few minutes after each game ends, and the standings update to match. Week 7 pregame win probabilities: SportRadar NFL scores feed, looked up October 24, 2026.</p>
     <p>Scoring follows the workbook: a correct pick is a win, a wrong pick a loss, and ties or missing picks count for nobody.</p>
   </footer>
 </div>
@@ -612,6 +612,7 @@ window.dash = (() => {
   const store = Object.assign({}, window.__PK_DATA);
   const listeners = [];
   let params = {};
+  const calcs = [];
   const fire = () => listeners.forEach((fn) => { try { fn(); } catch (e) { console.error(e); } });
   let t;
   setInterval(fire, 60000);
@@ -623,7 +624,8 @@ window.dash = (() => {
       if (v === undefined) return { status: 'missing', data: [], columns: [], message: '', refreshing: false, meta: [] };
       return { status: 'ok', data: v, columns: Array.isArray(v) && v.length ? Object.keys(v[0]) : [], message: '', refreshing: false, meta: [] };
     },
-    calc(id, spec) { store[id] = spec.fn(...spec.inputs.map((i) => store[i] || [])); },
+    calc(id, spec) { calcs.push([id, spec]); store[id] = spec.fn(...spec.inputs.map((i) => store[i] || [])); },
+    update(patch) { Object.assign(store, patch); calcs.forEach(([id, spec]) => { try { store[id] = spec.fn(...spec.inputs.map((i) => store[i] || [])); } catch (e) { console.error(e); } }); fire(); },
     loader() {},
     onData(fn) { listeners.push(fn); fn(); },
     params() { return Object.assign({}, params); },
@@ -1114,46 +1116,52 @@ window.dash = (() => {
   const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
   const ET = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
 
-  // ---------- live picks for the public "Picks by week" tab ----------
-  const weekCache = {}, inflight = {};
-  function loadPublic(week) {
-    const c = weekCache[week];
-    if (inflight[week] || (c && !c.failed) || (c && c.failed && Date.now() - c.at < 60000)) return;
-    inflight[week] = true;
-    getJSON('week=' + week)
-      .then((d) => { weekCache[week] = d && d.ok ? d : { failed: true, at: Date.now() }; })
-      .catch(() => { weekCache[week] = { failed: true, at: Date.now() }; })
-      .finally(() => { inflight[week] = false; redraw(); });
-  }
-  const live = (week) => { const d = weekCache[week]; return d && !d.failed ? d : null; };
-  window.pkOverlay = (week, rows) => {
-    if (week < 7) return rows;
-    const d = live(week);
-    if (!d) { loadPublic(week); return rows; }
-    const byGame = {};
-    d.games.forEach((g) => { byGame[g.game] = g; });
-    return rows.map((r) => {
-      const g = byGame[r.game];
-      if (!g) return r;
-      const out = Object.assign({}, r);
-      if (!out.kickoff) out.kickoff = g.kickoff;
-      if (!out.winner && g.winner) { out.winner = g.winner; out.winner_from = 'sheet'; }
-      (d.picks[r.game] || []).forEach((p) => { if (p.player in out) out[p.player] = p.pick; });
-      return out;
+  // ---------- live season from the pick sheet (Week 7 on) ----------
+  // Weeks 1-6 come from the league workbook built into the page. From Week 7 on, winners, scores,
+  // picks (only for games that have kicked off) and pick counts come from the pick sheet, and every
+  // standing, tile and table is recalculated from them.
+  const LIVE_FROM = 7;
+  const BASE = window.__PK_DATA;
+  let lastLoad = 0, loadingSeason = false;
+  const key = (w, g) => +w + '-' + +g;
+  function mergeSeason(s) {
+    const sheet = new Map(s.games.map((g) => [key(g.week, g.game), g]));
+    const games = BASE.games.map((g) => {
+      const x = +g.week >= LIVE_FROM ? sheet.get(key(g.week, g.game)) : null;
+      return x && x.away === g.away_short && x.home === g.home_short ? Object.assign({}, g, { winner: x.winner || '' }) : g;
     });
-  };
-  window.pkCounts = (week, rows) => {
-    const d = week >= 7 ? live(week) : null;
-    if (!d) return rows;
-    return Object.keys(d.entered).map((player) => ({ week, player, entered: d.entered[player] }));
-  };
-  window.pkStatus = (week, s) => {
-    const d = week >= 7 ? live(week) : null;
-    if (!d || !s) return s;
-    return Object.assign({}, s, { pickers: Object.keys(d.entered).length, decided: d.games.filter((g) => g.winner).length, games: d.games.length });
-  };
-  // refresh the live week every few minutes so picks open at kickoff without a reload
-  setInterval(() => { Object.keys(weekCache).forEach((w) => { delete weekCache[w]; }); redraw(); }, 180000);
+    const oldFeed = new Map(BASE.week7_feed.map((f) => [key(f.week, f.game), f]));
+    const feed = BASE.week7_feed.filter((f) => +f.week < LIVE_FROM).concat(s.games.filter((x) => +x.week >= LIVE_FROM).map((x) => {
+      const f = oldFeed.get(key(x.week, x.game)) || {};
+      const final = x.away_score != null && x.home_score != null;
+      return {
+        week: +x.week, game: +x.game, away: x.away, home: x.home, kickoff: x.kickoff || f.kickoff || null,
+        status: final ? 'final' : 'scheduled', away_score: final ? x.away_score : null, home_score: final ? x.home_score : null,
+        winner: x.winner || '', away_win_prob: f.away_win_prob != null ? f.away_win_prob : null, home_win_prob: f.home_win_prob != null ? f.home_win_prob : null,
+      };
+    }));
+    const picks = BASE.picks.filter((p) => +p.week < LIVE_FROM)
+      .concat(s.picks.filter((p) => +p[0] >= LIVE_FROM).map((p) => ({ week: +p[0], game: +p[1], player: p[2], pick: p[3] })));
+    const counts = BASE.pick_counts.filter((c) => +c.week < LIVE_FROM);
+    Object.keys(s.entered).forEach((w) => {
+      if (+w < LIVE_FROM) return;
+      Object.keys(s.entered[w]).forEach((player) => counts.push({ week: +w, player, entered: s.entered[w][player] }));
+    });
+    return { games, week7_feed: feed, picks, pick_counts: counts };
+  }
+  function loadSeason() {
+    if (loadingSeason || !window.dash || !window.dash.update) return;
+    loadingSeason = true;
+    getJSON('action=season')
+      .then((s) => { if (s && s.ok && Array.isArray(s.games)) { lastLoad = Date.now(); window.dash.update(mergeSeason(s)); } })
+      .catch(() => {})
+      .finally(() => { loadingSeason = false; });
+  }
+  window.pkLoadSeason = loadSeason;
+  setTimeout(loadSeason, 0);
+  // keep it fresh: every 2 minutes while the page is open, and right away when someone comes back to it
+  setInterval(() => { if (document.visibilityState === 'visible') loadSeason(); }, 120000);
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && Date.now() - lastLoad > 60000) loadSeason(); });
 
   // ---------- My picks (only with a player link) ----------
   if (!TOKEN) return;
@@ -1190,7 +1198,7 @@ window.dash = (() => {
         const skipped = (res.skipped || []).find((s) => s.game === game);
         state.me = res;
         state.status[game] = skipped ? { text: 'Not saved: ' + skipped.reason, cls: 'bad' } : { text: team ? 'Saved' : 'Cleared', cls: 'ok' };
-        delete weekCache[res.week];
+        loadSeason();
       })
       .catch(() => { state.status[game] = { text: 'Not saved. Check your connection.', cls: 'bad' }; })
       .finally(() => { delete state.pending[game]; render(); });
