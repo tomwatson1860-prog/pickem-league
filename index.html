@@ -461,6 +461,54 @@
   @keyframes hw-eq { from { height: 4px; } to { height: 16px; } }
   html.halloween .pk-page { padding-bottom: 96px; }
   @media (max-width: 640px) { html.halloween .hw-music { font-size: .875rem; padding: .55rem .9rem; } }
+
+  /* ---------- lightning and occasional visitors on the bats layer (site_spooky.js) ---------- */
+  .hw-fx { position: absolute; left: 0; top: 0; pointer-events: none; }
+  /* lightning: a soft sky flash (two flickers, well under three per second) and a jagged bolt */
+  .hw-flash { inset: 0; width: 100%; height: 100%; opacity: 0; animation: hw-flash 1s linear forwards;
+    background: radial-gradient(120% 90% at var(--fx, 50%) 0%, rgba(226, 230, 255, .95), rgba(170, 180, 255, .45) 40%, rgba(120, 120, 210, .12) 75%, transparent); }
+  @keyframes hw-flash { 0% { opacity: 0; } 4% { opacity: .34; } 9% { opacity: .06; } 15% { opacity: .26; } 24% { opacity: .04; } 40%, 100% { opacity: 0; } }
+  .hw-bolt { inset: 0; width: 100%; height: 100%; opacity: 0; animation: hw-bolt .85s linear forwards; }
+  .hw-bolt svg { display: block; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 0 4px #cfd6ff) drop-shadow(0 0 14px #8c9cff); }
+  .hw-bolt path { fill: none; stroke: #f7f4ff; stroke-linejoin: round; stroke-linecap: round; }
+  .hw-bolt path.core { stroke-width: 2.6; }
+  .hw-bolt path.branch { stroke-width: 1.4; opacity: .8; }
+  @keyframes hw-bolt { 0% { opacity: 0; } 3% { opacity: 1; } 10% { opacity: .25; } 16% { opacity: 1; } 45% { opacity: .85; } 100% { opacity: 0; } }
+  /* a ghost drifting up (or across) the screen */
+  .hw-ghost { width: var(--size); opacity: 0; animation: hw-ghost 10.5s ease-in-out forwards; filter: drop-shadow(0 0 12px rgba(215, 205, 255, .55)); }
+  .hw-ghost svg { display: block; width: 100%; height: auto; }
+  .hw-ghost .sway { animation: hw-sway 2.6s ease-in-out infinite alternate; }
+  @keyframes hw-ghost {
+    0% { transform: translate(calc(var(--x0) - var(--size) / 2), var(--y0)); opacity: 0; }
+    15% { opacity: .62; } 80% { opacity: .55; }
+    100% { transform: translate(calc(var(--x1) - var(--size) / 2), var(--y1)); opacity: 0; } }
+  @keyframes hw-sway { from { transform: translateX(-14px) rotate(-5deg); } to { transform: translateX(14px) rotate(5deg); } }
+  /* a spider dropping on its thread, bouncing, and climbing back up */
+  .hw-spider { left: calc(var(--x) - var(--size) / 2); width: var(--size); transform: translateY(-130%); animation: hw-spider 9s ease-in-out forwards; filter: drop-shadow(0 0 2px rgba(255, 170, 90, .6)); }
+  .hw-spider svg { position: relative; display: block; width: 100%; height: auto; }
+  .hw-spider .thread { position: absolute; left: 50%; bottom: 60%; width: 1px; height: 130vh; background: linear-gradient(rgba(230, 220, 255, .12), rgba(230, 220, 255, .6)); }
+  .hw-spider .legs { transform-origin: 20px 22px; animation: hw-legs .45s ease-in-out infinite alternate; }
+  @keyframes hw-spider {
+    0% { transform: translateY(-130%); } 28% { transform: translateY(var(--drop)); } 33% { transform: translateY(calc(var(--drop) - 16px)); }
+    38%, 72% { transform: translateY(var(--drop)); } 100% { transform: translateY(-130%); } }
+  @keyframes hw-legs { from { transform: scaleY(1); } to { transform: scaleY(.86); } }
+  /* glowing eyes that open in the dark, blink twice and vanish */
+  .hw-eyes { left: var(--x); top: var(--y); display: flex; gap: calc(10px * var(--s)); transform: translate(-50%, -50%); opacity: 0; animation: hw-eyes 4.8s ease-in-out var(--d) forwards; }
+  .hw-eyes i { position: relative; width: calc(16px * var(--s)); height: calc(10px * var(--s)); border-radius: 50%; animation: hw-blink 4.8s linear var(--d) forwards;
+    background: radial-gradient(circle at 50% 45%, #fff7c2 0 18%, #ffbf3a 40%, #ff7a00 70%, rgba(255, 90, 0, 0) 72%); box-shadow: 0 0 calc(10px * var(--s)) rgba(255, 140, 30, .75); }
+  .hw-eyes i::after { content: ""; position: absolute; left: 50%; top: 12%; width: 18%; height: 76%; transform: translateX(-50%); border-radius: 50%; background: #120806; }
+  .hw-eyes.green i { background: radial-gradient(circle at 50% 45%, #f4ffd0 0 18%, #b6ff5a 40%, #4fd12a 70%, rgba(80, 210, 40, 0) 72%); box-shadow: 0 0 calc(10px * var(--s)) rgba(120, 255, 60, .7); }
+  @keyframes hw-eyes { 0% { opacity: 0; } 15%, 80% { opacity: 1; } 100% { opacity: 0; } }
+  @keyframes hw-blink { 0%, 30% { transform: scaleY(1); } 33% { transform: scaleY(.08); } 36%, 58% { transform: scaleY(1); } 61% { transform: scaleY(.08); } 64%, 100% { transform: scaleY(1); } }
+  /* a witch on her broom crossing the top of the screen */
+  .hw-witch { top: var(--y); width: var(--size); animation: hw-witch 12s linear forwards; filter: drop-shadow(0 0 3px rgba(255, 160, 80, .75)); }
+  .hw-witch.rtl { animation-name: hw-witch-rtl; }
+  .hw-witch svg { display: block; width: 100%; height: auto; }
+  .hw-witch.rtl svg { transform: scaleX(-1); }
+  .hw-witch .bob { animation: hw-bob 1.8s ease-in-out infinite alternate; }
+  @keyframes hw-witch { from { transform: translateX(calc(-1 * var(--size) - 20px)) rotate(-4deg); } to { transform: translateX(calc(100vw + 20px)) rotate(-8deg); } }
+  @keyframes hw-witch-rtl { from { transform: translateX(calc(100vw + 20px)) rotate(4deg); } to { transform: translateX(calc(-1 * var(--size) - 20px)) rotate(8deg); } }
+  @keyframes hw-bob { from { transform: translateY(-6px); } to { transform: translateY(6px); } }
 </style>
 </head>
 <body>
@@ -1666,7 +1714,24 @@ window.SpookyMusic = (() => {
   function resume() { init(); return ctx.state === 'running' ? Promise.resolve() : ctx.resume(); }
   function suspend() { if (ctx && ctx.state === 'running') return ctx.suspend(); return Promise.resolve(); }
   const audible = () => !!active && !!ctx && ctx.state === 'running';
-  return { play, stop, setVolume, resume, suspend, audible, playing: () => (active ? active.name : null) };
+  // a low thunder rumble for the lightning strikes; silent unless the music is playing
+  function thunder(delay) {
+    if (!audible()) return;
+    const t = ctx.currentTime + (delay || 0), len = 3.4, n = Math.floor(ctx.sampleRate * len);
+    const buf = ctx.createBuffer(1, n, ctx.sampleRate), d = buf.getChannelData(0);
+    let last = 0;
+    for (let i = 0; i < n; i++) { last = (last + 0.02 * (Math.random() * 2 - 1)) / 1.02; d[i] = last * 3.5; }
+    const src = ctx.createBufferSource(); src.buffer = buf;
+    const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.setValueAtTime(1100, t); lp.frequency.exponentialRampToValueAtTime(110, t + 2.6);
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.42, t + 0.06); g.gain.exponentialRampToValueAtTime(0.2, t + 0.7);
+    g.gain.linearRampToValueAtTime(0.26, t + 1.1); g.gain.exponentialRampToValueAtTime(0.0008, t + 3.2);
+    const w = ctx.createGain(); w.gain.value = 0.45;
+    src.connect(lp); lp.connect(g); g.connect(out); g.connect(w); w.connect(verb);
+    src.start(t); src.stop(t + len);
+    src.onended = () => { try { g.disconnect(); w.disconnect(); } catch (e) { /* gone */ } };
+  }
+  return { play, stop, setVolume, resume, suspend, audible, thunder, playing: () => (active ? active.name : null) };
 })();
 </script>
 <script>// Halloween music (haunted organ). Starts on its own where the browser allows it, otherwise on the
@@ -1708,6 +1773,128 @@ window.SpookyMusic = (() => {
     else if (!isOff()) SpookyMusic.resume().then(sync, sync);
   });
   sync();
+})();
+</script>
+<script>// Halloween extras on the full-screen bats layer: lightning strikes (with thunder when the music is on)
+// and occasional visitors: a ghost, a spider on its thread, glowing eyes, and a witch on her broom.
+// Runs only while the Halloween theme is on, never for visitors who ask for reduced motion, and
+// pauses while the tab is hidden. window.hwSpooky lets you trigger each one by hand.
+(() => {
+  const root = document.documentElement;
+  const sky = document.querySelector('.hw-sky');
+  if (!sky || !root.classList.contains('halloween')) return;
+  const still = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
+  const NS = 'http://www.w3.org/2000/svg';
+  const rnd = (a, b) => a + Math.random() * (b - a);
+  const side = (edge) => (Math.random() < 0.5 ? rnd(2, edge) : rnd(100 - edge, 98)); // % from the left, hugging an edge
+  const W = () => window.innerWidth, H = () => window.innerHeight;
+  const small = () => W() < 640;
+
+  function spawn(cls, html, ms, style) {
+    const n = document.createElement('div');
+    n.className = 'hw-fx ' + cls;
+    if (html) n.innerHTML = html;
+    if (style) Object.keys(style).forEach((k) => n.style.setProperty(k, style[k]));
+    sky.append(n);
+    setTimeout(() => n.remove(), ms);
+    return n;
+  }
+
+  // ---------- lightning ----------
+  function boltPath(x, y, endY, spread) {
+    let d = 'M' + x.toFixed(1) + ' ' + y.toFixed(1);
+    const pts = [[x, y]];
+    while (y < endY) {
+      y += rnd(18, 46);
+      x += rnd(-spread, spread);
+      d += 'L' + x.toFixed(1) + ' ' + y.toFixed(1);
+      pts.push([x, y]);
+    }
+    return { d, pts };
+  }
+  function lightning() {
+    const w = W(), h = H();
+    const x = (side(30) / 100) * w;
+    const main = boltPath(x, -10, h * rnd(0.32, 0.62), small() ? 18 : 26);
+    const from = main.pts[Math.floor(rnd(2, Math.max(3, main.pts.length - 2)))];
+    const dir = Math.random() < 0.5 ? -1 : 1;
+    let bx = from[0], by = from[1], branch = 'M' + bx.toFixed(1) + ' ' + by.toFixed(1);
+    for (let i = 0, n = Math.round(rnd(3, 6)); i < n; i++) { bx += dir * rnd(10, 28); by += rnd(14, 34); branch += 'L' + bx.toFixed(1) + ' ' + by.toFixed(1); }
+    spawn('hw-flash', '', 1100, { '--fx': ((x / w) * 100).toFixed(1) + '%' });
+    const svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+    svg.setAttribute('preserveAspectRatio', 'none');
+    [[main.d, 'core'], [branch, 'branch']].forEach(([d, c]) => {
+      const p = document.createElementNS(NS, 'path');
+      p.setAttribute('d', d);
+      p.setAttribute('class', c);
+      svg.append(p);
+    });
+    spawn('hw-bolt', '', 900).append(svg);
+    if (window.SpookyMusic && SpookyMusic.thunder) SpookyMusic.thunder(rnd(0.5, 1.6));
+  }
+
+  // ---------- visitors ----------
+  const GHOST = '<svg viewBox="0 0 64 80"><path d="M32 4C17 4 8 16 8 31V72L16 64L24 72L32 64L40 72L48 64L56 72V31C56 16 47 4 32 4Z" fill="#f3effd"/><ellipse cx="24" cy="30" rx="4.6" ry="6.6" fill="#1a1028"/><ellipse cx="40" cy="30" rx="4.6" ry="6.6" fill="#1a1028"/><ellipse cx="32" cy="46" rx="5" ry="6.4" fill="#1a1028"/></svg>';
+  function ghost() {
+    const up = Math.random() < 0.6;
+    const x0 = side(26), x1 = x0 + (x0 < 50 ? rnd(4, 18) : -rnd(4, 18));
+    spawn('hw-ghost', '<div class="sway">' + GHOST + '</div>', 11000, {
+      '--x0': x0 + 'vw', '--x1': x1 + 'vw', '--y0': up ? '105vh' : rnd(20, 70).toFixed(0) + 'vh', '--y1': up ? '-25vh' : rnd(10, 60).toFixed(0) + 'vh',
+      '--size': (small() ? rnd(46, 62) : rnd(64, 92)).toFixed(0) + 'px',
+    });
+  }
+
+  const SPIDER = '<svg viewBox="0 0 40 40"><g class="legs" stroke="#0b0710" stroke-width="2.2" stroke-linecap="round" fill="none"><path d="M15 18L6 10L2 14"/><path d="M15 21L4 20L1 25"/><path d="M15 24L6 29L4 35"/><path d="M16 26L10 34L9 39"/><path d="M25 18L34 10L38 14"/><path d="M25 21L36 20L39 25"/><path d="M25 24L34 29L36 35"/><path d="M24 26L30 34L31 39"/></g><ellipse cx="20" cy="17" rx="5" ry="5" fill="#0b0710"/><ellipse cx="20" cy="26" rx="7" ry="8" fill="#0b0710"/><path d="M20 21l-2.5 4h5z" fill="#c4161c"/><circle cx="18" cy="15.6" r="1.3" fill="#ff8a1f"/><circle cx="22" cy="15.6" r="1.3" fill="#ff8a1f"/></svg>';
+  function spider() {
+    spawn('hw-spider', '<span class="thread"></span>' + SPIDER, 9500, {
+      '--x': side(small() ? 10 : 14) + 'vw', '--drop': rnd(22, 48).toFixed(0) + 'vh', '--size': (small() ? 30 : 40) + 'px',
+    });
+  }
+
+  function eyes() {
+    const green = Math.random() < 0.35;
+    const pairs = Math.random() < 0.45 ? 2 : 1;
+    for (let i = 0; i < pairs; i++) {
+      spawn('hw-eyes' + (green ? ' green' : ''), '<i></i><i></i>', 5200, {
+        '--x': side(small() ? 8 : 10) + 'vw', '--y': rnd(28, 88).toFixed(0) + 'vh',
+        '--s': (rnd(0.75, 1.25) * (small() ? 0.8 : 1)).toFixed(2), '--d': (i * rnd(0.3, 0.9)).toFixed(2) + 's',
+      });
+    }
+  }
+
+  const WITCH = '<svg viewBox="0 0 120 70"><g fill="#07040c"><path d="M6 55L104 40L105 43.5L7 58.5Z"/><path d="M0 50L24 50.5L27 56L24 61L2 66L8 58Z"/><path d="M52 52L60 30Q64 23 72 25L79 29L84 49Z"/><path d="M61 32Q46 30 32 47Q44 45 54 49Z"/><path d="M80 46L92 51L90 54L78 50Z"/><path d="M70 31L86 41L84 44L68 36Z"/><circle cx="73" cy="21" r="6.4"/><path d="M78 21.5L84 24L78 24.5Z"/><path d="M62 16.5L88 13.5L88.5 16.5L62.5 19.5Z"/><path d="M66 16.5L81 14.6L62 0L64 9Z"/></g></svg>';
+  function witch() {
+    const ltr = Math.random() < 0.5;
+    spawn('hw-witch' + (ltr ? '' : ' rtl'), '<div class="bob">' + WITCH + '</div>', 13000, {
+      '--y': rnd(6, 22).toFixed(0) + 'vh', '--size': (small() ? 74 : 110) + 'px',
+    });
+  }
+
+  // ---------- timing ----------
+  const visitors = [ghost, spider, eyes, witch];
+  let bag = [], last = null, timers = [];
+  const nextVisitor = () => {
+    if (!bag.length) bag = visitors.slice().sort(() => Math.random() - 0.5);
+    let v = bag.pop();
+    if (v === last && bag.length) { bag.unshift(v); v = bag.pop(); }
+    last = v;
+    return v;
+  };
+  const ok = () => !still.matches && !document.hidden && root.classList.contains('halloween');
+  function every(fn, first, min, max) {
+    const tick = () => { if (ok()) fn(); timers.push(setTimeout(tick, rnd(min, max) * 1000)); };
+    timers.push(setTimeout(tick, first * 1000));
+  }
+  function startAll() {
+    if (timers.length || still.matches) return;
+    every(() => { lightning(); if (Math.random() < 0.25) setTimeout(() => ok() && lightning(), rnd(1300, 2000)); }, rnd(5, 9), 18, 40);
+    every(() => nextVisitor()(), rnd(11, 16), 10, 18);
+  }
+  function stopAll() { timers.forEach(clearTimeout); timers = []; sky.querySelectorAll('.hw-fx').forEach((n) => n.remove()); }
+  if (still.addEventListener) still.addEventListener('change', () => (still.matches ? stopAll() : startAll()));
+  startAll();
+  window.hwSpooky = { lightning, ghost, spider, eyes, witch, start: startAll, stop: stopAll };
 })();
 </script>
 <script>
