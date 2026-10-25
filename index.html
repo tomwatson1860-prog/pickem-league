@@ -362,7 +362,9 @@
       radial-gradient(900px 420px at 88% -140px, rgba(255, 150, 50, .20), transparent 62%),
       radial-gradient(800px 600px at -15% 12%, rgba(150, 95, 255, .13), transparent 60%),
       var(--color-bg);
+    background-repeat: no-repeat; min-height: 100vh;
   }
+  html.halloween { background: var(--color-bg); }
   html.halloween .pk-page { position: relative; }
   html.halloween .pk-card { border-color: var(--color-border-line); box-shadow: 0 0 0 1px rgba(255, 138, 31, .04), 0 10px 30px rgba(0, 0, 0, .25); }
 
@@ -439,12 +441,33 @@
     .hw-fly.f1 { width: 38px; } .hw-fly.f2 { width: 32px; } .hw-fly.f3 { width: 28px; } .hw-fly.f4 { width: 34px; }
   }
   @keyframes hw-flap-soft { from { transform: scaleY(1); } to { transform: scaleY(.72); } }
+
+  /* Play spooky music button */
+  html.halloween .hw-music { display: inline-flex; align-items: center; gap: .5rem; position: fixed; z-index: 40;
+    right: max(16px, env(safe-area-inset-right, 0px)); bottom: max(16px, env(safe-area-inset-bottom, 0px));
+    font: inherit; font-weight: 600; font-size: .95rem; min-height: 46px; padding: .6rem 1.05rem; border-radius: 999px; border: 0; cursor: pointer;
+    background: var(--hw-orange); color: var(--on-accent); box-shadow: 0 0 0 1px rgba(0, 0, 0, .25), 0 8px 24px rgba(0, 0, 0, .45), 0 0 22px rgba(255, 138, 31, .35); }
+  html.halloween .hw-music:hover { filter: brightness(1.08); }
+  html.halloween .hw-music:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 3px; }
+  .hw-music .hw-note { width: 18px; height: 18px; flex: 0 0 auto; }
+  .hw-music .hw-eq { display: none; gap: 2px; align-items: flex-end; height: 16px; }
+  .hw-music.on .hw-eq { display: inline-flex; }
+  .hw-music.on .hw-note { display: none; }
+  .hw-music .hw-eq i { width: 3px; height: 6px; border-radius: 1px; background: currentColor; }
+  @media (prefers-reduced-motion: no-preference) {
+    .hw-music .hw-eq i { animation: hw-eq .8s ease-in-out infinite alternate; }
+    .hw-music .hw-eq i:nth-child(2) { animation-delay: -.3s; } .hw-music .hw-eq i:nth-child(3) { animation-delay: -.55s; }
+  }
+  @keyframes hw-eq { from { height: 4px; } to { height: 16px; } }
+  html.halloween .pk-page { padding-bottom: 96px; }
+  @media (max-width: 640px) { html.halloween .hw-music { font-size: .875rem; padding: .55rem .9rem; } }
 </style>
 </head>
 <body>
 <div class="pk-page" id="dash-root">
 <div class="pk">
   <header class="pk-head" id="top">
+    <button class="hw-only hw-music" id="hw-music" type="button" aria-pressed="false"><svg class="hw-note" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9 18.5a3 3 0 1 1-2-2.83V5.2l12-2.4v11.7a3 3 0 1 1-2-2.83V7.04l-8 1.6z"/></svg><span class="hw-eq" aria-hidden="true"><i></i><i></i><i></i></span><span class="hw-music-label">Play spooky music</span></button>
     <div class="hw-only hw-sky" aria-hidden="true"><span class="hw-fly f1"><svg viewBox="0 0 100 44"><path fill="currentColor" d="M50 20C47 13 43 13 41 18C35 10 21 6 4 10C12 14 14 22 12 28C18 24 24 24 28 30C32 26 36 26 40 30C44 26 47 27 50 33C53 27 56 26 60 30C64 26 68 26 72 30C76 24 82 24 88 28C86 22 88 14 96 10C79 6 65 10 59 18C57 13 53 13 50 20ZM46 17L47 11L49 16ZM54 17L53 11L51 16Z"/></svg></span><span class="hw-fly f2"><svg viewBox="0 0 100 44"><path fill="currentColor" d="M50 20C47 13 43 13 41 18C35 10 21 6 4 10C12 14 14 22 12 28C18 24 24 24 28 30C32 26 36 26 40 30C44 26 47 27 50 33C53 27 56 26 60 30C64 26 68 26 72 30C76 24 82 24 88 28C86 22 88 14 96 10C79 6 65 10 59 18C57 13 53 13 50 20ZM46 17L47 11L49 16ZM54 17L53 11L51 16Z"/></svg></span><span class="hw-fly f3"><svg viewBox="0 0 100 44"><path fill="currentColor" d="M50 20C47 13 43 13 41 18C35 10 21 6 4 10C12 14 14 22 12 28C18 24 24 24 28 30C32 26 36 26 40 30C44 26 47 27 50 33C53 27 56 26 60 30C64 26 68 26 72 30C76 24 82 24 88 28C86 22 88 14 96 10C79 6 65 10 59 18C57 13 53 13 50 20ZM46 17L47 11L49 16ZM54 17L53 11L51 16Z"/></svg></span><span class="hw-fly f4"><svg viewBox="0 0 100 44"><path fill="currentColor" d="M50 20C47 13 43 13 41 18C35 10 21 6 4 10C12 14 14 22 12 28C18 24 24 24 28 30C32 26 36 26 40 30C44 26 47 27 50 33C53 27 56 26 60 30C64 26 68 26 72 30C76 24 82 24 88 28C86 22 88 14 96 10C79 6 65 10 59 18C57 13 53 13 50 20ZM46 17L47 11L49 16ZM54 17L53 11L51 16Z"/></svg></span><span class="hw-fly f5"><svg viewBox="0 0 100 44"><path fill="currentColor" d="M50 20C47 13 43 13 41 18C35 10 21 6 4 10C12 14 14 22 12 28C18 24 24 24 28 30C32 26 36 26 40 30C44 26 47 27 50 33C53 27 56 26 60 30C64 26 68 26 72 30C76 24 82 24 88 28C86 22 88 14 96 10C79 6 65 10 59 18C57 13 53 13 50 20ZM46 17L47 11L49 16ZM54 17L53 11L51 16Z"/></svg></span><span class="hw-fly f6"><svg viewBox="0 0 100 44"><path fill="currentColor" d="M50 20C47 13 43 13 41 18C35 10 21 6 4 10C12 14 14 22 12 28C18 24 24 24 28 30C32 26 36 26 40 30C44 26 47 27 50 33C53 27 56 26 60 30C64 26 68 26 72 30C76 24 82 24 88 28C86 22 88 14 96 10C79 6 65 10 59 18C57 13 53 13 50 20ZM46 17L47 11L49 16ZM54 17L53 11L51 16Z"/></svg></span></div>
     <div class="hw-only hw-web" aria-hidden="true"><svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"><path d="M0 0L120 26M0 0L104 78M0 0L62 120M0 0L20 120"/><path d="M0 22Q10 16 15 4L18 0M0 46Q22 38 33 24Q40 14 44 0M0 72Q28 62 46 50Q64 36 72 14L75 0M0 98Q34 88 56 76Q82 60 94 32L100 0M18 120Q34 104 42 96Q54 84 66 66M0 120"/></svg></div>
     <div class="hw-only hw-moon" aria-hidden="true"></div>
@@ -1469,6 +1492,183 @@ window.dash = (() => {
     if (!built) buildStatic();
     drawRace();
   };
+})();
+</script>
+<script>// Spooky soundtrack engine: everything is synthesized live with Web Audio (no audio files).
+window.SpookyMusic = (() => {
+  const NOTE = { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 };
+  const hz = (n) => { const m = /^([A-G])([#b]?)(-?\d)$/.exec(n); const s = NOTE[m[1]] + (m[2] === '#' ? 1 : m[2] === 'b' ? -1 : 0); return 440 * Math.pow(2, ((+m[3] + 1) * 12 + s - 69) / 12); };
+  const down = (n) => n.replace(/(-?\d)$/, (d) => String(+d - 1));
+  let ctx = null, out = null, verb = null, volume = null, active = null;
+
+  function init() {
+    if (ctx) return;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    ctx = new AC();
+    const comp = ctx.createDynamicsCompressor();
+    comp.threshold.value = -16; comp.ratio.value = 4; comp.attack.value = 0.01; comp.release.value = 0.3;
+    volume = ctx.createGain(); volume.gain.value = 0.8;
+    out = ctx.createGain(); out.gain.value = 1;
+    out.connect(comp); comp.connect(volume); volume.connect(ctx.destination);
+    verb = ctx.createConvolver(); verb.buffer = impulse(3.4, 2.6);
+    verb.connect(out);
+  }
+  function impulse(sec, decay) {
+    const r = ctx.sampleRate, n = Math.floor(r * sec), b = ctx.createBuffer(2, n, r);
+    for (let c = 0; c < 2; c++) { const d = b.getChannelData(c); for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, decay); }
+    return b;
+  }
+  function makeBus(dry, wet) {
+    const g = ctx.createGain(); g.gain.value = 0;
+    const d = ctx.createGain(); d.gain.value = dry; const w = ctx.createGain(); w.gain.value = wet;
+    g.connect(d); d.connect(out); g.connect(w); w.connect(verb);
+    return g;
+  }
+  const keep = (nodes, node, end) => { nodes.push([node, end]); };
+
+  // ---------- voices ----------
+  function organ(bus, f, t, dur, vel, nodes) {
+    const g = ctx.createGain(); const peak = 0.075 * vel;
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(peak, t + 0.035);
+    g.gain.setValueAtTime(peak, t + dur); g.gain.linearRampToValueAtTime(0, t + dur + 0.25);
+    const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 3600; lp.Q.value = 0.4;
+    g.connect(lp); lp.connect(bus);
+    [[0.5, 0.42], [1, 1], [2, 0.55], [3, 0.3], [4, 0.22], [6, 0.1], [8, 0.07]].forEach(([m, a]) => {
+      const fr = f * m; if (fr < 28 || fr > 9000) return;
+      const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = fr; o.detune.value = (Math.random() - 0.5) * 6;
+      const og = ctx.createGain(); og.gain.value = a; o.connect(og); og.connect(g);
+      o.start(t); o.stop(t + dur + 0.32); keep(nodes, o, t + dur + 0.32);
+    });
+  }
+  function musicBox(bus, f, t, vel, nodes) {
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.2 * vel, t + 0.006); g.gain.exponentialRampToValueAtTime(0.0004, t + 1.9);
+    g.connect(bus);
+    const cents = (Math.random() - 0.5) * 26; // slightly out of tune, like an old music box
+    [[1, 1], [2.76, 0.28], [5.4, 0.1], [8.93, 0.035]].forEach(([m, a]) => {
+      const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = f * m; o.detune.value = cents;
+      const og = ctx.createGain(); og.gain.value = a; o.connect(og); og.connect(g);
+      o.start(t); o.stop(t + 2); keep(nodes, o, t + 2);
+    });
+  }
+  function pad(bus, notes, t, dur, nodes) {
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(0.03, t + 1.4); g.gain.setValueAtTime(0.03, t + dur); g.gain.linearRampToValueAtTime(0, t + dur + 1.8);
+    const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 650; lp.Q.value = 2;
+    const lfo = ctx.createOscillator(); lfo.frequency.value = 0.18; const lg = ctx.createGain(); lg.gain.value = 260; lfo.connect(lg); lg.connect(lp.frequency);
+    lfo.start(t); lfo.stop(t + dur + 2); keep(nodes, lfo, t + dur + 2);
+    g.connect(lp); lp.connect(bus);
+    notes.forEach((n) => [-8, 8].forEach((c) => {
+      const o = ctx.createOscillator(); o.type = 'triangle'; o.frequency.value = hz(n); o.detune.value = c;
+      o.connect(g); o.start(t); o.stop(t + dur + 2); keep(nodes, o, t + dur + 2);
+    }));
+  }
+  function wail(bus, t, path, nodes) {
+    const o = ctx.createOscillator(); o.type = 'sine';
+    o.frequency.setValueAtTime(hz(path[0][0]), t);
+    path.slice(1).forEach(([n, at]) => o.frequency.exponentialRampToValueAtTime(hz(n), t + at));
+    const end = path[path.length - 1][1];
+    const vib = ctx.createOscillator(); vib.frequency.value = 5.3; const vg = ctx.createGain(); vg.gain.value = 9; vib.connect(vg); vg.connect(o.frequency);
+    const g = ctx.createGain(); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(0.05, t + 0.6); g.gain.setValueAtTime(0.05, t + end - 0.7); g.gain.linearRampToValueAtTime(0, t + end);
+    o.connect(g); g.connect(bus);
+    o.start(t); vib.start(t); o.stop(t + end + 0.1); vib.stop(t + end + 0.1); keep(nodes, o, t + end + 0.1); keep(nodes, vib, t + end + 0.1);
+  }
+
+  // ---------- pieces ----------
+  const pieces = {
+    // Opening of J. S. Bach's Toccata and Fugue in D minor, BWV 565 (public domain), arranged for synth organ.
+    bach: { dry: 0.75, wet: 0.65, render(bus, t0, nodes) {
+      let t = t0;
+      const O = (n, at, d, v) => organ(bus, hz(n), at, d, v == null ? 1 : v, nodes);
+      const seq = (list, dbl) => { list.forEach(([n, d]) => { O(n, t, d); if (dbl) O(down(n), t, d, 0.85); t += d; }); };
+      seq([['A5', 0.11], ['G5', 0.11], ['A5', 1.4]]); t += 0.3;
+      seq([['G5', 0.1], ['F5', 0.1], ['E5', 0.1], ['D5', 0.1], ['C#5', 0.34], ['D5', 1.8]]); t += 0.55;
+      seq([['A4', 0.11], ['G4', 0.11], ['A4', 1.3]]); t += 0.3;
+      seq([['E4', 0.2], ['F4', 0.2], ['C#4', 0.34], ['D4', 1.7]]); t += 0.55;
+      seq([['A3', 0.12], ['G3', 0.12], ['A3', 1.3]], true); t += 0.3;
+      seq([['G3', 0.1], ['F3', 0.1], ['E3', 0.1], ['D3', 0.1], ['C#3', 0.34], ['D3', 1.6]], true); t += 0.2;
+      O('D2', t, 6.6, 1.15);
+      ['C#3', 'E3', 'G3', 'Bb3', 'C#4', 'E4', 'G4', 'Bb4'].forEach((n, i) => { const s = t + 0.6 + i * 0.2; O(n, s, t + 4.1 - s, 0.8); });
+      ['D3', 'F3', 'A3', 'D4', 'F4', 'A4', 'D5'].forEach((n) => O(n, t + 4.2, 2.4, 0.85));
+      t += 7.2;
+      return t - t0 + 1.8;
+    } },
+    // Original waltz written for the league: out-of-tune music box, ghostly chords and a wail.
+    musicbox: { dry: 0.8, wet: 0.5, render(bus, t0, nodes) {
+      const beat = 0.56;
+      const melody = [
+        [['A4', 1], ['D5', 1], ['F5', 1]], [['E5', 2], ['D5', 1]], [['C#5', 1], ['E5', 1], ['A5', 1]], [['G5', 3]],
+        [['F5', 1], ['E5', 1], ['D5', 1]], [['Bb4', 2], ['D5', 1]], [['C#5', 1], ['A4', 1], ['E5', 1]], [['D5', 3]],
+        [['D5', 1], ['F5', 1], ['A5', 1]], [['Bb5', 2], ['A5', 1]], [['G5', 1], ['Bb5', 1], ['D6', 1]], [['C#6', 3]],
+        [['D6', 1], ['A5', 1], ['F5', 1]], [['G5', 1], ['E5', 1], ['C#5', 1]], [['D5', 1], ['E5', 1], ['C#5', 1]], [['D5', 3]],
+      ];
+      const chords = { Dm: ['D3', ['F4', 'A4'], ['D3', 'F3', 'A3']], A: ['A2', ['C#4', 'E4'], ['A2', 'C#3', 'E3']], Gm: ['G2', ['Bb3', 'D4'], ['G2', 'Bb2', 'D3']] };
+      const bars = ['Dm', 'Dm', 'A', 'A', 'Dm', 'Gm', 'A', 'Dm', 'Dm', 'Gm', 'Gm', 'A', 'Dm', 'Gm', 'A', 'Dm'];
+      let t = t0;
+      melody.forEach((bar, i) => {
+        const slow = i === 15 ? 1.25 : 1;
+        const barStart = t; const c = chords[bars[i]];
+        musicBox(bus, hz(c[0]), barStart, 0.75, nodes);
+        c[1].forEach((n) => { musicBox(bus, hz(n), barStart + beat * slow, 0.38, nodes); musicBox(bus, hz(n), barStart + 2 * beat * slow, 0.34, nodes); });
+        if (i % 2 === 0) pad(bus, c[2], barStart, beat * 6 - 0.4, nodes);
+        bar.forEach(([n, b]) => { musicBox(bus, hz(n), t + (Math.random() - 0.5) * 0.02, 1, nodes); t += b * beat * slow; });
+        if (i === 3 || i === 11) wail(bus, barStart + 0.2, [['A4', 0], ['D5', 0.9], ['C#5', 1.7], ['A4', 2.6]], nodes);
+        if (i === 7 || i === 15) wail(bus, barStart + 0.2, [['F4', 0], ['A4', 1.0], ['G#4', 1.8], ['D4', 2.8]], nodes);
+      });
+      return t - t0 + 1.6;
+    } },
+  };
+
+  function play(name) {
+    init();
+    if (ctx.state === 'suspended') ctx.resume();
+    stop();
+    const piece = pieces[name];
+    const bus = makeBus(piece.dry, piece.wet);
+    const t0 = ctx.currentTime + 0.1;
+    bus.gain.setValueAtTime(0, t0 - 0.05); bus.gain.linearRampToValueAtTime(1, t0 + 0.25);
+    const state = { name, bus, nodes: [], timer: null, playing: true };
+    const loop = (start) => {
+      const len = piece.render(bus, start, state.nodes);
+      state.timer = setTimeout(() => {
+        if (!state.playing) return;
+        const now = ctx.currentTime;
+        state.nodes = state.nodes.filter(([, end]) => end > now);
+        loop(start + len);
+      }, Math.max(0, (start + len - ctx.currentTime - 1.5) * 1000));
+    };
+    loop(t0);
+    active = state;
+  }
+  function stop() {
+    if (!active) return;
+    const s = active; active = null; s.playing = false; clearTimeout(s.timer);
+    const now = ctx.currentTime;
+    s.bus.gain.cancelScheduledValues(now); s.bus.gain.setValueAtTime(s.bus.gain.value, now); s.bus.gain.linearRampToValueAtTime(0, now + 0.5);
+    setTimeout(() => { s.nodes.forEach(([n]) => { try { n.stop(); } catch (e) { /* already stopped */ } }); try { s.bus.disconnect(); } catch (e) { /* gone */ } }, 700);
+  }
+  function setVolume(v) { init(); volume.gain.setTargetAtTime(v, ctx.currentTime, 0.05); }
+  return { play, stop, setVolume, playing: () => (active ? active.name : null) };
+})();
+</script>
+<script>// Halloween "Play spooky music" button (haunted organ). Only does anything while the Halloween theme is on.
+(() => {
+  const btn = document.getElementById('hw-music');
+  if (!btn || !document.documentElement.classList.contains('halloween') || !window.SpookyMusic) return;
+  const label = btn.querySelector('.hw-music-label');
+  const sync = () => {
+    const on = SpookyMusic.playing() === 'bach';
+    btn.setAttribute('aria-pressed', String(on));
+    btn.classList.toggle('on', on);
+    label.textContent = on ? 'Stop music' : 'Play spooky music';
+  };
+  btn.addEventListener('click', () => {
+    if (SpookyMusic.playing()) SpookyMusic.stop(); else SpookyMusic.play('bach');
+    sync();
+  });
+  // stop when the page goes into the background (switching apps or tabs)
+  document.addEventListener('visibilitychange', () => { if (document.hidden && SpookyMusic.playing()) { SpookyMusic.stop(); sync(); } });
+  sync();
 })();
 </script>
 <script>
