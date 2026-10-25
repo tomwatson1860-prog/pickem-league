@@ -1629,13 +1629,15 @@ window.SpookyMusic = (() => {
     bus.gain.setValueAtTime(0, t0 - 0.05); bus.gain.linearRampToValueAtTime(1, t0 + 0.25);
     const state = { name, bus, nodes: [], timer: null, playing: true };
     const loop = (start) => {
-      const len = piece.render(bus, start, state.nodes);
-      state.timer = setTimeout(() => {
+      const next = start + piece.render(bus, start, state.nodes);
+      const wait = () => {
         if (!state.playing) return;
+        if (ctx.state !== 'running' || ctx.currentTime < next - 1.6) { state.timer = setTimeout(wait, 500); return; }
         const now = ctx.currentTime;
         state.nodes = state.nodes.filter(([, end]) => end > now);
-        loop(start + len);
-      }, Math.max(0, (start + len - ctx.currentTime - 1.5) * 1000));
+        loop(next);
+      };
+      state.timer = setTimeout(wait, 500);
     };
     loop(t0);
     active = state;
@@ -1648,26 +1650,50 @@ window.SpookyMusic = (() => {
     setTimeout(() => { s.nodes.forEach(([n]) => { try { n.stop(); } catch (e) { /* already stopped */ } }); try { s.bus.disconnect(); } catch (e) { /* gone */ } }, 700);
   }
   function setVolume(v) { init(); volume.gain.setTargetAtTime(v, ctx.currentTime, 0.05); }
-  return { play, stop, setVolume, playing: () => (active ? active.name : null) };
+  function resume() { init(); return ctx.state === 'running' ? Promise.resolve() : ctx.resume(); }
+  function suspend() { if (ctx && ctx.state === 'running') return ctx.suspend(); return Promise.resolve(); }
+  const audible = () => !!active && !!ctx && ctx.state === 'running';
+  return { play, stop, setVolume, resume, suspend, audible, playing: () => (active ? active.name : null) };
 })();
 </script>
-<script>// Halloween "Play spooky music" button (haunted organ). Only does anything while the Halloween theme is on.
+<script>// Halloween music (haunted organ). Starts on its own where the browser allows it, otherwise on the
+// visitor's first tap, click or key press anywhere. The corner button stops it, and the site
+// remembers that choice on that device. Only runs while the Halloween theme is on.
 (() => {
   const btn = document.getElementById('hw-music');
   if (!btn || !document.documentElement.classList.contains('halloween') || !window.SpookyMusic) return;
   const label = btn.querySelector('.hw-music-label');
+  const KEY = 'pk-halloween-music-off';
+  const isOff = () => { try { return localStorage.getItem(KEY) === '1'; } catch (e) { return false; } };
+  const setOff = (off) => { try { if (off) localStorage.setItem(KEY, '1'); else localStorage.removeItem(KEY); } catch (e) { /* storage blocked */ } };
   const sync = () => {
-    const on = SpookyMusic.playing() === 'bach';
+    const on = SpookyMusic.audible();
     btn.setAttribute('aria-pressed', String(on));
     btn.classList.toggle('on', on);
     label.textContent = on ? 'Stop music' : 'Play spooky music';
   };
+  const start = () => {
+    if (SpookyMusic.playing() !== 'bach') SpookyMusic.play('bach');
+    return SpookyMusic.resume().then(sync, sync);
+  };
+  const GESTURES = ['pointerdown', 'touchend', 'click', 'keydown'];
+  const onFirstGesture = (e) => {
+    if (btn.contains(e.target) || isOff()) return;
+    start().then(() => { if (SpookyMusic.audible()) GESTURES.forEach((t) => document.removeEventListener(t, onFirstGesture, true)); });
+  };
   btn.addEventListener('click', () => {
-    if (SpookyMusic.playing()) SpookyMusic.stop(); else SpookyMusic.play('bach');
-    sync();
+    if (SpookyMusic.audible()) { SpookyMusic.stop(); setOff(true); sync(); }
+    else { setOff(false); start(); }
   });
-  // stop when the page goes into the background (switching apps or tabs)
-  document.addEventListener('visibilitychange', () => { if (document.hidden && SpookyMusic.playing()) { SpookyMusic.stop(); sync(); } });
+  if (!isOff()) {
+    start();
+    GESTURES.forEach((t) => document.addEventListener(t, onFirstGesture, true));
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (!SpookyMusic.playing()) return;
+    if (document.hidden) SpookyMusic.suspend().then(sync, sync);
+    else if (!isOff()) SpookyMusic.resume().then(sync, sync);
+  });
   sync();
 })();
 </script>
