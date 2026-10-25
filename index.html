@@ -1122,7 +1122,7 @@ window.dash = (() => {
   // standing, tile and table is recalculated from them.
   const LIVE_FROM = 7;
   const BASE = window.__PK_DATA;
-  let lastLoad = 0, loadingSeason = false;
+  let lastLoad = 0, loadingSeason = false, fails = 0, retry = 0;
   const key = (w, g) => +w + '-' + +g;
   function mergeSeason(s) {
     const sheet = new Map(s.games.map((g) => [key(g.week, g.game), g]));
@@ -1152,9 +1152,14 @@ window.dash = (() => {
   function loadSeason() {
     if (loadingSeason || !window.dash || !window.dash.update) return;
     loadingSeason = true;
+    clearTimeout(retry);
     getJSON('action=season')
-      .then((s) => { if (s && s.ok && Array.isArray(s.games)) { lastLoad = Date.now(); window.dash.update(mergeSeason(s)); } })
-      .catch(() => {})
+      .then((s) => {
+        if (!s || !s.ok || !Array.isArray(s.games)) throw new Error((s && s.error) || 'bad reply');
+        lastLoad = Date.now(); fails = 0;
+        window.dash.update(mergeSeason(s));
+      })
+      .catch(() => { fails++; retry = setTimeout(loadSeason, Math.min(60000, 4000 * 2 ** (fails - 1))); })  // try again soon: 4s, 8s, 16s... up to a minute
       .finally(() => { loadingSeason = false; });
   }
   window.pkLoadSeason = loadSeason;
