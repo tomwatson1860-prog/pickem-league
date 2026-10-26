@@ -1838,15 +1838,138 @@ window.SpookyMusic = (() => {
       o.connect(g); o.start(t); o.stop(t + dur + 2); keep(nodes, o, t + dur + 2);
     }));
   }
-  function wail(bus, t, path, nodes) {
-    const o = ctx.createOscillator(); o.type = 'sine';
+  function wail(bus, t, path, nodes, opt) {
+    opt = opt || {};
+    const o = ctx.createOscillator(); o.type = opt.type || 'sine';
     o.frequency.setValueAtTime(hz(path[0][0]), t);
     path.slice(1).forEach(([n, at]) => o.frequency.exponentialRampToValueAtTime(hz(n), t + at));
-    const end = path[path.length - 1][1];
-    const vib = ctx.createOscillator(); vib.frequency.value = 5.3; const vg = ctx.createGain(); vg.gain.value = 9; vib.connect(vg); vg.connect(o.frequency);
-    const g = ctx.createGain(); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(0.05, t + 0.6); g.gain.setValueAtTime(0.05, t + end - 0.7); g.gain.linearRampToValueAtTime(0, t + end);
-    o.connect(g); g.connect(bus);
+    const end = path[path.length - 1][1], lvl = opt.level || 0.05;
+    const vib = ctx.createOscillator(); vib.frequency.value = opt.vib || 5.3; const vg = ctx.createGain(); vg.gain.value = opt.depth == null ? 9 : opt.depth; vib.connect(vg); vg.connect(o.frequency);
+    const g = ctx.createGain(); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(lvl, t + 0.6); g.gain.setValueAtTime(lvl, t + end - 0.7); g.gain.linearRampToValueAtTime(0, t + end);
+    o.connect(g);
+    if (opt.lp) { const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = opt.lp; g.connect(lp); lp.connect(bus); } else g.connect(bus);
     o.start(t); vib.start(t); o.stop(t + end + 0.1); vib.stop(t + end + 0.1); keep(nodes, o, t + end + 0.1); keep(nodes, vib, t + end + 0.1);
+  }
+
+  // ---------- slasher-movie voices ----------
+  let noise = null;
+  function noiseBuf() {
+    if (noise) return noise;
+    const n = ctx.sampleRate * 2; noise = ctx.createBuffer(1, n, ctx.sampleRate);
+    const d = noise.getChannelData(0); for (let i = 0; i < n; i++) d[i] = Math.random() * 2 - 1;
+    return noise;
+  }
+  // percussive piano: one oscillator per note with the overtones built into its waveform (light enough
+  // for phones), and a bright strike that darkens as the note rings
+  const waves = {};
+  function pianoWave(parts) {
+    if (!waves[parts]) {
+      const re = new Float32Array(parts + 1), im = new Float32Array(parts + 1);
+      for (let m = 1; m <= parts; m++) im[m] = 1 / Math.pow(m, 1.35);
+      waves[parts] = ctx.createPeriodicWave(re, im, { disableNormalization: true });
+    }
+    return waves[parts];
+  }
+  function piano(bus, f, t, vel, nodes, len) {
+    len = len || (f > 300 ? 1.3 : 2.8);
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.11 * vel, t + 0.004);
+    g.gain.exponentialRampToValueAtTime(0.036 * vel, t + Math.min(0.35, len * 0.3)); g.gain.exponentialRampToValueAtTime(0.0002, t + len);
+    const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 0.2;
+    lp.frequency.setValueAtTime(Math.min(15000, f * 10), t); lp.frequency.exponentialRampToValueAtTime(Math.min(15000, Math.max(520, f * 3)), t + 0.6);
+    const o = ctx.createOscillator(); o.setPeriodicWave(pianoWave(f < 200 ? 10 : 6)); o.frequency.value = f; o.detune.value = (Math.random() - 0.5) * 5;
+    o.connect(g); g.connect(lp); lp.connect(bus);
+    o.start(t); o.stop(t + len + 0.05); keep(nodes, o, t + len + 0.05);
+  }
+  // analog-style synth drone: detuned sawtooths through a resonant low-pass that slowly opens
+  function drone(bus, notes, t, dur, nodes, o) {
+    o = o || {};
+    const pk = o.level || 0.03, att = Math.min(dur, o.attack == null ? 1.5 : o.attack), rel = o.release == null ? 1.2 : o.release, end = t + dur + rel + 0.05;
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(pk, t + att); g.gain.setValueAtTime(pk, t + dur); g.gain.linearRampToValueAtTime(0, t + dur + rel);
+    const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = o.q || 4;
+    lp.frequency.setValueAtTime(o.from || 180, t); lp.frequency.exponentialRampToValueAtTime(o.to || 700, t + dur + rel);
+    g.connect(lp); lp.connect(bus);
+    notes.forEach((n) => [-9, 0, 9].forEach((c) => {
+      const s = ctx.createOscillator(); s.type = 'sawtooth'; s.frequency.value = hz(n); s.detune.value = c;
+      s.connect(g); s.start(t); s.stop(end); keep(nodes, s, end);
+    }));
+  }
+  // heartbeat / timpani thump
+  function thump(bus, t, vel, nodes) {
+    const o = ctx.createOscillator(); o.frequency.setValueAtTime(110, t); o.frequency.exponentialRampToValueAtTime(40, t + 0.18);
+    const g = ctx.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.5 * vel, t + 0.006); g.gain.exponentialRampToValueAtTime(0.0003, t + 0.34);
+    o.connect(g); g.connect(bus); o.start(t); o.stop(t + 0.36); keep(nodes, o, t + 0.36);
+  }
+  // the jump scare: a sudden dissonant brassy cluster with a noise hit, dying away
+  function stinger(bus, notes, t, nodes) {
+    const g = ctx.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.06, t + 0.012); g.gain.exponentialRampToValueAtTime(0.02, t + 0.6); g.gain.exponentialRampToValueAtTime(0.0002, t + 3);
+    const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 1; lp.frequency.setValueAtTime(5200, t); lp.frequency.exponentialRampToValueAtTime(650, t + 2.6);
+    g.connect(lp); lp.connect(bus);
+    notes.forEach((n) => [-14, 12].forEach((c) => {
+      const s = ctx.createOscillator(); s.type = 'sawtooth'; s.frequency.value = hz(n); s.detune.value = c;
+      s.connect(g); s.start(t); s.stop(t + 3.05); keep(nodes, s, t + 3.05);
+    }));
+    const nz = ctx.createBufferSource(); nz.buffer = noiseBuf();
+    const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1300; bp.Q.value = 0.5;
+    const ng = ctx.createGain(); ng.gain.setValueAtTime(0.0001, t); ng.gain.exponentialRampToValueAtTime(0.32, t + 0.004); ng.gain.exponentialRampToValueAtTime(0.0003, t + 0.9);
+    nz.connect(bp); bp.connect(ng); ng.connect(bus); nz.start(t, Math.random()); nz.stop(t + 0.95); keep(nodes, nz, t + 0.95);
+  }
+  // string section: three detuned sawtooths per note with vibrato; options for tremolo, swells and slides
+  function strings(bus, notes, t, dur, nodes, o) {
+    o = o || {};
+    const pk = o.level || 0.025, att = Math.min(dur, o.attack == null ? 0.3 : o.attack), rel = o.release == null ? 0.5 : o.release, end = t + dur + rel + 0.05;
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(pk, t + att);
+    if (o.swell) g.gain.linearRampToValueAtTime(pk * o.swell, t + dur); else g.gain.setValueAtTime(pk, t + dur);
+    g.gain.linearRampToValueAtTime(0, t + dur + rel);
+    const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = o.bright || 2600; lp.Q.value = 0.6;
+    if (o.trem) {
+      const tg = ctx.createGain(); tg.gain.value = 0.55;
+      const lfo = ctx.createOscillator(); lfo.type = 'triangle'; lfo.frequency.value = o.trem;
+      const lg = ctx.createGain(); lg.gain.value = 0.45; lfo.connect(lg); lg.connect(tg.gain);
+      lfo.start(t); lfo.stop(end); keep(nodes, lfo, end);
+      g.connect(tg); tg.connect(lp);
+    } else g.connect(lp);
+    lp.connect(bus);
+    let vg = null;
+    if (o.vib !== 0) {
+      const vib = ctx.createOscillator(); vib.frequency.value = 5 + Math.random(); vg = ctx.createGain(); vg.gain.value = o.vib || 9; vib.connect(vg);
+      vib.start(t); vib.stop(end); keep(nodes, vib, end);
+    }
+    notes.forEach((n) => [-10, -3, 6].forEach((c) => {
+      const s = ctx.createOscillator(); s.type = 'sawtooth'; s.detune.value = c + (Math.random() - 0.5) * 4;
+      s.frequency.setValueAtTime(hz(n), t);
+      if (o.slide) s.frequency.exponentialRampToValueAtTime(hz(n) * Math.pow(2, o.slide / 12), t + dur);
+      if (vg) vg.connect(s.detune);
+      s.connect(g); s.start(t); s.stop(end); keep(nodes, s, end);
+    }));
+  }
+  // glassy high tones that fade in and hover
+  function glass(bus, notes, t, dur, nodes, level) {
+    const pk = level || 0.016, att = Math.min(1.6, dur / 2), end = t + dur + 1.3;
+    const g = ctx.createGain(); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(pk, t + att); g.gain.setValueAtTime(pk, t + dur); g.gain.linearRampToValueAtTime(0, t + dur + 1.2);
+    g.connect(bus);
+    const vib = ctx.createOscillator(); vib.frequency.value = 4.2; const vg = ctx.createGain(); vg.gain.value = 7; vib.connect(vg);
+    vib.start(t); vib.stop(end); keep(nodes, vib, end);
+    notes.forEach((n) => [[1, 1], [2, 0.12]].forEach(([m, a]) => {
+      const s = ctx.createOscillator(); s.frequency.value = hz(n) * m; vg.connect(s.detune);
+      const sg = ctx.createGain(); sg.gain.value = a; s.connect(sg); sg.connect(g); s.start(t); s.stop(end); keep(nodes, s, end);
+    }));
+  }
+  // a short breathy exhale (filtered noise, no words) followed by fading echoes
+  function breath(bus, t, nodes, o) {
+    o = o || {};
+    const echoes = o.echoes == null ? 4 : o.echoes, gap = o.gap || 0.3, lvl = o.level || 0.5, len = o.len || 0.3, tone = o.tone || 2300;
+    for (let k = 0; k <= echoes; k++) {
+      const at = t + k * gap, amp = lvl * Math.pow(0.52, k), f = tone * Math.pow(0.88, k);
+      const src = ctx.createBufferSource(); src.buffer = noiseBuf();
+      const hp = ctx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 450;
+      const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = 1.3; bp.frequency.setValueAtTime(f, at); bp.frequency.exponentialRampToValueAtTime(f * 0.68, at + len);
+      const g = ctx.createGain(); g.gain.setValueAtTime(0.0001, at); g.gain.exponentialRampToValueAtTime(amp, at + 0.035); g.gain.exponentialRampToValueAtTime(amp * 0.45, at + len * 0.55); g.gain.exponentialRampToValueAtTime(0.0002, at + len);
+      src.connect(hp); hp.connect(bp); bp.connect(g); g.connect(bus);
+      src.start(at, Math.random() * 1.4); src.stop(at + len + 0.02); keep(nodes, src, at + len + 0.02);
+    }
   }
 
   // ---------- pieces ----------
@@ -1892,37 +2015,145 @@ window.SpookyMusic = (() => {
       });
       return t - t0 + 1.6;
     } },
+    // Original 70s-slasher-style theme written for the league: a restless piano figure in 7/8
+    // (counted 1-2-3, 1-2, 1-2) over low piano octaves, synth drones and a heartbeat.
+    stalker: { dry: 0.8, wet: 0.38, render(bus, t0, nodes) {
+      const e = 0.145, bar = 7 * e, near = bus.close || bus;
+      const CELL = { a: ['E5', 'B5', 'G5', 'E5', 'B5', 'F5', 'B5'], b: ['D#5', 'B5', 'F#5', 'D#5', 'B5', 'E5', 'B5'] };
+      const ACC = [1, 0.6, 0.68, 0.86, 0.6, 0.8, 0.6];
+      const LOW = { E: ['E2', 'E3'], F: ['F2', 'F3'], C: ['C2', 'C3'], A: ['A1', 'A2'], B: ['B1', 'B2'] };
+      const roots = 'EEEEEEEE EECCAABB EECCAABB EFEFEFBE'.replace(/ /g, '').split('');
+      const P = (n, t, v, len) => piano(bus, hz(n), t, v, nodes, len);
+      roots.forEach((r, i) => {
+        const bt = t0 + i * bar, cell = r === 'B' ? CELL.b : CELL.a, last = i === roots.length - 1;
+        const loud = i < 24 ? 0.82 + i * 0.006 : 1;
+        cell.forEach((n, k) => {
+          if (last && k > 2) return;
+          P(n, bt + k * e, ACC[k] * loud);
+          if (i >= 20) P(down(n), bt + k * e, ACC[k] * 0.42);
+        });
+        // low piano octaves
+        const hits = i < 4 ? [] : i < 8 ? [0] : i < 24 ? [0, 3] : [0, 3, 5];
+        if (!last) hits.forEach((k, j) => LOW[r].forEach((n) => P(n, bt + k * e, (j ? 0.62 : 0.95) * (i >= 24 ? 1.1 : 1))));
+        // heartbeat
+        if (i >= 8 && !last) {
+          thump(near, bt, 0.8, nodes); thump(near, bt + 0.2, 0.5, nodes);
+          if (i >= 24) { thump(near, bt + 4 * e, 0.7, nodes); thump(near, bt + 4 * e + 0.2, 0.45, nodes); }
+        }
+        // synth drone follows the bass, one chord per two bars
+        if (i >= 2 && i < 24 && i % 2 === 0) drone(bus, [LOW[r][0], LOW[r][1]], bt, 2 * bar - 0.1, nodes, { level: i < 8 ? 0.012 : 0.02, attack: 0.8, release: 0.6, from: 160, to: i < 8 ? 420 : 800 });
+      });
+      // high synth line that hangs over the middle section, dropping a half step for the B chord
+      wail(bus, t0 + 16 * bar, [['E6', 0], ['E6', 6 * bar - 0.15], ['D#6', 6 * bar], ['D#6', 8 * bar]], nodes, { type: 'triangle', level: 0.02, vib: 4.6, depth: 7, lp: 2600 });
+      // dread builds: a dissonant drone cluster under the last section
+      drone(bus, ['E2', 'F2', 'B2'], t0 + 24 * bar, 7 * bar, nodes, { level: 0.03, attack: 6 * bar, release: 0.2, from: 150, to: 1800, q: 6 });
+      // the scare
+      const hit = t0 + 31 * bar + 3 * e;
+      stinger(bus, ['E3', 'F3', 'Bb3', 'B3', 'F4'], hit, nodes);
+      ['E1', 'F1', 'B1', 'E2'].forEach((n) => P(n, hit, 1.2, 3.6));
+      thump(near, hit, 1.2, nodes);
+      return 32 * bar + 2.0;
+    } },
+    // Original 80s-camp-slasher-style cue written for the league: pulsing low strings, shrieking
+    // stabs and breathy echoes out in the dark woods.
+    lake: { dry: 0.75, wet: 0.55, gain: 1.6, render(bus, t0, nodes) {
+      const e = 0.27, bar = 8 * e, near = bus.close || bus;
+      const at = (b, k) => t0 + b * bar + k * e;
+      const stab = (notes, t, v) => strings(bus, notes, t, 0.1, nodes, { attack: 0.005, release: 0.15, level: 0.03 * v, bright: 4800, vib: 0 });
+      const pulse = (n, t, v) => strings(bus, [n, down(n)], t, 0.12, nodes, { attack: 0.006, release: 0.12, level: 0.04 * v, bright: 1500, vib: 0 });
+      const ACC = [1, 0.5, 0.55, 0.95, 0.5, 0.55, 0.9, 0.55]; // 3+3+2 drive
+      // 1. the woods at night
+      strings(bus, ['D2', 'A2'], at(0, 0), 2 * bar - 0.2, nodes, { trem: 8, attack: 1.8, level: 0.03, bright: 900, release: 1 });
+      glass(bus, ['D6'], at(0, 2), 2 * bar, nodes, 0.012);
+      glass(bus, ['G#6'], at(1, 0), 1.6 * bar, nodes, 0.009);
+      breath(bus, at(0, 4), nodes, { echoes: 4, gap: e });
+      breath(bus, at(1, 3), nodes, { echoes: 5, gap: e, tone: 2000 });
+      // 2. something is moving: low string pulse with a creeping neighbor note
+      strings(bus, ['D3', 'A3', 'Eb4'], at(2, 0), 6 * bar, nodes, { level: 0.009, attack: 2.5, bright: 1100, release: 1 });
+      for (let b = 2; b < 8; b++) {
+        for (let k = 0; k < 8; k++) pulse(k === 6 ? (b % 2 ? 'C#3' : 'Eb3') : 'D3', at(b, k), ACC[k]);
+        if (b === 3 || b === 7) [5, 6, 7].forEach((k, j) => stab(['D5', 'G#5', 'A5'], at(b, k), 0.75 + j * 0.15));
+      }
+      breath(bus, at(5, 1), nodes, { echoes: 4, gap: e, level: 0.42 });
+      // 3. it's getting closer: the pulse climbs a half step every two bars
+      const climb = [['D3', 'Eb3', ['D5', 'G#5', 'A5']], ['Eb3', 'E3', ['Eb5', 'A5', 'Bb5']], ['E3', 'F3', ['E5', 'A#5', 'B5']]];
+      strings(bus, ['A4', 'Bb4'], at(8, 0), 6 * bar, nodes, { trem: 11, attack: 0.6, level: 0.007, swell: 3.2, bright: 3200, release: 0.3 });
+      for (let b = 8; b < 14; b++) {
+        const [root, nb, cl] = climb[Math.floor((b - 8) / 2)], grow = 1 + (b - 8) * 0.06;
+        for (let k = 0; k < 8; k++) pulse(k === 6 ? nb : root, at(b, k), ACC[k] * grow);
+        stab(cl, at(b, 6), 0.8 * grow); stab(cl, at(b, 7), 0.95 * grow);
+        thump(near, at(b, 0), 0.55 + (b - 8) * 0.06, nodes);
+      }
+      breath(bus, at(10, 2), nodes, { echoes: 3, gap: e, level: 0.4 });
+      breath(bus, at(12, 2), nodes, { echoes: 3, gap: e, level: 0.4, tone: 2600 });
+      // 4. run: everything rises at once
+      for (let k = 0; k < 8; k++) { pulse('F3', at(14, k), 1.15); if (k % 2 === 0) thump(near, at(14, k), 0.75, nodes); }
+      strings(bus, ['E4', 'F4', 'A#4', 'B4'], at(14, 0), bar, nodes, { attack: 0.3, level: 0.016, swell: 2.6, slide: 12, bright: 4000, release: 0.05, vib: 14 });
+      // 5. the scare, then silence and one last breath
+      stinger(bus, ['D3', 'Eb3', 'G#3', 'A3', 'D4'], at(15, 0), nodes);
+      thump(near, at(15, 0), 0.9, nodes);
+      breath(bus, at(15, 5), nodes, { echoes: 5, gap: e, level: 0.3, tone: 1900 });
+      return 16 * bar + 0.8;
+    } },
   };
 
+  // play(name) loops one song; play([names]) shuffles them: each song plays through once, then a
+  // different one starts, and every song is heard before any comes around again.
   function play(name) {
     init();
     if (ctx.state === 'suspended') ctx.resume();
     stop();
-    const piece = pieces[name];
-    const bus = makeBus(piece.dry, piece.wet);
-    const t0 = ctx.currentTime + 0.1;
-    bus.gain.setValueAtTime(0, t0 - 0.05); bus.gain.linearRampToValueAtTime(1, t0 + 0.25);
-    const state = { name, bus, nodes: [], timer: null, playing: true };
-    const loop = (start) => {
-      const next = start + piece.render(bus, start, state.nodes);
+    const list = [].concat(name).filter((n) => pieces[n]);
+    if (!list.length) return;
+    const state = { name: Array.isArray(name) ? 'mix' : name, song: null, buses: [], nodes: [], timer: null, playing: true };
+    let bag = [], cur = null;
+    const pick = () => {
+      if (list.length === 1) return list[0];
+      if (!bag.length) {
+        bag = list.slice();
+        for (let i = bag.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [bag[i], bag[j]] = [bag[j], bag[i]]; }
+        if (bag[bag.length - 1] === state.song) bag.unshift(bag.pop());
+      }
+      return bag.pop();
+    };
+    const loop = (start, first) => {
+      const nm = pick(), piece = pieces[nm];
+      if (!cur || cur.name !== nm) {
+        const bus = makeBus(piece.dry, piece.wet);
+        bus.close = makeBus(0.95, 0.06); // nearly dry, for heartbeats and drums
+        const g = piece.gain || 1;
+        [bus, bus.close].forEach((b) => {
+          if (first) { b.gain.setValueAtTime(0, start - 0.05); b.gain.linearRampToValueAtTime(g, start + 0.25); } else b.gain.setValueAtTime(g, start);
+        });
+        cur = { name: nm, bus }; state.buses.push(cur);
+      }
+      state.song = nm;
+      const next = start + piece.render(cur.bus, start, state.nodes);
+      cur.until = next + 5;
       const wait = () => {
         if (!state.playing) return;
         if (ctx.state !== 'running' || ctx.currentTime < next - 1.6) { state.timer = setTimeout(wait, 500); return; }
         const now = ctx.currentTime;
         state.nodes = state.nodes.filter(([, end]) => end > now);
-        loop(next);
+        state.buses = state.buses.filter((b) => {
+          if (b === cur || b.until > now) return true;
+          [b.bus, b.bus.close].forEach((x) => { try { x.disconnect(); } catch (e) { /* gone */ } });
+          return false;
+        });
+        loop(next, false);
       };
       state.timer = setTimeout(wait, 500);
     };
-    loop(t0);
+    loop(ctx.currentTime + 0.1, true);
     active = state;
   }
   function stop() {
     if (!active) return;
     const s = active; active = null; s.playing = false; clearTimeout(s.timer);
-    const now = ctx.currentTime;
-    s.bus.gain.cancelScheduledValues(now); s.bus.gain.setValueAtTime(s.bus.gain.value, now); s.bus.gain.linearRampToValueAtTime(0, now + 0.5);
-    setTimeout(() => { s.nodes.forEach(([n]) => { try { n.stop(); } catch (e) { /* already stopped */ } }); try { s.bus.disconnect(); } catch (e) { /* gone */ } }, 700);
+    const now = ctx.currentTime, buses = [];
+    s.buses.forEach((b) => buses.push(b.bus, b.bus.close));
+    buses.forEach((b) => { b.gain.cancelScheduledValues(now); b.gain.setValueAtTime(b.gain.value, now); b.gain.linearRampToValueAtTime(0, now + 0.5); });
+    setTimeout(() => { s.nodes.forEach(([n]) => { try { n.stop(); } catch (e) { /* already stopped */ } }); buses.forEach((b) => { try { b.disconnect(); } catch (e) { /* gone */ } }); }, 700);
   }
   function setVolume(v) { init(); volume.gain.setTargetAtTime(v, ctx.currentTime, 0.05); }
   function resume() { init(); return ctx.state === 'running' ? Promise.resolve() : ctx.resume(); }
@@ -1945,10 +2176,11 @@ window.SpookyMusic = (() => {
     src.start(t); src.stop(t + len);
     src.onended = () => { try { g.disconnect(); w.disconnect(); } catch (e) { /* gone */ } };
   }
-  return { play, stop, setVolume, resume, suspend, audible, thunder, playing: () => (active ? active.name : null) };
+  return { play, stop, setVolume, resume, suspend, audible, thunder, playing: () => (active ? active.name : null), song: () => (active ? active.song : null) };
 })();
 </script>
-<script>// Halloween music (haunted organ). Starts on its own where the browser allows it, otherwise on the
+<script>// Halloween music: shuffles the haunted organ, "The Stalker" and "Night at the Lake", one song after
+// another in random order. Starts on its own where the browser allows it, otherwise on the
 // visitor's first tap, click or key press anywhere. The corner button stops it, and the site
 // remembers that choice on that device. Only runs while the Halloween theme is on.
 (() => {
@@ -1964,8 +2196,9 @@ window.SpookyMusic = (() => {
     btn.classList.toggle('on', on);
     label.textContent = on ? 'Stop music' : 'Play spooky music';
   };
+  const SONGS = ['bach', 'stalker', 'lake'];
   const start = () => {
-    if (SpookyMusic.playing() !== 'bach') SpookyMusic.play('bach');
+    if (SpookyMusic.playing() !== 'mix') SpookyMusic.play(SONGS);
     return SpookyMusic.resume().then(sync, sync);
   };
   const GESTURES = ['pointerdown', 'touchend', 'click', 'keydown'];
