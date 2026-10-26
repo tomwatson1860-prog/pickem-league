@@ -753,6 +753,50 @@ html.halloween .dkx-say span + span { animation-name: dkx-say2; }
 @keyframes dkx-say { 0%, 22% { opacity: 0; } 25%, 76% { opacity: 1; } 80%, 100% { opacity: 0; } }
 @keyframes dkx-say2 { 0%, 38% { opacity: 0; } 41%, 76% { opacity: 1; } 80%, 100% { opacity: 0; } }
 @media (max-width: 640px) { html.halloween .dkx-rise { height: min(44vh, 360px); } html.halloween .dkx-say { right: 62%; top: 2%; } }
+/* ---------- Ditkatron 9000 in the Thanksgiving theme: the same three pieces, in a Pilgrim buckle hat ---------- */
+html.thanksgiving { --dkx-hand: "Permanent Marker", "IM Fell English", "Comic Sans MS", cursive; }
+html.thanksgiving .dk-take { position: relative; overflow: hidden; }
+html.thanksgiving .dkx-portrait { display: block; position: absolute; right: 0; bottom: 0; height: min(96%, 470px, 40vw); pointer-events: none;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 22%); mask-image: linear-gradient(to right, transparent 0, #000 22%); }
+html.thanksgiving .dkx-portrait img { display: block; height: 100%; width: auto; }
+html.thanksgiving .dk-take > :not(.dkx-portrait) { position: relative; z-index: 1; }
+html.thanksgiving .dk-paras { max-width: min(68ch, 56%); }
+html.thanksgiving .dkx-tag { margin: 0 0 .7rem; max-width: 56%; font-family: var(--dkx-hand); font-weight: 400; font-size: clamp(1.15rem, 1.9vw, 1.55rem); line-height: 1.15;
+  color: var(--tg-accent); transform: rotate(-2deg); transform-origin: left center; }
+html.thanksgiving .dkx-tile { position: relative; }
+html.thanksgiving .dkx-tile-face { display: block; position: absolute; top: 12px; right: 14px; width: 60px; height: 60px; border-radius: 50%; box-shadow: 0 0 0 2px var(--tg-accent), 0 4px 12px rgba(60, 30, 10, .25); }
+html.thanksgiving .dkx-ava { display: inline-block; width: 22px; height: 22px; border-radius: 50%; vertical-align: -6px; margin-right: 7px; box-shadow: 0 0 0 1.5px var(--tg-accent); }
+html.thanksgiving .dkx-ava-m { display: none; }
+@media (max-width: 899px) {
+  html.thanksgiving .dkx-portrait { position: relative; height: auto; width: 100%; max-width: 430px; margin: -4px auto 4px;
+    -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent); mask-image: linear-gradient(to bottom, #000 78%, transparent); }
+  html.thanksgiving .dkx-portrait img { width: 100%; height: auto; }
+  html.thanksgiving .dk-paras { max-width: none; }
+  html.thanksgiving .dkx-tag { max-width: none; margin: .1rem 0 .9rem; font-size: 1.2rem; }
+}
+@media (max-width: 640px) { html.thanksgiving .dkx-tile-face { display: none; } html.thanksgiving .dkx-ava-m { display: inline-block; margin: 0 0 0 7px; width: 20px; height: 20px; vertical-align: -5px; } }
+/* now and then he rises at the bottom corner, tips his hat twice and wishes everyone a happy Thanksgiving */
+html.thanksgiving .dkx-rise { display: block; position: absolute; bottom: 0; right: max(2vw, 8px); height: min(58vh, 500px); aspect-ratio: 430 / 907; transform: translateY(105%);
+  animation: dkx-rise 9.5s cubic-bezier(.45, 0, .3, 1) forwards; }
+html.thanksgiving .dkx-rise .dkx-body { position: relative; width: 100%; height: 100%; }
+html.thanksgiving .dkx-rise img { display: block; position: absolute; inset: 0; width: 100%; height: 100%; }
+html.thanksgiving .dkx-rise .dkx-hat { transform-origin: 66% 19%; animation: dkx-tip 9.5s ease-in-out forwards; }
+html.thanksgiving .dkx-rise .dkx-eye { --s: 16%; }
+html.thanksgiving .dkx-say { position: absolute; right: 74%; top: 18%; margin: 0; display: grid; gap: 4px; justify-items: end; font-family: var(--dkx-hand); font-size: clamp(1rem, 2.1vh, 1.35rem);
+  color: var(--tg-accent); white-space: nowrap; }
+html.thanksgiving .dkx-say span { background: var(--color-panel, #fffaf1); border: 1px solid var(--tg-gold); border-radius: 10px; padding: 2px 11px; box-shadow: 0 4px 14px rgba(60, 30, 10, .18); opacity: 0; animation: dkx-say 9.5s linear forwards; }
+html.thanksgiving .dkx-say span + span { animation-name: dkx-say2; }
+@keyframes dkx-tip { 0%, 23% { transform: none; } 28%, 33% { transform: translate(-2%, -6%) rotate(-13deg); } 39%, 55% { transform: none; } 60%, 64% { transform: translate(-1%, -4%) rotate(-9deg); } 69%, 100% { transform: none; } }
+@media (max-width: 640px) { html.thanksgiving .dkx-rise { height: min(46vh, 380px); } html.thanksgiving .dkx-say { right: 58%; top: 12%; } }
+/* the music button, in harvest colours */
+html.thanksgiving .hw-music { display: inline-flex; align-items: center; gap: .5rem; position: fixed; z-index: 40;
+  right: max(16px, env(safe-area-inset-right, 0px)); bottom: max(16px, env(safe-area-inset-bottom, 0px));
+  font: inherit; font-weight: 600; font-size: .95rem; min-height: 46px; padding: .6rem 1.05rem; border-radius: 999px; border: 0; cursor: pointer;
+  background: var(--tg-accent); color: var(--on-accent); box-shadow: 0 0 0 1px rgba(60, 30, 10, .2), 0 8px 22px rgba(60, 30, 10, .28); }
+html.thanksgiving .hw-music:hover { filter: brightness(1.06); }
+html.thanksgiving .hw-music:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 3px; }
+html.thanksgiving .pk-page { padding-bottom: 96px; }
+@media (max-width: 640px) { html.thanksgiving .hw-music { font-size: .875rem; padding: .55rem .9rem; } }
 </style>
 </head>
 <body>
@@ -2025,6 +2069,170 @@ window.SpookyMusic = (() => {
     }
   }
 
+  // ---------- harvest (Thanksgiving) voices ----------
+  // Each voice is one or two oscillators with the overtones built into a cached waveform, so whole
+  // bands stay light enough for phones.
+  const shapes = {};
+  function shape(key, count, amp) {
+    if (!shapes[key]) {
+      const re = new Float32Array(count + 1), im = new Float32Array(count + 1);
+      for (let m = 1; m <= count; m++) im[m] = amp(m);
+      shapes[key] = ctx.createPeriodicWave(re, im, { disableNormalization: true });
+    }
+    return shapes[key];
+  }
+  const combed = (pos, tilt) => (m) => Math.abs(Math.sin(Math.PI * m * pos)) / Math.pow(m, tilt); // where the string is plucked or struck
+  function vibrato(nodes, targets, t, end, rate, cents, delay) {
+    const l = ctx.createOscillator(); l.frequency.value = rate;
+    const lg = ctx.createGain(); lg.gain.setValueAtTime(0, t); lg.gain.linearRampToValueAtTime(0, t + delay); lg.gain.linearRampToValueAtTime(cents, t + delay + 0.35);
+    l.connect(lg); targets.forEach((o) => lg.connect(o.detune));
+    l.start(t); l.stop(end); keep(nodes, l, end);
+  }
+  function noiseHit(bus, t, nodes, o) {
+    const src = ctx.createBufferSource(); src.buffer = noiseBuf();
+    const f = ctx.createBiquadFilter(); f.type = o.type || 'highpass'; f.frequency.value = o.freq; f.Q.value = o.q || 0.7;
+    const g = ctx.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(o.level, t + (o.attack || 0.002)); g.gain.exponentialRampToValueAtTime(0.0001, t + o.len);
+    src.connect(f); f.connect(g); g.connect(bus);
+    src.start(t, Math.random() * 1.5); src.stop(t + o.len + 0.02); keep(nodes, src, t + o.len + 0.02);
+  }
+  // bowed fiddle: a bright sawtooth shaped by a violin-body resonance, with vibrato that blooms on long notes
+  function fiddle(bus, n, t, dur, vel, nodes, o) {
+    o = o || {};
+    const f = hz(n), pk = (o.level || 0.05) * vel, end = t + dur + 0.12;
+    const g = ctx.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(pk * 1.25, t + 0.03); g.gain.exponentialRampToValueAtTime(pk, t + 0.12);
+    g.gain.setValueAtTime(pk, t + Math.max(0.12, dur - 0.04)); g.gain.exponentialRampToValueAtTime(0.0001, t + dur + 0.1);
+    const body = ctx.createBiquadFilter(); body.type = 'peaking'; body.frequency.value = 2900; body.Q.value = 1.1; body.gain.value = 7;
+    const wood = ctx.createBiquadFilter(); wood.type = 'peaking'; wood.frequency.value = 480; wood.Q.value = 1.4; wood.gain.value = 5;
+    const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 6500;
+    const hp = ctx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 190;
+    const a = ctx.createOscillator(); a.type = 'sawtooth'; a.frequency.value = f;
+    const b = ctx.createOscillator(); b.type = 'sawtooth'; b.frequency.value = f; b.detune.value = 7;
+    const bg = ctx.createGain(); bg.gain.value = 0.35;
+    if (o.slide) { a.detune.setValueAtTime(-110, t); a.detune.linearRampToValueAtTime(0, t + 0.07); b.detune.setValueAtTime(-103, t); b.detune.linearRampToValueAtTime(7, t + 0.07); }
+    a.connect(g); b.connect(bg); bg.connect(g); g.connect(hp); hp.connect(wood); wood.connect(body); body.connect(lp); lp.connect(bus);
+    if (dur > 0.35) vibrato(nodes, [a, b], t, end, 5.7, 14, 0.12);
+    [a, b].forEach((x) => { x.start(t); x.stop(end); keep(nodes, x, end); });
+  }
+  // plucked strings: banjo, guitar, lute and upright bass, depending on brightness and decay
+  function pluck(bus, n, t, vel, nodes, o) {
+    o = o || {};
+    const f = hz(n), len = o.len || 1.1, pk = (o.level || 0.07) * vel;
+    const g = ctx.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(pk, t + 0.003);
+    g.gain.exponentialRampToValueAtTime(pk * 0.32, t + len * 0.22); g.gain.exponentialRampToValueAtTime(0.0002, t + len);
+    const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = o.q || 0.8;
+    lp.frequency.setValueAtTime(Math.min(12000, f * (o.bright || 12)), t); lp.frequency.exponentialRampToValueAtTime(Math.min(12000, Math.max(380, f * 2.4)), t + len * 0.45);
+    const x = ctx.createOscillator(); x.setPeriodicWave(shape('pluck' + (o.pos || 0.18), 16, combed(o.pos || 0.18, 1))); x.frequency.value = f; x.detune.value = (Math.random() - 0.5) * 6;
+    x.connect(g); g.connect(lp); lp.connect(bus); x.start(t); x.stop(t + len + 0.02); keep(nodes, x, t + len + 0.02);
+  }
+  // harpsichord: two plucked strings per key; a damper silences the note when the key is let go
+  function harpsichord(bus, n, t, dur, vel, nodes) {
+    const f = hz(n), pk = 0.05 * vel, ring = Math.min(dur + 0.05, 2.2), end = t + ring + 0.1;
+    const g = ctx.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(pk, t + 0.002);
+    g.gain.exponentialRampToValueAtTime(pk * 0.4, t + 0.14); g.gain.exponentialRampToValueAtTime(pk * 0.06, t + 2.3);
+    const damp = ctx.createGain(); damp.gain.setValueAtTime(1, t + ring); damp.gain.exponentialRampToValueAtTime(0.001, t + ring + 0.07);
+    const hp = ctx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 110;
+    const w = shape('harpsi', 24, combed(0.11, 0.55));
+    [-3, 4].forEach((c) => {
+      const x = ctx.createOscillator(); x.setPeriodicWave(w); x.frequency.value = f; x.detune.value = c;
+      x.connect(g); x.start(t); x.stop(end); keep(nodes, x, end);
+    });
+    g.connect(damp); damp.connect(hp); hp.connect(bus);
+  }
+  // hammered dulcimer: paired strings struck by small hammers, ringing long
+  function dulcimer(bus, n, t, vel, nodes) {
+    const f = hz(n), len = f > 500 ? 1.8 : 2.6, pk = 0.06 * vel;
+    const g = ctx.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(pk, t + 0.003);
+    g.gain.exponentialRampToValueAtTime(pk * 0.35, t + 0.3); g.gain.exponentialRampToValueAtTime(0.0002, t + len);
+    const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.setValueAtTime(Math.min(13000, f * 14), t); lp.frequency.exponentialRampToValueAtTime(Math.min(13000, f * 3.2), t + 0.8);
+    const w = shape('dulc', 14, combed(0.21, 0.9));
+    [-4, 4].forEach((c) => {
+      const x = ctx.createOscillator(); x.setPeriodicWave(w); x.frequency.value = f; x.detune.value = c;
+      x.connect(g); x.start(t); x.stop(t + len + 0.02); keep(nodes, x, t + len + 0.02);
+    });
+    g.connect(lp); lp.connect(bus);
+  }
+  // recorder: a near-pure tone with a breathy chiff at the start
+  function recorder(bus, n, t, dur, vel, nodes, o) {
+    o = o || {};
+    const f = hz(n), pk = (o.level || 0.07) * vel, end = t + dur + 0.1;
+    const g = ctx.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(pk, t + 0.045);
+    g.gain.setValueAtTime(pk, t + Math.max(0.05, dur - 0.03)); g.gain.exponentialRampToValueAtTime(0.0001, t + dur + 0.08);
+    const x = ctx.createOscillator(); x.setPeriodicWave(shape('recorder', 5, (m) => [1, 0.09, 0.07, 0.02, 0.012][m - 1])); x.frequency.value = f;
+    x.connect(g); g.connect(bus); x.start(t); x.stop(end); keep(nodes, x, end);
+    if (dur > 0.45) vibrato(nodes, [x], t, end, 4.8, 9, 0.25);
+    noiseHit(bus, t, nodes, { type: 'bandpass', freq: Math.min(9000, f * 3), q: 2, level: pk * 0.7, attack: 0.008, len: 0.07 });
+  }
+  // brass: sawtooths whose tone opens up as the note speaks, like a horn's "blat"
+  function brass(bus, n, t, dur, vel, nodes, o) {
+    o = o || {};
+    const f = hz(n), pk = (o.level || 0.035) * vel, end = t + dur + 0.14, br = o.bright || 5;
+    const g = ctx.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(pk * 1.2, t + 0.035); g.gain.exponentialRampToValueAtTime(pk, t + 0.16);
+    g.gain.setValueAtTime(pk, t + Math.max(0.16, dur - 0.04)); g.gain.exponentialRampToValueAtTime(0.0001, t + dur + 0.12);
+    const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 1.2;
+    lp.frequency.setValueAtTime(Math.min(9000, f * 1.3), t); lp.frequency.exponentialRampToValueAtTime(Math.min(9000, f * br), t + 0.06); lp.frequency.exponentialRampToValueAtTime(Math.min(9000, f * br * 0.65), t + 0.3);
+    const xs = [-5, 5].map((c) => { const x = ctx.createOscillator(); x.type = 'sawtooth'; x.frequency.value = f; x.detune.value = c; x.connect(g); x.start(t); x.stop(end); keep(nodes, x, end); return x; });
+    if (dur > 0.6) vibrato(nodes, xs, t, end, 5.2, 7, 0.3);
+    g.connect(lp); lp.connect(bus);
+  }
+  // sleigh bells: a few tiny metallic pings and a hiss
+  function jingle(bus, t, vel, nodes) {
+    for (let i = 0; i < 4; i++) {
+      const at = t + Math.random() * 0.035, x = ctx.createOscillator(); x.frequency.value = 4300 + Math.random() * 3600;
+      const g = ctx.createGain(); g.gain.setValueAtTime(0.0001, at); g.gain.exponentialRampToValueAtTime(0.012 * vel, at + 0.002); g.gain.exponentialRampToValueAtTime(0.0001, at + 0.08 + Math.random() * 0.06);
+      x.connect(g); g.connect(bus); x.start(at); x.stop(at + 0.16); keep(nodes, x, at + 0.16);
+    }
+    noiseHit(bus, t, nodes, { freq: 7000, level: 0.05 * vel, len: 0.07 });
+  }
+  function snare(bus, t, vel, nodes) {
+    noiseHit(bus, t, nodes, { type: 'bandpass', freq: 3200, q: 0.6, level: 0.2 * vel, len: 0.16 });
+    const x = ctx.createOscillator(); x.type = 'triangle'; x.frequency.setValueAtTime(220, t); x.frequency.exponentialRampToValueAtTime(160, t + 0.05);
+    const g = ctx.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.14 * vel, t + 0.002); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.08);
+    x.connect(g); g.connect(bus); x.start(t); x.stop(t + 0.1); keep(nodes, x, t + 0.1);
+  }
+  function crash(bus, t, vel, nodes) { noiseHit(bus, t, nodes, { freq: 5200, level: 0.12 * vel, len: 1.8, attack: 0.004 }); }
+  // melodies are written as "note/beats" tokens ("r" is a rest); line() plays one through a voice
+  const L = (s) => s.trim().split(/\s+/).filter((tok) => tok !== '|').map((tok) => { const [n, b] = tok.split('/'); return [n === 'r' ? null : n, +b]; });
+  function line(list, t0, beat, play) { let t = t0; list.forEach(([n, b], i) => { if (n) play(n, t, b * beat, i); t += b * beat; }); return t; }
+  const beats = (list) => list.reduce((s, [, b]) => s + b, 0);
+  // continuo helpers: note names <-> MIDI numbers, and a close chord voicing inside a range
+  const PCN = ['C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'];
+  const midi = (n) => Math.round(69 + 12 * Math.log2(hz(n) / 440));
+  const nameOf = (m) => PCN[m % 12] + (Math.floor(m / 12) - 1);
+  const voice = (pcs, lo, hi) => { const out = []; for (let m = lo; m <= hi; m++) if (pcs.includes(m % 12)) out.push(nameOf(m)); return out; };
+  const pc = (n) => midi(n) % 12;
+  // which note of a line is sounding at a given beat (null for a rest)
+  const at = (list, beat) => { let b = 0; for (const [n, d] of list) { if (beat >= b - 1e-6 && beat < b + d - 1e-6) return n; b += d; } return null; };
+  const up = (n) => n.replace(/(-?\d)$/, (d) => String(+d + 1));
+  // a diatonic third below in a major key (key given as its pitch class), for simple harmony lines
+  function thirdBelow(n, key) {
+    const m = midi(n), scale = [0, 2, 4, 5, 7, 9, 11].map((s) => (s + key) % 12);
+    let k = m - 1, steps = 0;
+    while (steps < 2) { if (scale.includes(k % 12)) steps++; if (steps < 2) k--; }
+    return nameOf(k);
+  }
+  // four-part hymn: plays each of the S, A, T, B lines through its own voice function
+  function satb(parts, t0, beat, voices) {
+    let end = t0;
+    parts.forEach((p, i) => { end = Math.max(end, line(L(p), t0, beat, (n, t, d, k) => voices[i](n, t, d, k))); });
+    return end;
+  }
+
+
+  // ---------- just-in-time note building ----------
+  // While a piece is being written out, each instrument call is queued with its start time; a timer
+  // then builds the notes about 1.5 seconds before they sound, so the audio graph stays small.
+  let pending = null;
+  const lazy = (fn, ti) => function (...a) { if (pending) { pending.push([a[ti], () => fn.apply(null, a)]); return undefined; } return fn.apply(null, a); };
+  organ = lazy(organ, 2); musicBox = lazy(musicBox, 2); pad = lazy(pad, 2); wail = lazy(wail, 1); piano = lazy(piano, 2);
+  drone = lazy(drone, 2); thump = lazy(thump, 1); stinger = lazy(stinger, 2); strings = lazy(strings, 2); glass = lazy(glass, 2);
+  breath = lazy(breath, 1); fiddle = lazy(fiddle, 2); pluck = lazy(pluck, 2); harpsichord = lazy(harpsichord, 2); dulcimer = lazy(dulcimer, 2);
+  recorder = lazy(recorder, 2); brass = lazy(brass, 2); jingle = lazy(jingle, 1); snare = lazy(snare, 1); crash = lazy(crash, 1);
+  function pump(state) {
+    const horizon = ctx.currentTime + 1.5, q = state.queue;
+    let i = 0; while (i < q.length && q[i][0] < horizon) i++;
+    if (i) q.splice(0, i).forEach(([, f]) => { try { f(); } catch (e) { console.error(e); } });
+  }
+
   // ---------- pieces ----------
   const pieces = {
     // Opening of J. S. Bach's Toccata and Fugue in D minor, BWV 565 (public domain), arranged for synth organ.
@@ -2148,6 +2356,273 @@ window.SpookyMusic = (() => {
       breath(bus, at(15, 5), nodes, { echoes: 5, gap: e, level: 0.3, tone: 1900 });
       return 16 * bar + 0.8;
     } },
+    // Original marching-band fight song written for the league's Thanksgiving football (B-flat, 2/4).
+    fightsong: { dry: 0.85, wet: 0.28, gain: 1.5, render(bus, t0, nodes) {
+      const q = 0.5, bar = 2 * q, near = bus.close || bus;
+      const CH = { Bb: ['Bb3', 'D4', 'F4'], Eb: ['Bb3', 'Eb4', 'G4'], F: ['A3', 'C4', 'F4'], F7: ['A3', 'Eb4', 'F4'], Cm: ['G3', 'C4', 'Eb4'], C7: ['Bb3', 'E4', 'G4'] };
+      const BASS = { Bb: ['Bb2', 'F2'], Eb: ['Eb2', 'Bb2'], F: ['F2', 'C3'], F7: ['F2', 'C3'], Cm: ['C3', 'G2'], C7: ['C3', 'G2'] };
+      const A = 'Bb4/.75 Bb4/.25 D5/.5 Bb4/.5 | F5/1.5 D5/.5 | Eb5/.75 D5/.25 C5/.5 Bb4/.5 | C5/1.5 F4/.5 | C5/.75 C5/.25 Eb5/.5 C5/.5 | G5/1.5 Eb5/.5';
+      const tune = [A, 'F5/.5 D5/.5 Eb5/.5 C5/.5 | F5/1.5 F4/.5', A, 'F5/.5 Eb5/.5 D5/.5 C5/.5 | Bb4/1.5 r/.5',
+        'G5/1 G5/1 | F5/1.5 D5/.5 | Eb5/.75 Eb5/.25 Eb5/.5 G5/.5 | F5/2 | D5/.75 D5/.25 D5/.5 F5/.5 | Eb5/1.5 C5/.5 | Bb4/.5 C5/.5 D5/.5 E5/.5 | F5/1 r/.5 F4/.5',
+        A, 'F5/.75 F5/.25 G5/.5 A5/.5 | Bb5/1 r/1'].join(' | ').split('|').map(L);
+      const chords = 'Bb Bb Eb F Cm Cm F7 F  Bb Bb Eb F Cm Cm F7 Bb  Eb Bb Cm F Bb Cm C7 F  Bb Bb Eb F Cm Cm F7 Bb'.split(/\s+/);
+      const start = t0 + 2 * bar;
+      // intro: drum cadence, then a band fanfare on the F chord; the trumpets' pickup leads in
+      for (let k = 0; k < 8; k++) snare(near, t0 + k * q / 4, 0.35 + k * 0.08, nodes);
+      thump(near, t0, 0.8, nodes); thump(near, t0 + q, 0.6, nodes);
+      [[0, 0.25], [0.25, 0.25], [0.5, 0.5]].forEach(([b, d]) => {
+        const at = t0 + bar + b * q * 2;
+        ['F4', 'A4', 'C5', 'F5'].forEach((n) => brass(bus, n, at, d * q * 1.6, 1, nodes, { level: 0.028, bright: 6 }));
+        BASS.F.slice(0, 1).forEach((n) => brass(bus, n, at, d * q * 1.6, 1, nodes, { level: 0.05, bright: 3 }));
+        snare(near, at, 1, nodes); thump(near, at, 0.9, nodes);
+      });
+      brass(bus, 'F4', start - q, q * 0.9, 1, nodes, { level: 0.04, bright: 6 });
+      tune.forEach((notes, i) => {
+        const bt = start + i * bar, ch = chords[i], last = i === tune.length - 1, section = Math.floor(i / 8);
+        line(notes, bt, q, (n, at, d, k) => {
+          const v = k === 0 ? 1 : 0.85;
+          brass(bus, n, at, d * 0.88, v, nodes, { level: 0.04, bright: 6 });
+          if (section === 3) brass(bus, down(n), at, d * 0.88, v, nodes, { level: 0.03, bright: 4 });
+          if (section === 2) musicBox(bus, hz(n) * 2, at, 0.32, nodes);
+        });
+        // oom-pah: tuba on the beats, horns on the offbeats
+        if (!last) {
+          brass(bus, BASS[ch][0], bt, q * 0.75, 1, nodes, { level: 0.05, bright: 3 });
+          brass(bus, BASS[ch][1], bt + q, q * 0.75, 0.85, nodes, { level: 0.05, bright: 3 });
+          [0.5, 1.5].forEach((b) => CH[ch].forEach((n) => brass(bus, n, bt + b * q, q * 0.4, 0.8, nodes, { level: 0.014, bright: 3.5 })));
+        }
+        // drums
+        const fill = i === 15 || i === 23;
+        const pat = fill ? [0.6, 0.5, 0.6, 0.55, 0.7, 0.75, 0.85, 1] : section === 2 ? [0.85, 0.3, 0.45, 0.3, 1, 0.35, 0.6, 0.35] : [0.8, 0, 0.35, 0, 0.95, 0.25, 0.45, 0.25];
+        if (!last) pat.forEach((v, k) => v && snare(near, bt + k * q / 4, v * 0.8, nodes));
+        thump(near, bt, 0.85, nodes); if (!last) thump(near, bt + q, 0.5, nodes);
+        if (i % 8 === 0) crash(near, bt, i ? 0.8 : 1, nodes);
+      });
+      // big finish on B-flat
+      const endBar = start + 31 * bar;
+      ['Bb3', 'D4', 'F4', 'Bb4', 'D5', 'F5'].forEach((n) => brass(bus, n, endBar, q * 0.9, 1, nodes, { level: 0.024, bright: 6 }));
+      brass(bus, 'Bb2', endBar, q * 0.9, 1, nodes, { level: 0.05, bright: 3 });
+      crash(near, endBar, 1, nodes);
+      const tag = start + 32 * bar;
+      for (let k = 0; k < 8; k++) snare(near, tag + k * q / 4, 0.4 + k * 0.08, nodes);
+      ['Bb3', 'D4', 'F4', 'Bb4', 'D5', 'F5', 'Bb5'].forEach((n) => brass(bus, n, tag + bar, 1.6, 1, nodes, { level: 0.024, bright: 6 }));
+      ['Bb1', 'Bb2'].forEach((n) => brass(bus, n, tag + bar, 1.6, 1, nodes, { level: 0.045, bright: 3 }));
+      crash(near, tag + bar, 1.2, nodes); thump(near, tag + bar, 1.1, nodes); snare(near, tag + bar, 1, nodes);
+      return 2 * bar + 34 * bar + 1.4;
+    } },
+    // Vivaldi, "Autumn" from The Four Seasons (1725, public domain), opening of the first movement:
+    // the peasants' harvest dance. String orchestra, solo violin and harpsichord, notes from the
+    // Mutopia Project edition (typeset from the 1725 Amsterdam print). Bars 1-13, 20-23, 27-32.
+    autumn: { dry: 0.8, wet: 0.42, gain: 1.15, render(bus, t0, nodes) {
+      const q = 0.47;
+      const B1 = 'F3/.5 F3/.5 F3/.5 C3/.5 F3/1 F3/.5 C3/.5', B3 = 'F3/.5 F3/.5 Bb2/.5 B2/.5 C3/1 r/1';
+      const B9 = 'F3/.5 F3/.5 F3/.5 C3/.5 F3/.5 F3/.5 F3/.5 C3/.5', B10 = 'F3/.5 F3/.5 F3/.5 C3/.5 F3/.5 F3/.5 Bb2/.5 C3/.5';
+      const ECHO = 'A4/.5 A4/.5 A4/.5 Bb4/.5 A4/1 A4/.5 Bb4/.5', RUN = 'A5/.5 A5/.5 A5/.5 Bb5/.5 A5/.5 A5/.5 A5/.5 Bb5/.5';
+      const SOLO = ['F6/.5 C6/.5 C6/.5 C6/.5 D6/1 C6/.5 C6/.5', 'A5/.5 A5/.5 A5/.5 A5/.5 Bb5/1 A5/.5 A5/.5'];
+      const bars = [
+        { v: 'A5/.5 A5/.5 A5/.5 Bb5/.5 A5/1 A5/.5 Bb5/.5', b: B1, d: 1 },
+        { v: 'A5/.5 A5/.5 A5/.5 A5/.5 Bb5/1 A5/.5 Bb5/.5', b: B1, d: 1 },
+        { v: 'A5/.5 G5/.25 A5/.25 Bb5/.5 A5/.5 G5/1 r/1', b: B3, d: 1 },
+        { v: ECHO, b: B1, d: 0.5 }, { v: ECHO, b: B1, d: 0.5 },
+        { v: 'A4/.5 G4/.25 A4/.25 Bb4/.5 A4/.5 G4/1 r/1', b: B3, d: 0.5 },
+        { v: 'A5/.5 A5/.5 A5/.5 C6/.5 D5/1 D5/.5 D5/.5', b: 'F3/.5 A3/.5 A3/.5 F3/.5 G3/1 G3/.5 G3/.5', d: 1 },
+        { v: 'G5/.5 G5/.5 G5/.5 Bb5/.5 C5/1 C5/.5 F5/.5', b: 'G3/.5 C4/.5 C4/.5 C3/.5 F3/1 F3/.5 F3/.5', d: 1, gToC7: true },
+        { v: RUN, b: B9, d: 1 },
+        { v: 'A5/.5 A5/.5 A5/.5 Bb5/.5 A5/.5 G5/.25 A5/.25 Bb5/.5 G5/.5', b: B10, d: 1 },
+        { v: 'A5/1 r/1 A4/.5 A4/.5 A4/.5 Bb4/.5', b: 'F2/1 r/1 F3/.5 F3/.5 F3/.5 C3/.5', d: [1, 0.5] },
+        { v: 'A4/.5 A4/.5 A4/.5 Bb4/.5 A4/.5 A4/.5 A4/.5 Bb4/.5', b: B9, d: 0.5 },
+        { v: 'A4/.5 G4/.25 A4/.25 Bb4/.5 G4/.5 F4/1 r/1', b: 'F3/.5 F3/.5 Bb2/.5 C3/.5 F2/1 r/1', d: 0.5 },
+        { s: SOLO, b: 'F4/.5 F4/.5 F4/.5 F4/.5 Bb3/1 F3/.5 F4/.5', d: 0.9 },
+        { s: SOLO, b: 'F4/.5 F4/.5 F4/.5 F4/.5 Bb3/1 F3/.5 F4/.5', d: 0.9 },
+        { s: ['D6/1 C6/.5 C6/.5 r/2', 'Bb5/1 A5/.5 A5/.5 F6/.5 E6/.25 D6/.25 C6/.5 Bb5/.5'], b: 'Bb3/1 F3/.5 F4/.5 F4/1 E4/1', d: 0.9 },
+        { s: ['A5/1 G5/1 F5/1 r/1', 'C5/1 Bb4/1 A4/1 r/1'], v: 'r/2 A5/.5 A5/.5 A5/.5 Bb5/.5', b: 'F4/1 C4/1 F3/.5 F3/.5 F3/.5 C3/.5', d: 1 },
+        { v: RUN, b: B9, d: 1 },
+        { v: 'A5/.5 G5/.25 A5/.25 Bb5/.5 G5/.5 A5/1 r/1', b: 'F3/.5 F3/.5 Bb2/.5 C3/.5 F2/1 r/1', d: 1 },
+        { v: 'A4/.5 A4/.5 A4/.5 Bb4/.5 A4/.5 A4/.5 A4/.5 Bb4/.5', b: B9, d: 0.5 },
+        { v: 'A4/.5 A4/.5 A4/.5 Bb4/.5 A4/.5 G4/.25 A4/.25 Bb4/.5 G4/.5', b: B10, d: 0.5 },
+        { v: 'A4/1 r/3', b: 'F2/1 r/3', d: 0.5, end: true },
+      ];
+      // figured-bass chords: C and E basses carry C7, B natural is a passing diminished chord
+      const CH = { 5: [5, 9, 0], 0: [0, 4, 7, 10], 10: [10, 2, 5], 11: [11, 2, 5], 9: [5, 9, 0], 7: [7, 10, 2], 4: [0, 4, 7, 10] };
+      bars.forEach((bar, i) => {
+        const bt = t0 + i * 4 * q, dyn = (beat) => (Array.isArray(bar.d) ? bar.d[beat < 2 ? 0 : 1] : bar.d);
+        if (bar.v) line(L(bar.v), bt, q, (n, t, d, k) => {
+          const beat = (t - bt) / q, dv = dyn(beat);
+          strings(bus, [n], t, d * 0.84, nodes, { attack: 0.015, release: 0.07, level: 0.034 * dv, bright: 2200 + 1800 * dv, vib: 6 });
+          if (dv > 0.8) strings(bus, [down(n)], t, d * 0.84, nodes, { attack: 0.015, release: 0.07, level: 0.012, bright: 1800, vib: 5 });
+        });
+        if (bar.s) bar.s.forEach((s, j) => line(L(s), bt, q, (n, t, d) => fiddle(bus, n, t, d * 0.9, 1, nodes, { level: j ? 0.034 : 0.04 })));
+        const bass = L(bar.b);
+        line(bass, bt, q, (n, t, d) => {
+          const dv = dyn((t - bt) / q);
+          strings(bus, [n], t, d * 0.82, nodes, { attack: 0.02, release: 0.08, level: 0.04 * dv, bright: 1300, vib: 4 });
+          harpsichord(bus, n, t, d * 0.9, 0.5 + 0.35 * dv, nodes);
+        });
+        // harpsichord right hand: the chord over the bass on every beat
+        for (let beat = 0; beat < 4; beat++) {
+          const bn = at(bass, beat); if (!bn) continue;
+          let p = pc(bn); if (bar.gToC7 && p === 7) p = 0;
+          voice(CH[p] || [5, 9, 0], 62, 72).forEach((n, k) => harpsichord(bus, n, bt + beat * q + k * 0.012, q * 0.85, 0.32 + 0.3 * dyn(beat), nodes));
+        }
+        if (bar.end) {
+          ['F2', 'C3', 'F3'].forEach((n) => strings(bus, [n], bt, q * 3, nodes, { attack: 0.03, release: 1.2, level: 0.02, bright: 1100, vib: 4 }));
+          voice([5, 9, 0], 53, 72).forEach((n, k) => harpsichord(bus, n, bt + k * 0.05, 2.2, 0.6, nodes));
+        }
+      });
+      return bars.length * 4 * q + 0.6;
+    } },
+    // "Over the River and Through the Wood" (Lydia Maria Child's 1844 Thanksgiving poem, traditional
+    // tune): fiddle, banjo, upright bass and sleigh bells, in 6/8. Twice through, harmony the second time.
+    overriver: { dry: 0.85, wet: 0.3, gain: 1.9, render(bus, t0, nodes) {
+      const e = 0.235, bar = 6 * e, near = bus.close || bus;
+      const tune = ['G4/1 G4/1 G4/1 G4/1 E4/1 F4/1', 'G4/2 G4/1 G4/2 G4/1', 'C5/1 C5/1 C5/1 B4/2 A4/1', 'G4/5 G4/1',
+        'F4/1 F4/1 F4/1 F4/2 F4/1', 'E4/1 E4/1 E4/1 E4/3', 'E4/2 E4/1 D4/2 D4/1', 'E4/2 D4/1 G4/3',
+        'G4/1 G4/1 G4/1 G4/1 E4/1 F4/1', 'G4/2 G4/1 G4/2 G4/1', 'C5/2 C5/1 B4/2 A4/1', 'G4/5 G4/1',
+        'C5/2 C5/1 B4/2 A4/1', 'G4/2 E4/1 C4/2 D4/1', 'E4/1 E4/1 F4/1 E4/2 D4/1', 'C4/6'].map(L);
+      const chords = ['C C', 'C C', 'F F', 'C C', 'G7 G7', 'C C', 'C D7', 'G7 G7', 'C C', 'C C', 'F F', 'C C', 'F F', 'C C', 'C G7', 'C C'].map((s) => s.split(' '));
+      const PCS = { C: [0, 4, 7], F: [5, 9, 0], G7: [7, 11, 2, 5], D7: [2, 6, 9, 0] };
+      const BASS = { C: ['C3', 'G2'], F: ['F2', 'C3'], G7: ['G2', 'D3'], D7: ['D3', 'A2'] };
+      const vamp = (bt, pair, v) => pair.forEach((ch, h) => {
+        const s = bt + h * 3 * e;
+        pluck(bus, BASS[ch][h], s, 1 * v, nodes, { len: 0.7, bright: 5, level: 0.11, pos: 0.25 });
+        const notes = voice(PCS[ch], 55, 67);
+        [1, 2].forEach((k) => notes.forEach((n, j) => pluck(bus, n, s + k * e + j * 0.008, (k === 1 ? 0.55 : 0.45) * v, nodes, { len: 0.45, bright: 14, level: 0.05, pos: 0.1, q: 2.5 })));
+        jingle(near, s, 0.9 * v, nodes); jingle(near, s + e, 0.4 * v, nodes); jingle(near, s + 2 * e, 0.5 * v, nodes);
+      });
+      // intro: two bars of sleigh bells and banjo
+      vamp(t0, ['C', 'C'], 0.8); vamp(t0 + bar, ['G7', 'G7'], 0.9);
+      let t = t0 + 2 * bar;
+      [0, 1].forEach((pass) => {
+        tune.forEach((notes, i) => {
+          const bt = t + i * bar;
+          line(notes, bt, e, (n, at, d, k) => {
+            fiddle(bus, up(n), at, d * 0.92, k === 0 ? 1 : 0.85, nodes, { level: 0.045, slide: d >= 2 * e && Math.random() < 0.35 });
+            if (pass) fiddle(bus, up(thirdBelow(n, 0)), at, d * 0.92, 0.7, nodes, { level: 0.03 });
+          });
+          vamp(bt, chords[i], pass ? 1 : 0.9);
+        });
+        t += 16 * bar;
+      });
+      // tag: a last strum and a shake of the bells
+      ['C3', 'G3', 'C4', 'E4', 'G4', 'C5'].forEach((n, j) => pluck(bus, n, t + j * 0.03, 0.9, nodes, { len: 1.8, bright: 10, level: 0.06, pos: 0.12 }));
+      fiddle(bus, 'C5', t, 1.4, 1, nodes, { level: 0.045 }); fiddle(bus, 'E5', t, 1.4, 0.8, nodes, { level: 0.03 });
+      for (let k = 0; k < 6; k++) jingle(near, t + k * 0.09, 1 - k * 0.12, nodes);
+      return t - t0 + 2.2;
+    } },
+    // "Simple Gifts" (Shaker song by Joseph Brackett, 1848; the original tune, not Copland's arrangement):
+    // hammered dulcimer over guitar and soft strings. Notes from the Mary Hazzard manuscript transcription.
+    simplegifts: { dry: 0.75, wet: 0.5, gain: 1.9, render(bus, t0, nodes) {
+      const q = 0.62;
+      const tune = L('G4/1 G4/1 ' +
+        'C5/1 C5/.5 D5/.5 E5/.5 C5/.5 E5/.5 F5/.5  G5/1 G5/.5 G5/.5 E5/1 D5/.5 C5/.5  D5/1 D5/1 D5/1 D5/1  D5/.5 E5/.5 D5/.5 B4/.5 G4/1 G4/1 ' +
+        'C5/.5 B4/.5 C5/.5 D5/.5 E5/1 D5/.5 D5/.5  E5/1 F5/1 G5/1.5 G5/.5  D5/1 D5/.5 E5/.5 D5/1 C5/.5 C5/.5  D5/1 C5/.5 B4/.5 C5/2 ' +
+        'G5/2 E5/1.5 D5/.5  E5/.5 F5/.5 E5/.5 D5/.5 C5/1.5 D5/.5  E5/1 E5/.5 F5/.5 G5/1 E5/1  D5/1 D5/.5 E5/.5 D5/1.5 G4/.5 ' +
+        'C5/2 C5/1.5 D5/.5  E5/1 E5/.5 F5/.5 G5/1 G5/.5 G5/.5  D5/1 D5/1 E5/1 E5/.5 D5/.5  C5/1 C5/1 C5/2');
+      // two chords a bar, each with its bass note (a walking line down from C under the first two bars)
+      const CH = ['C:C3 C:B2', 'C:A2 C:G2', 'Dm:D3 Dm:D3', 'G:B2 G:B2', 'C:C3 C:B2', 'C:A2 C:G2', 'Dm:D3 C:E3', 'G:B2 C:C3',
+        'C:C3 C:B2', 'Am:A2 Am:A2', 'C:C3 C:E3', 'G:G2 G:G2', 'Am:A2 C:B2', 'C:C3 C:E3', 'Dm:D3 C:E3', 'F:F2 C:C3'].map((s) => s.split(' ').map((x) => x.split(':')));
+      const PCS = { C: [0, 4, 7], Dm: [2, 5, 9], G: [7, 11, 2], Am: [9, 0, 4], F: [5, 9, 0] };
+      const start = t0 + 2 * q; // the two pickup notes
+      line(tune, t0, q, (n, at, d) => {
+        dulcimer(bus, n, at, 1, nodes);
+        if (d >= 1.5 * q) for (let r = at + q / 4; r < at + d - 0.05; r += q / 4) dulcimer(bus, n, r, 0.42, nodes); // the dulcimer's roll on long notes
+      });
+      CH.forEach((pair, i) => pair.forEach(([ch, bass], h) => {
+        const s = start + i * 4 * q + h * 2 * q;
+        pluck(bus, bass, s, 0.9, nodes, { len: 1.6, bright: 6, level: 0.09, pos: 0.2 });
+        voice(PCS[ch], 55, 67).forEach((n, j) => pluck(bus, n, s + q + j * 0.03, 0.55, nodes, { len: 1.2, bright: 8, level: 0.045, pos: 0.18 }));
+        if (h === 0) strings(bus, voice(PCS[ch], 52, 64).slice(0, 3), s, 4 * q - 0.2, nodes, { attack: 0.8, release: 0.8, level: 0.008, bright: 1000, vib: 5 });
+      }));
+      const end = start + 16 * 4 * q;
+      ['C3', 'G3', 'C4', 'E4', 'G4', 'C5'].forEach((n, j) => dulcimer(bus, n, end + j * 0.06, 0.8, nodes));
+      return end - t0 + 2.4;
+    } },
+    // "Old Hundredth" (Louis Bourgeois, Genevan Psalter 1551), the psalm tune of the Pilgrims' era, in its
+    // original long-and-short rhythm. Recorder, lute and bass viol, then the whole viol consort.
+    // Four-part harmony from the Mutopia Project edition.
+    oldhundred: { dry: 0.72, wet: 0.55, gain: 1.45, render(bus, t0, nodes) {
+      const u = 0.56; // one half note
+      const S = 'G4/2 | G4/1 F#4/1 E4/1 D4/1 | G4/2 A4/2 | B4/2  B4/2 | B4/1 B4/1 A4/1 G4/1 | C5/2 B4/2 | A4/2  G4/2 | A4/1 B4/1 A4/1 G4/1 | E4/2 F#4/2 | G4/2  D5/2 | B4/1 G4/1 A4/1 C5/1 | B4/2 A4/2 | G4/2';
+      const A = 'D4/2 | D4/1 D4/1 B3/1 B3/1 | B3/2 D4/2 | D4/2  D4/2 | D4/1 G4/1 F#4/1 G4/1 | G4/2 G4/2 | F#4/2  G4/2 | D4/1 D4/1 D4/1 D4/1 | E4/2 C4/2 | D4/2  B3/2 | B3/1 E4/1 E4/1 C4/1 | D4/1 G4/2 F#4/1 | G4/2';
+      const T = 'B3/2 | B3/1 A3/1 G3/1 F#3/1 | G3/2 F#3/2 | G3/2  G3/2 | B3/1 D4/1 D4/1 B3/1 | E4/2 D4/2 | D4/2  B3/2 | A3/1 G3/1 F#3/1 G3/1 | G3/2 A3/2 | B3/2  F#3/2 | G3/1 B3/1 C4/1 E4/1 | D4/3.5 C4/.5 | B3/2';
+      const B = 'G3/2 | G3/1 D3/1 E3/1 B2/1 | E3/2 D3/2 | G2/2  G3/2 | G3/1 G3/1 D3/1 E3/1 | C3/2 G2/2 | D3/2  E3/2 | F#3/1 G3/1 D3/1 B2/1 | C3/2 A2/2 | G2/2  B2/2 | E3/1.5 D3/.5 C3/.5 B2/.5 A2/1 | B2/1.5 C3/.5 D3/2 | G2/2';
+      const len = beats(L(S)) * u;
+      // verse 1: recorder with lute and bass viol
+      satb([S, A, T, B], t0, u, [
+        (n, t, d) => recorder(bus, n, t, d * 0.93, 1, nodes, { level: 0.075 }),
+        (n, t, d) => pluck(bus, n, t + 0.02, 0.6, nodes, { len: Math.max(0.9, d + 0.3), bright: 7, level: 0.05, pos: 0.16 }),
+        (n, t, d) => pluck(bus, n, t, 0.6, nodes, { len: Math.max(0.9, d + 0.3), bright: 7, level: 0.05, pos: 0.16 }),
+        (n, t, d) => strings(bus, [n], t, d * 0.94, nodes, { attack: 0.06, release: 0.18, level: 0.04, bright: 1100, vib: 3 }),
+      ]);
+      // verse 2: the viol consort in four parts, recorder an octave above
+      const t1 = t0 + len + u;
+      const viol = (lvl, br) => (n, t, d) => strings(bus, [n], t, d * 0.94, nodes, { attack: 0.07, release: 0.2, level: lvl, bright: br, vib: 3 });
+      satb([S, A, T, B], t1, u, [
+        (n, t, d) => { viol(0.026, 2400)(n, t, d); recorder(bus, up(n), t, d * 0.93, 0.8, nodes, { level: 0.055 }); },
+        viol(0.022, 2000), viol(0.022, 1700), viol(0.034, 1100),
+      ]);
+      const end = t1 + len;
+      ['G2', 'D3', 'G3', 'B3', 'D4', 'G4'].forEach((n, k) => pluck(bus, n, end + k * 0.06, 0.7, nodes, { len: 2.2, bright: 7, level: 0.05, pos: 0.16 }));
+      return end - t0 + 2.4;
+    } },
+    // "We Gather Together" (Dutch hymn of 1597; tune KREMSER, arr. Eduard Kremser 1877; English words
+    // Theodore Baker 1894) for brass choir, twice: gently, then full with timpani.
+    gather: { dry: 0.78, wet: 0.48, gain: 1.75, render(bus, t0, nodes) {
+      const q = 0.6, near = bus.close || bus;
+      const S = 'F4/1 | F4/1.5 G4/.5 F4/1 | D4/1 Eb4/1 F4/1 | Eb4/1.5 D4/.5 C4/1 | D4/1 Bb3/1 F4/1 | F4/1.5 G4/.5 A4/1 | Bb4/1.5 C5/.5 A4/1 | G4/1.5 F4/.5 G4/1 | F4/2 F4/1 | F4/1.5 G4/.5 A4/1 | Bb4/1 F4/1 F4/1 | F4/1.5 G4/.5 Eb4/.5 F4/.5 | D4/1 Bb3/1 Bb3/1 | Eb4/1.5 F4/.5 G4/.5 Eb4/.5 | F4/1.5 Eb4/.5 D4/.5 D4/.5 | Eb4/1 C4/1.5 Bb3/.5 | Bb3/2';
+      const A = 'Bb3/1 | Bb3/1.5 Bb3/.5 Bb3/1 | Bb3/1 Bb3/1 Bb3/1 | Bb3/1.5 Bb3/.5 A3/1 | Bb3/1 Bb3/1 D4/1 | C4/1.5 C4/.5 C4/1 | D4/1 C4/1 C4/1 | D4/1.5 D4/.5 E4/1 | C4/2 C4/1 | C4/1.5 C4/.5 C4/1 | Bb3/1 Bb3/1 Bb3/1 | Bb3/2 A3/.5 A3/.5 | Bb3/1 Bb3/1 Bb3/1 | Bb3/1.5 Bb3/.5 Bb3/.5 Bb3/.5 | C4/2 Bb3/.5 Bb3/.5 | G3/1 A3/1.5 Bb3/.5 | Bb3/2';
+      const T = 'D3/1 | D3/1.5 Eb3/.5 D3/1 | F3/1 F3/1 F3/1 | G3/1.5 G3/.5 F3/1 | F3/1 D3/1 F3/1 | F3/1.5 F3/.5 F3/1 | F3/1 E3/1 F3/1 | Bb3/1.5 Bb3/.5 Bb3/1 | A3/2 A3/1 | A3/1.5 G3/.5 F3/1 | F3/1 F3/1 F3/1 | G3/2 F3/.5 F3/.5 | F3/1 D3/1 D3/1 | G3/1.5 F3/.5 Eb3/.5 G3/.5 | A3/1.5 A3/.5 F3/.5 F3/.5 | Eb3/2.5 D3/.5 | D3/2';
+      const B = 'Bb2/1 | Bb2/1.5 Bb2/.5 Bb2/1 | Bb2/1 C3/1 D3/1 | C3/1.5 C3/.5 F3/1 | Bb2/1 Bb2/1 Bb2/1 | A2/1.5 A2/.5 A2/1 | G2/1 C3/1 F3/1 | G2/1.5 G2/.5 C3/1 | F3/2 F3/1 | Eb3/1.5 Eb3/.5 Eb3/1 | D3/1 D3/1 D3/1 | C3/2 F3/.5 F3/.5 | Bb2/1 Bb2/1 Bb2/1 | Eb3/2 C3/1 | F3/2 Bb2/1 | Eb2/1 F2/2 | Bb2/2';
+      const len = beats(L(S)) * q;
+      [0, 1].forEach((pass) => {
+        const t = t0 + pass * (len + q), v = pass ? 1 : 0.72, br = pass ? 1.25 : 1;
+        satb([S, A, T, B], t, q, [
+          (n, at, d) => { brass(bus, n, at, d * 0.94, v, nodes, { level: 0.042, bright: 5 * br }); if (pass) brass(bus, up(n), at, d * 0.94, 0.6, nodes, { level: 0.022, bright: 5 }); },
+          (n, at, d) => brass(bus, n, at, d * 0.94, v, nodes, { level: 0.03, bright: 3.6 * br }),
+          (n, at, d) => brass(bus, n, at, d * 0.94, v, nodes, { level: 0.032, bright: 3.6 * br }),
+          (n, at, d) => { brass(bus, n, at, d * 0.94, v, nodes, { level: 0.045, bright: 3 * br }); if (pass) brass(bus, down(n), at, d * 0.94, 0.7, nodes, { level: 0.03, bright: 2.6 }); },
+        ]);
+        if (pass) for (let b = 1; b < beats(L(S)); b += 3) thump(near, t + b * q, b === 1 ? 0.8 : 0.5, nodes); // timpani on each downbeat
+      });
+      const end = t0 + 2 * len + q;
+      ['Bb2', 'F3', 'Bb3', 'D4', 'F4', 'Bb4'].forEach((n) => brass(bus, n, end, 2.2, 0.9, nodes, { level: 0.028, bright: 5 }));
+      thump(near, end, 1, nodes); crash(near, end, 0.4, nodes);
+      return end - t0 + 2.8;
+    } },
+    // "Come, Ye Thankful People, Come" (Henry Alford 1844; tune ST. GEORGE'S WINDSOR, George J. Elvey 1858)
+    // on church pipe organ, introduced the way churches do: the last line first.
+    thankful: { dry: 0.72, wet: 0.7, gain: 0.5, render(bus, t0, nodes) {
+      const q = 0.6;
+      const S = 'A4/1 A4/1 C5/1 A4/1 | F4/1 G4/1 A4/2 | A4/1 A4/1 C5/1 A4/1 | F4/1 G4/1 A4/2 | A4/1 A4/1 Bb4/1 Bb4/1 | G4/1 G4/1 A4/2 | A4/1 B4/1 C5/1 F4/1 | E4/1 D4/1 C4/2 | E4/1 E4/1 G4/1 E4/1 | F4/1 G4/1 A4/2 | A4/1 A4/1 C5/1 A4/1 | Bb4/1 C5/1 D5/2 | D5/1 D5/1 Bb4/1 G4/1 | C5/1 C5/1 A4/2 | Bb4/1 D5/1 C5/1 F4/1 | A4/1 G4/1 F4/2';
+      const A = 'C4/1 C4/1 C4/1 C4/1 | D4/1 E4/1 F4/2 | C4/1 C4/1 C4/1 C4/1 | D4/1 D4/1 C#4/2 | D4/1 D4/1 D4/1 D4/1 | C4/1 C4/1 C4/2 | C4/1 D4/1 C4/1 D4/1 | C4/1 B3/1 C4/2 | C4/1 C4/1 C4/1 C4/1 | C4/1 Bb3/1 A3/2 | C4/1 C4/1 F4/1 F4/1 | F4/1 Eb4/1 D4/2 | D4/1 F#4/1 G4/1 D4/1 | C4/1 E4/1 F4/2 | F4/1 F4/1 F4/1 F4/1 | F4/1 E4/1 F4/2';
+      const T = 'F3/1 F3/1 G3/1 A3/1 | A3/1 C4/1 C4/2 | F3/1 F3/1 G3/1 A3/1 | A3/1 Bb3/1 A3/2 | F3/1 F3/1 F3/1 F3/1 | G3/1 G3/1 F3/2 | F3/1 G3/1 G3/1 A3/1 | G3/1 G3/1 G3/2 | G3/1 G3/1 G3/1 Bb3/1 | A3/1 G3/1 F3/2 | F3/1 F3/1 A3/1 C4/1 | D4/1 A3/1 Bb3/2 | Bb3/1 A3/1 D4/1 Bb3/1 | G3/1 G3/1 C4/2 | D4/1 Bb3/1 A3/1 A3/1 | C4/1 Bb3/1 A3/2';
+      const B = 'F3/1 F3/1 E3/1 F3/1 | D3/1 C3/1 F2/2 | F3/1 F3/1 E3/1 F3/1 | D3/1 Bb2/1 A2/2 | D3/1 D3/1 Bb2/1 Bb2/1 | C3/1 C3/1 F2/2 | F3/1 B2/1 C3/1 D3/1 | C3/1 G2/1 C3/2 | C3/1 C3/1 E3/1 C3/1 | F3/1 C3/1 F2/2 | F3/1 F3/1 F3/1 F3/1 | Bb2/1 F3/1 Bb2/2 | G3/1 D3/1 Bb2/1 G2/1 | C3/1 C3/1 F2/2 | Bb2/1 Bb2/1 A2/1 F2/1 | C3/1 C3/1 F2/2';
+      const parts = [S, A, T, B].map(L);
+      const lastLine = parts.map((p) => { const out = []; let b = 0; p.forEach(([n, d]) => { if (b >= 56 - 1e-6) out.push([n, d]); b += d; }); return out; });
+      const O = (n, t, d, v) => organ(bus, hz(n), t, Math.max(0.05, d - 0.07), v, nodes);
+      const play = (ps, t, v) => { let end = t; ps.forEach((p, i) => { end = Math.max(end, line(p, t, q, (n, at, d) => { O(n, at, d, v * (i === 0 ? 1 : 0.8)); if (i === 3) O(down(n), at, d, v * 0.75); })); }); return end; };
+      // introduction: the last line, softly
+      let t = play(lastLine, t0, 0.62) + q;
+      t = play(parts, t, 1);
+      ['F2', 'C3', 'F3', 'A3', 'C4', 'F4'].forEach((n) => O(n, t, 2.2, 0.9));
+      return t - t0 + 3.2;
+    } },
+    // "Now Thank We All Our God" (Martin Rinkart c. 1636; tune NUN DANKET, Johann Crüger 1647), for
+    // string orchestra. Harmony after Mendelssohn's setting.
+    thanknow: { dry: 0.74, wet: 0.6, gain: 1.75, render(bus, t0, nodes) {
+      const q = 0.62;
+      const S = 'C5/1 | C5/1 C5/1 D5/1 D5/1 | C5/3 C5/1 | Bb4/1 A4/1 G4/1 A4/1 | G4/2 F4/1 C5/1 | C5/1 C5/1 D5/1 D5/1 | C5/3 C5/1 | Bb4/1 A4/1 G4/1 A4/1 | G4/2 F4/1 G4/1 | G4/1 G4/1 A4/1 A4/1 | G4/3 G4/1 | A4/.5 B4/.5 C5/1 D5/1 B4/1 | C5/3 C5/1 | D5/1 C5/1 Bb4/1 A4/1 | Bb4/3 A4/1 | G4/1 F4/1 F4/1 E4/1 | F4/3';
+      const A = 'F4/1 | G4/1 F4/1 F4/1 D4/.5 E4/.5 | F4/3 F4/.5 E4/.5 | D4/.5 E4/.5 F4/1 E4/1 F4/1 | F4/1 E4/1 F4/1 F4/1 | G4/1 F4/1 F4/1 F4/1 | F4/3 F4/1 | F4/.5 E4/.5 F4/1 F4/.5 E4/.5 D4/.5 C#4/.5 | D4/1 C4/.5 Bb3/.5 A3/1 C4/1 | D4/1 E4/.5 D4/.5 C4/1 F4/1 | E4/3 G4/1 | F4/1 G4/1 F4/1 E4/1 | E4/3 E4/1 | D4/1 D4/1 D4/1 F#4/1 | G4/3 F4/.5 E4/.5 | D4/1 A3/.5 Bb3/.5 C4/1 C4/.5 Bb3/.5 | A3/3';
+      const T = 'A3/1 | G3/1 A3/1 Bb3/1 F3/.5 G3/.5 | A3/3 A3/1 | Bb3/1 C4/1 C4/1 C4/1 | Bb3/2 A3/1 A3/1 | G3/1 A3/1 Bb3/1 Bb3/1 | A3/3 A3/1 | D4/1 C4/1 Bb3/1 A3/1 | Bb3/1 E3/1 F3/1 E3/1 | B3/1 C4/1 A3/1 C4/1 | C4/3 C4/1 | D4/1 C4/1 B3/1 B3/1 | G3/3 Bb3/1 | Bb3/1 A3/1 G3/1 C4/1 | D4/3 C4/1 | Bb3/1 F3/1 A3/1 G3/1 | F3/3';
+      const B = 'F3/1 | E3/1 F3/1 Bb3/1 Bb2/1 | F3/3 F3/1 | G3/1 A3/.5 Bb3/.5 C4/1 F3/1 | C3/2 F2/1 F3/1 | Eb3/1 Eb3/1 D3/.5 C3/.5 Bb2/1 | F2/3 F3/.5 E3/.5 | Bb2/1 A2/1 C3/1 D3/.5 A2/.5 | G2/1 C3/1 F2/1 C3/1 | G2/1 C3/1 A2/1 F2/1 | C3/3 E3/1 | D3/.5 B2/.5 C3/1 G2/1 E3/1 | C3/3 C3/1 | Bb2/1 D3/1 G2/1 D3/1 | G2/3 F3/1 | Bb2/1 A2/1 C3/1 C3/1 | F2/3';
+      const sec = (lvl, br, vib) => (n, t, d) => strings(bus, [n], t, d - 0.05, nodes, { attack: 0.1, release: 0.25, level: lvl, bright: br, vib });
+      const end = satb([S, A, T, B], t0, q, [
+        sec(0.03, 2600, 8), sec(0.022, 2000, 7), sec(0.022, 1600, 6),
+        (n, t, d) => { sec(0.03, 1100, 4)(n, t, d); strings(bus, [down(n)], t, d - 0.05, nodes, { attack: 0.12, release: 0.25, level: 0.014, bright: 700, vib: 3 }); },
+      ]);
+      strings(bus, ['F2', 'C3', 'F3', 'A3', 'C4', 'F4'], end, 1.6, nodes, { attack: 0.1, release: 1.4, level: 0.012, bright: 1600, vib: 6 });
+      return end - t0 + 3;
+    } },
   };
 
   // play(name) loops one song; play([names]) shuffles them: each song plays through once, then a
@@ -2158,7 +2633,9 @@ window.SpookyMusic = (() => {
     stop();
     const list = [].concat(name).filter((n) => pieces[n]);
     if (!list.length) return;
-    const state = { name: Array.isArray(name) ? 'mix' : name, song: null, buses: [], nodes: [], timer: null, playing: true };
+    const state = { name: Array.isArray(name) ? 'mix' : name, song: null, buses: [], nodes: [], queue: [], timer: null, playing: true };
+    const deferring = !(window.OfflineAudioContext && ctx instanceof window.OfflineAudioContext);
+    if (deferring) state.pumper = setInterval(() => pump(state), 250);
     let bag = [], cur = null;
     const pick = () => {
       if (list.length === 1) return list[0];
@@ -2181,13 +2658,15 @@ window.SpookyMusic = (() => {
         cur = { name: nm, bus }; state.buses.push(cur);
       }
       state.song = nm;
+      pending = deferring ? [] : null;
       const next = start + piece.render(cur.bus, start, state.nodes);
+      if (pending) { const got = pending; pending = null; got.forEach((x) => state.queue.push(x)); state.queue.sort((x, y) => x[0] - y[0]); pump(state); }
       cur.until = next + 5;
       const wait = () => {
         if (!state.playing) return;
         if (ctx.state !== 'running' || ctx.currentTime < next - 1.6) { state.timer = setTimeout(wait, 500); return; }
         const now = ctx.currentTime;
-        state.nodes = state.nodes.filter(([, end]) => end > now);
+        const live = state.nodes.filter(([, end]) => end > now); state.nodes.length = 0; live.forEach((x) => state.nodes.push(x));
         state.buses = state.buses.filter((b) => {
           if (b === cur || b.until > now) return true;
           [b.bus, b.bus.close].forEach((x) => { try { x.disconnect(); } catch (e) { /* gone */ } });
@@ -2202,7 +2681,7 @@ window.SpookyMusic = (() => {
   }
   function stop() {
     if (!active) return;
-    const s = active; active = null; s.playing = false; clearTimeout(s.timer);
+    const s = active; active = null; s.playing = false; clearTimeout(s.timer); clearInterval(s.pumper); s.queue.length = 0;
     const now = ctx.currentTime, buses = [];
     s.buses.forEach((b) => buses.push(b.bus, b.bus.close));
     buses.forEach((b) => { b.gain.cancelScheduledValues(now); b.gain.setValueAtTime(b.gain.value, now); b.gain.linearRampToValueAtTime(0, now + 0.5); });
@@ -2232,26 +2711,30 @@ window.SpookyMusic = (() => {
   return { play, stop, setVolume, resume, suspend, audible, thunder, playing: () => (active ? active.name : null), song: () => (active ? active.song : null) };
 })();
 </script>
-<script>// Halloween music: shuffles the haunted organ, "The Stalker" and "Night at the Lake", one song after
-// another in random order. Starts on its own where the browser allows it, otherwise on the
-// visitor's first tap, click or key press anywhere. The corner button stops it, and the site
-// remembers that choice on that device. Only runs while the Halloween theme is on.
+<script>// Seasonal music. Halloween shuffles the haunted organ, "The Stalker" and "Night at the Lake"; Thanksgiving
+// shuffles "Over the River and Through the Wood", "We Gather Together" and the Thanksgiving fight song.
+// Music starts on its own where the browser allows it, otherwise on the visitor's first tap, click or key
+// press anywhere. The corner button stops it, and the site remembers that choice on that device.
 (() => {
   const btn = document.getElementById('hw-music');
-  if (!btn || !document.documentElement.classList.contains('halloween') || !window.SpookyMusic) return;
+  const root = document.documentElement;
+  const theme = root.classList.contains('halloween') ? 'halloween' : root.classList.contains('thanksgiving') ? 'thanksgiving' : '';
+  if (!btn || !theme || !window.SpookyMusic) return;
+  const CFG = {
+    halloween: { songs: ['bach', 'stalker', 'lake'], label: 'Play spooky music', key: 'pk-halloween-music-off' },
+    thanksgiving: { songs: ['overriver', 'gather', 'fightsong'], label: 'Play Thanksgiving music', key: 'pk-thanksgiving-music-off' },
+  }[theme];
   const label = btn.querySelector('.hw-music-label');
-  const KEY = 'pk-halloween-music-off';
-  const isOff = () => { try { return localStorage.getItem(KEY) === '1'; } catch (e) { return false; } };
-  const setOff = (off) => { try { if (off) localStorage.setItem(KEY, '1'); else localStorage.removeItem(KEY); } catch (e) { /* storage blocked */ } };
+  const isOff = () => { try { return localStorage.getItem(CFG.key) === '1'; } catch (e) { return false; } };
+  const setOff = (off) => { try { if (off) localStorage.setItem(CFG.key, '1'); else localStorage.removeItem(CFG.key); } catch (e) { /* storage blocked */ } };
   const sync = () => {
     const on = SpookyMusic.audible();
     btn.setAttribute('aria-pressed', String(on));
     btn.classList.toggle('on', on);
-    label.textContent = on ? 'Stop music' : 'Play spooky music';
+    label.textContent = on ? 'Stop music' : CFG.label;
   };
-  const SONGS = ['bach', 'stalker', 'lake'];
   const start = () => {
-    if (SpookyMusic.playing() !== 'mix') SpookyMusic.play(SONGS);
+    if (SpookyMusic.playing() !== 'mix') SpookyMusic.play(CFG.songs);
     return SpookyMusic.resume().then(sync, sync);
   };
   const GESTURES = ['pointerdown', 'touchend', 'click', 'keydown'];
@@ -2585,15 +3068,20 @@ window.SpookyMusic = (() => {
   window.tgHarvest = { geese, turkey, football, gust, mayflower, pilgrims, start: startAll, stop: stopAll };
 })();
 </script>
-<script>window.__DKX = {"bust":"img/ditkatron_bust.webp","full":"img/ditkatron_full.webp","face":"img/ditkatron_face.webp"};</script>
-<script>// Ditkatron 9000 in the Halloween theme (trial): his portrait on the Ditkatron Thoughts card, his face
-// on the standings, and an occasional "Ditkatron rises" visitor that the lightning lights up.
-// window.dkx.rise() shows the visitor on demand.
+<script>window.__DKX = {"halloween": {"bust": "img/ditkatron_bust.webp", "full": "img/ditkatron_full.webp", "face": "img/ditkatron_face.webp"}, "thanksgiving": {"bust": "img/ditkatron_tg_bust.webp", "full": "img/ditkatron_tg_full.webp", "hat": "img/ditkatron_tg_hat.webp", "face": "img/ditkatron_tg_face.webp"}};</script>
+<script>// Ditkatron 9000 artwork for the seasonal themes. Halloween: portrait on the Ditkatron Thoughts card, his
+// face on the standings, and now and then he rises in the dark and the lightning lights him up.
+// Thanksgiving: the same, in a Pilgrim buckle hat; when he rises he tips the hat. window.dkx.rise() on demand.
 (() => {
-  const root = document.documentElement, IMG = window.__DKX;
-  if (!IMG || !root.classList.contains('halloween')) return;
+  const root = document.documentElement;
+  const theme = root.classList.contains('halloween') ? 'halloween' : root.classList.contains('thanksgiving') ? 'thanksgiving' : '';
+  const IMG = window.__DKX && window.__DKX[theme];
+  if (!IMG) return;
+  const T = {
+    halloween: { eye: { bust: [58.9, 30.4], full: [79.5, 14.6] }, tag: 'Da picks are in. Da damage is done.', say: ['Da picks are in.', 'Da damage is done.'], sky: '.hw-sky' },
+    thanksgiving: { eye: { bust: [58.9, 52.2], full: [74.3, 25.9] }, tag: 'Da picks are in. Da turkey is done.', say: ['Happy Thanksgiving.', 'Da turkey is done.'], sky: '.tg-sky' },
+  }[theme];
   const still = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
-  const EYE = { bust: [58.9, 30.4], full: [79.5, 14.6] }; // where the red eye sits, in % of each picture
   const eye = (pos, size) => { const i = document.createElement('i'); i.className = 'dkx-eye'; i.style.setProperty('--x', pos[0] + '%'); i.style.setProperty('--y', pos[1] + '%'); if (size) i.style.setProperty('--s', size); return i; };
   const img = (src, cls) => { const m = new Image(); m.src = src; m.alt = ''; m.decoding = 'async'; if (cls) m.className = cls; return m; };
 
@@ -2601,8 +3089,8 @@ window.SpookyMusic = (() => {
   const take = document.getElementById('dk-take');
   if (take && !take.querySelector('.dkx-portrait')) {
     const p = document.createElement('div'); p.className = 'dkx-portrait'; p.setAttribute('aria-hidden', 'true');
-    p.append(img(IMG.bust), eye(EYE.bust, '9%'));
-    const tag = document.createElement('p'); tag.className = 'dkx-tag'; tag.textContent = 'Da picks are in. Da damage is done.';
+    p.append(img(IMG.bust), eye(T.eye.bust, '9%'));
+    const tag = document.createElement('p'); tag.className = 'dkx-tag'; tag.textContent = T.tag;
     take.prepend(p);
     p.after(tag);
   }
@@ -2624,22 +3112,25 @@ window.SpookyMusic = (() => {
   new MutationObserver(() => { if (!queued) { queued = true; requestAnimationFrame(() => { queued = false; decorate(); }); } }).observe(dash, { childList: true, subtree: true });
   decorate();
 
-  // 3. "Ditkatron rises"
-  const sky = document.querySelector('.hw-sky');
+  // 3. now and then he rises at the bottom corner
+  const sky = document.querySelector(T.sky);
   function rise() {
     if (!sky || sky.querySelector('.dkx-rise')) return;
     const n = document.createElement('div'); n.className = 'dkx-rise';
     const body = document.createElement('div'); body.className = 'dkx-body';
-    body.append(img(IMG.full), eye(EYE.full));
+    body.append(img(IMG.full), eye(T.eye.full));
+    if (IMG.hat) body.append(img(IMG.hat, 'dkx-hat'));
     const say = document.createElement('p'); say.className = 'dkx-say';
-    ['Da picks are in.', 'Da damage is done.'].forEach((s) => { const sp = document.createElement('span'); sp.textContent = s; say.append(sp); });
+    T.say.forEach((s) => { const sp = document.createElement('span'); sp.textContent = s; say.append(sp); });
     n.append(body, say); sky.append(n);
-    const flash = (at, ms) => setTimeout(() => {
-      if (window.hwSpooky && hwSpooky.lightning) hwSpooky.lightning();
-      n.classList.add('lit'); setTimeout(() => n.classList.remove('lit'), ms);
-      setTimeout(() => { n.classList.add('lit'); setTimeout(() => n.classList.remove('lit'), 120); }, ms + 160);
-    }, at);
-    flash(1900, 260); flash(5200, 200);
+    if (theme === 'halloween') {
+      const flash = (at, ms) => setTimeout(() => {
+        if (window.hwSpooky && hwSpooky.lightning) hwSpooky.lightning();
+        n.classList.add('lit'); setTimeout(() => n.classList.remove('lit'), ms);
+        setTimeout(() => { n.classList.add('lit'); setTimeout(() => n.classList.remove('lit'), 120); }, ms + 160);
+      }, at);
+      flash(1900, 260); flash(5200, 200);
+    } else if (window.tgHarvest && tgHarvest.gust) setTimeout(() => tgHarvest.gust(), 900);
     setTimeout(() => n.remove(), 9800);
   }
   const ok = () => !still.matches && !document.hidden;
