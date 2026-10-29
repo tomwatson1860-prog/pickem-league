@@ -964,7 +964,7 @@ html.thanksgiving .pk-page { padding-bottom: 96px; }
     </div>
 
     <div class="pk-card" id="dk-lines">
-      <h2>Week 8 at a glance</h2>
+      <h2 id="dk-lines-title">Week 8 at a glance</h2>
       <p class="pk-note">Each team's chance to win, from the betting lines. The favorite is shaded.</p>
       <div class="dk-lines" id="dk-lines-list"></div>
     </div>
@@ -986,7 +986,7 @@ html.thanksgiving .pk-page { padding-bottom: 96px; }
     <div class="pk-grid">
       <div class="pk-card" id="dk-pulse">
         <h2>League pulse</h2>
-        <p class="pk-note">Weeks 1–7, every finished game.</p>
+        <p class="pk-note" id="dk-pulse-note">Weeks 1–7, every finished game.</p>
         <div class="dk-pulse" id="dk-pulse-grid"></div>
       </div>
       <div class="pk-card" id="dk-crowd">
@@ -1038,13 +1038,13 @@ window.dash = (() => {
 })();
 </script>
 <script>window.__PK_THOUGHTS = {
- "written": "After Week 7 · written Tuesday, Oct 27, 2026",
+ "written": "Updated Thursday, Oct 29, 2026 · Week 8 preview",
  "take": [
-  "Ditkatron has reviewed the Week 7 tape. Jen is your new leader at 68–38, one game ahead of Michael & Katie. Michael & Katie went 7–7 and gave up first place after four straight weeks on top.",
-  "Best of the week: Ryan, Brady, Dad and Leet, all at 10–4. First to last, the whole league is now within five games. One good Sunday changes the board.",
-  "Week 7 was hard on sure things. All eight of you took the 49ers, Panthers and Jets, and all three lost. Unanimous picks went 6–3 this week.",
-  "Respect to Tommy & Haley, the only ones on the Giants. New York won 27–21 in Houston as a 10-point underdog, and the betting market had given the Texans about an 80% chance.",
-  "Week 8 opens Thursday with the Panthers at the Packers and closes Monday night with the Bears at the Seahawks. The Bengals are the week's biggest favorite at 83%, and Raiders–Jets is close to a coin flip. On bye: 49ers, Giants, Saints and Texans. Every game locks at kickoff."
+  "Ditkatron is back on the clock. Jen leads at 68–38. Michael & Katie are one game back at 67–39, with Brady and Leet two back. Week 8 starts tonight, and the whole league is within five games.",
+  "Now, a word about Michael & Katie. Ditkatron hears they have been complaining about Ditkatron. Ditkatron has reviewed the complaints. Ditkatron has also reviewed the tape. The tape shows four straight weeks in first place, then 7–7, then 7–7 again. That is not a slump. That is a coin flip with a pick sheet.",
+  "It gets worse when they go it alone. Their solo picks since Week 5: one win, three losses. The Cardinals, Eagles and Raiders lost by a combined 49 points. Last week they also rode the Chiefs into Seattle, and the Chiefs scored three points. Three. Ditkatron has seen more offense from a lawn chair.",
+  "Ditkatron's complaint department is located in Green Bay. Nobody goes there on purpose. One game back is not dead, Michael & Katie. Win the week and Ditkatron will say so right here. Until then, da robot stays undefeated in the comments section.",
+  "Week 8 opens tonight with the Panthers at the Packers, 8:15 PM Eastern, Packers about 62% to win. The Bengals are the week's biggest favorite at 83%, and Raiders–Jets is a coin flip at 53/47. Monday night, da Bears go to Seattle as 3-point underdogs, about a 40% chance, looking for three straight. On bye: 49ers, Giants, Saints and Texans. Every game locks at kickoff."
  ],
  "facts": [
   {
@@ -1060,12 +1060,12 @@ window.dash = (() => {
   {
    "big": "53/47",
    "label": "Raiders at Jets",
-   "detail": "The closest game on the board"
+   "detail": "The closest game still to play"
   },
   {
    "big": "8:15 PM",
    "label": "Panthers at Packers",
-   "detail": "Thursday night opens Week 8 (Eastern time)"
+   "detail": "Next kickoff: Thursday night (Eastern time)"
   }
  ],
  "bears": {
@@ -1400,6 +1400,8 @@ window.dash = (() => {
    "final": null
   }
  ],
+ "lines_title": "Week 8 at a glance",
+ "pulse_note": "Weeks 1–7, every finished game.",
  "race": {
   "weeks": [
    1,
@@ -1646,7 +1648,7 @@ window.dash = (() => {
    "l": 2
   }
  ],
- "sources": "NFL records, schedule and betting lines: nflverse (github.com/nflverse/nfldata), Oct 27, 2026. League numbers: the league workbook (Weeks 1–6) and the league pick sheet (Week 7)."
+ "sources": "NFL records, schedule and betting lines: nflverse (github.com/nflverse/nfldata), Oct 29, 2026. League numbers: the league workbook (Weeks 1–6) and the league pick sheet (Week 7 on)."
 };</script>
 <script>(() => {
   const BOT = 'Ditkatron 9000'; // the league's commentator, not a player
@@ -1927,7 +1929,11 @@ window.dash = (() => {
   function buildStatic() {
     $('dk-written').textContent = T.written;
     $('dk-paras').replaceChildren(...T.take.map((t) => el('p', '', t)));
-    $('dk-byes').textContent = 'On bye: ' + T.byes + '.';
+    $('dk-byes').textContent = T.byes ? 'On bye: ' + T.byes + '.' : '';
+    $('dk-byes').hidden = !T.byes;
+    if (T.lines_title && $('dk-lines-title')) $('dk-lines-title').textContent = T.lines_title;
+    if (T.pulse_note && $('dk-pulse-note')) $('dk-pulse-note').textContent = T.pulse_note;
+    if ($('dk-lines')) $('dk-lines').hidden = !T.lines.length;
     const fact = (f) => {
       const c = el('div', 'dk-fact');
       c.append(el('span', 'big', f.big), el('span', 'lbl', f.label));
