@@ -345,6 +345,44 @@
     .dk-race-chart { min-height: 220px; }
   }
 
+  /* ---------- Chicago Bears corner (This week in the NFL) ---------- */
+  :root { --bears-orange: #c83803; --bears-w-bg: #0b162a; --bears-w-line: #0b162a; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bears-orange: #f0621f; --bears-w-bg: #14233f; --bears-w-line: #2f4371; } }
+  :root[data-theme="dark"], html.halloween { --bears-orange: #f0621f; --bears-w-bg: #14233f; --bears-w-line: #2f4371; }
+  .dk-bears { margin-top: 1.25rem; padding-top: 1.1rem; border-top: 1px solid var(--color-border-line); display: flex; flex-direction: column; gap: .8rem; }
+  .dk-bears[hidden] { display: none; }
+  .dk-bears-head { background: #0b162a; color: #ffffff; border-radius: var(--cds-radius); border-bottom: 4px solid #c83803; padding: .7rem 1rem .65rem; display: flex; flex-wrap: wrap; align-items: baseline; gap: .25rem 1.1rem; }
+  .dk-bears-head h3 { margin: 0; font-family: var(--font-anthropic-serif); font-weight: 400; font-size: 1.4rem; line-height: 1.15; color: #ffffff; }
+  .dk-bears-sub { margin: 0; display: flex; flex-wrap: wrap; gap: .15rem .55rem; font-size: .875rem; color: #d5dcea; }
+  .dk-bears-sub b { color: #ffffff; font-variant-numeric: tabular-nums; font-weight: var(--cds-font-weight-medium); }
+  .dk-bears-sub > * + *::before { content: "·"; color: #ff8a4c; margin-right: .55rem; }
+  .dk-bears-next { margin: 0; font-size: .8rem; color: #ffffff; border: 1px solid #ff8a4c; border-radius: 999px; padding: .1rem .6rem; }
+  .dk-bears .dk-fact { border-top: 3px solid var(--bears-orange); }
+  .dk-bears-cap { margin: .2rem 0 -.3rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: .2rem 1rem; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .dk-bkey i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--bears-orange); margin-right: .35rem; vertical-align: 1px; }
+  .dk-bseason { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 6px; }
+  @media (max-width: 1000px) { .dk-bseason { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+  .dk-bg { position: relative; min-width: 0; display: flex; flex-direction: column; gap: .05rem; padding: .4rem .5rem .45rem; border-radius: 8px; border: 1px solid var(--color-border-line); background: var(--color-bg); font-size: .78rem; line-height: 1.25; }
+  .dk-bg .wk { font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; color: var(--color-fg-muted); }
+  .dk-bg .opp { font-weight: var(--cds-font-weight-medium); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .dk-bg .res { font-variant-numeric: tabular-nums; font-weight: var(--cds-font-weight-medium); }
+  .dk-bg .when { color: var(--color-fg-muted); font-size: .72rem; }
+  .dk-bg.w { background: var(--bears-w-bg); border-color: var(--bears-w-line); border-top: 3px solid var(--bears-orange); color: #ffffff; padding-top: calc(.4rem - 2px); }
+  .dk-bg.w .wk { color: #b8c3d9; }
+  .dk-bg.l .opp, .dk-bg.l .res { color: var(--color-fg-muted); }
+  .dk-bg.up { border-style: dashed; }
+  .dk-bg.bye { border-style: dotted; background: transparent; color: var(--color-fg-muted); justify-content: center; }
+  .dk-bg.next { border: 2px solid var(--bears-orange); padding: calc(.4rem - 1px) calc(.5rem - 1px) calc(.45rem - 1px); }
+  .dk-bg.next .when { color: var(--color-fg); }
+  .dk-bg .pct { font-size: .72rem; font-weight: 600; color: var(--bears-orange); }
+  .dk-bg .flag { position: absolute; top: -9px; right: 6px; background: var(--bears-orange); color: #ffffff; font-size: .62rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; border-radius: 999px; padding: .05rem .4rem; }
+  .dk-bg.dv::after { content: ""; position: absolute; top: 7px; right: 7px; width: 7px; height: 7px; border-radius: 50%; background: var(--bears-orange); }
+  @media (max-width: 640px) {
+    .dk-bseason { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .dk-bears-head h3 { font-size: 1.25rem; }
+    .dk-bg .opp { white-space: normal; }
+  }
+
   /* ---------- Halloween week: on only while <html> has the "halloween" class ---------- */
   /* One spooky night look in every viewer theme. */
   html:root.halloween {
@@ -913,6 +951,16 @@ html.thanksgiving .pk-page { padding-bottom: 96px; }
       <h2>This week in the NFL</h2>
       <p class="pk-note" id="dk-byes"></p>
       <div class="dk-factgrid" id="dk-factgrid"></div>
+      <section class="dk-bears" id="dk-bears" aria-labelledby="dk-bears-title" hidden>
+        <div class="dk-bears-head">
+          <h3 id="dk-bears-title">Chicago Bears</h3>
+          <p class="dk-bears-sub" id="dk-bears-sub"></p>
+          <p class="dk-bears-next" id="dk-bears-next"></p>
+        </div>
+        <div class="dk-factgrid" id="dk-bears-facts"></div>
+        <p class="dk-bears-cap"><span>The 2026 season, week by week</span><span class="dk-bkey"><i></i>NFC North game</span></p>
+        <ol class="dk-bseason" id="dk-bears-season"></ol>
+      </section>
     </div>
 
     <div class="pk-card" id="dk-lines">
@@ -1000,16 +1048,6 @@ window.dash = (() => {
  ],
  "facts": [
   {
-   "big": "1",
-   "label": "unbeaten team left",
-   "detail": "Vikings (6–0). The 49ers and Chiefs both lost on Sunday."
-  },
-  {
-   "big": "0–6",
-   "label": "Chargers, still winless",
-   "detail": "The only team without a win"
-  },
-  {
    "big": "27–21",
    "label": "Giants over the Texans",
    "detail": "Week 7's biggest upset: the Texans were 80% favorites"
@@ -1017,7 +1055,7 @@ window.dash = (() => {
   {
    "big": "83%",
    "label": "Bengals to beat the Titans",
-   "detail": "Week 8's biggest favorite (4–2 against 1–6)"
+   "detail": "Week 8's biggest favorite (4–⁠2 against 1–⁠6)"
   },
   {
    "big": "53/47",
@@ -1028,18 +1066,169 @@ window.dash = (() => {
    "big": "8:15 PM",
    "label": "Panthers at Packers",
    "detail": "Thursday night opens Week 8 (Eastern time)"
-  },
-  {
-   "big": "7",
-   "label": "division games",
-   "detail": "Vikings–Lions, Colts–Jaguars, Browns–Steelers, Falcons–Buccaneers, Chiefs–Broncos, Patriots–Dolphins, Eagles–Commanders"
-  },
-  {
-   "big": "67–39",
-   "label": "favorites this season",
-   "detail": "Betting favorites have won 63% of decided games"
   }
  ],
+ "bears": {
+  "record": "5–2",
+  "place": "Second in the NFC North",
+  "next": "Next: at the Seahawks, Mon night, Nov 2",
+  "season": [
+   {
+    "week": 1,
+    "opp": "Panthers",
+    "home": false,
+    "div": false,
+    "res": "W",
+    "score": "59–37"
+   },
+   {
+    "week": 2,
+    "opp": "Vikings",
+    "home": true,
+    "div": true,
+    "res": "L",
+    "score": "3–9"
+   },
+   {
+    "week": 3,
+    "opp": "Eagles",
+    "home": true,
+    "div": false,
+    "res": "W",
+    "score": "27–7"
+   },
+   {
+    "week": 4,
+    "opp": "Jets",
+    "home": true,
+    "div": false,
+    "res": "W",
+    "score": "23–12"
+   },
+   {
+    "week": 5,
+    "opp": "Packers",
+    "home": false,
+    "div": true,
+    "res": "L",
+    "score": "7–31"
+   },
+   {
+    "week": 6,
+    "opp": "Falcons",
+    "home": false,
+    "div": false,
+    "res": "W",
+    "score": "31–23"
+   },
+   {
+    "week": 7,
+    "opp": "Patriots",
+    "home": true,
+    "div": false,
+    "res": "W",
+    "score": "30–24"
+   },
+   {
+    "week": 8,
+    "opp": "Seahawks",
+    "home": false,
+    "div": false,
+    "when": "Mon night, Nov 2",
+    "next": true,
+    "pct": 40
+   },
+   {
+    "week": 9,
+    "opp": "Buccaneers",
+    "home": true,
+    "div": false,
+    "when": "Sun night, Nov 8"
+   },
+   {
+    "week": 10,
+    "bye": true
+   },
+   {
+    "week": 11,
+    "opp": "Saints",
+    "home": true,
+    "div": false,
+    "when": "Sun, Nov 22"
+   },
+   {
+    "week": 12,
+    "opp": "Lions",
+    "home": false,
+    "div": true,
+    "when": "Thanksgiving"
+   },
+   {
+    "week": 13,
+    "opp": "Jaguars",
+    "home": true,
+    "div": false,
+    "when": "Sun, Dec 6"
+   },
+   {
+    "week": 14,
+    "opp": "Dolphins",
+    "home": false,
+    "div": false,
+    "when": "Sun, Dec 13"
+   },
+   {
+    "week": 15,
+    "opp": "Bills",
+    "home": false,
+    "div": false,
+    "when": "Sat night, Dec 19"
+   },
+   {
+    "week": 16,
+    "opp": "Packers",
+    "home": true,
+    "div": true,
+    "when": "Christmas Day"
+   },
+   {
+    "week": 17,
+    "opp": "Lions",
+    "home": true,
+    "div": true,
+    "when": "Sun, Jan 3"
+   },
+   {
+    "week": 18,
+    "opp": "Vikings",
+    "home": false,
+    "div": true,
+    "when": "Sun, Jan 10"
+   }
+  ],
+  "facts": [
+   {
+    "big": "40%",
+    "label": "Bears at the Seahawks",
+    "detail": "Monday Night Football, Nov 2 at 8:15 PM ET. The betting line makes Chicago 3-point underdogs, about a 40% chance to win."
+   },
+   {
+    "big": "30–24",
+    "label": "Bears over the Patriots",
+    "detail": "Week 7 at Soldier Field. Two straight wins, four of the last five."
+   },
+   {
+    "big": "1½",
+    "label": "games behind the Vikings",
+    "detail": "NFC North: Vikings 6–⁠0, Bears 5–⁠2, Lions 4–⁠2, Packers 4–⁠3. Both Bears losses came in the division."
+   },
+   {
+    "big": "49 of 56",
+    "label": "family picks on the Bears",
+    "detail": "Everyone took Chicago every week except Week 3, when only Michael & Katie backed them against the Eagles. The Bears won 27–⁠7."
+   }
+  ]
+ },
  "byes": "49ers, Giants, Saints and Texans",
  "lines": [
   {
@@ -1739,12 +1928,33 @@ window.dash = (() => {
     $('dk-written').textContent = T.written;
     $('dk-paras').replaceChildren(...T.take.map((t) => el('p', '', t)));
     $('dk-byes').textContent = 'On bye: ' + T.byes + '.';
-    $('dk-factgrid').replaceChildren(...T.facts.map((f) => {
+    const fact = (f) => {
       const c = el('div', 'dk-fact');
       c.append(el('span', 'big', f.big), el('span', 'lbl', f.label));
       if (f.detail) c.append(el('span', 'det', f.detail));
       return c;
-    }));
+    };
+    $('dk-factgrid').replaceChildren(...T.facts.map(fact));
+    const B = T.bears, bx = $('dk-bears');
+    if (B && bx) {
+      const sub = $('dk-bears-sub');
+      sub.replaceChildren(el('b', '', B.record), el('span', '', B.place));
+      $('dk-bears-next').textContent = B.next;
+      $('dk-bears-facts').replaceChildren(...B.facts.map(fact));
+      $('dk-bears-season').replaceChildren(...B.season.map((g) => {
+        const li = el('li', 'dk-bg' + (g.bye ? ' bye' : g.res ? ' ' + g.res.toLowerCase() : g.next ? ' next' : ' up') + (g.div ? ' dv' : ''));
+        li.append(el('span', 'wk', 'Wk ' + g.week));
+        if (g.bye) { li.append(el('span', 'opp', 'Bye')); return li; }
+        li.append(el('span', 'opp', (g.home ? 'vs ' : 'at ') + g.opp));
+        if (g.res) li.append(el('span', 'res', g.res + ' ' + g.score));
+        else li.append(el('span', 'when', g.when));
+        if (g.next) li.append(el('span', 'pct', g.pct + '% to win'));
+        if (g.next) li.append(el('span', 'flag', 'Next'));
+        li.setAttribute('aria-label', 'Week ' + g.week + ': ' + (g.home ? 'vs ' : 'at ') + g.opp + (g.res ? ', ' + (g.res === 'W' ? 'won ' : g.res === 'L' ? 'lost ' : 'tied ') + g.score : ', ' + g.when + (g.next ? ', ' + g.pct + ' percent chance to win' : '')) + (g.div ? ', division game' : ''));
+        return li;
+      }));
+      bx.hidden = false;
+    }
     $('dk-lines-list').replaceChildren(...T.lines.map((g) => {
       const row = el('div', 'dk-line');
       const top = el('div', 'dk-line-top');
