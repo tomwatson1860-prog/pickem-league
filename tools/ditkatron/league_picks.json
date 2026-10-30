@@ -672,6 +672,54 @@
 "game": 14,
 "player": "Tommy & Haley",
 "pick": "Cowboys"
+},
+{
+"week": 8,
+"game": 1,
+"player": "Brady",
+"pick": "Packers"
+},
+{
+"week": 8,
+"game": 1,
+"player": "Dad",
+"pick": "Packers"
+},
+{
+"week": 8,
+"game": 1,
+"player": "Jen",
+"pick": "Packers"
+},
+{
+"week": 8,
+"game": 1,
+"player": "Jenna",
+"pick": "Panthers"
+},
+{
+"week": 8,
+"game": 1,
+"player": "Leet",
+"pick": "Packers"
+},
+{
+"week": 8,
+"game": 1,
+"player": "Michael & Katie",
+"pick": "Panthers"
+},
+{
+"week": 8,
+"game": 1,
+"player": "Ryan",
+"pick": "Packers"
+},
+{
+"week": 8,
+"game": 1,
+"player": "Tommy & Haley",
+"pick": "Panthers"
 }
 ]
 }
