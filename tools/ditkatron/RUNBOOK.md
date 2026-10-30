@@ -9,9 +9,6 @@ else on the site is touched.
   for a game that has not finished. The site keeps picks hidden until kickoff.
 - No phone numbers, emails, private player links or tokens anywhere in the repo or the take.
 - Ditkatron 9000 is the commentator, not a player: his picks are never counted or shown.
-- The take never says or hints who Ditkatron is picking, or who he thinks will win, in a game that
-  has not finished ("Ditkatron likes X", "Ditkatron is taking X"). His picks live in the pick sheet
-  and are secret until kickoff. He can cheer for da Bears as a fan and quote the betting line.
 
 ## Steps
 1. `GIT_LFS_SKIP_SMUDGE=1 git clone --depth 1 https://github.com/nflverse/nfldata /tmp/nfldata`
