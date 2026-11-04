@@ -355,9 +355,9 @@ def build(a):
     div_note = (f" {'Both' if len(losses) == 2 else 'All ' + W[len(losses)]} Bears losses came in the division." if losses and len(div_l) == len(losses) and len(losses) > 1 else '')
     standings = 'NFC North: ' + ', '.join(f"{t} {rs(rec[t])}" for t in north) + '.'
     if north[0] == 'Bears':
-        bfacts.append({'big': half(gba) if gba else 'Tied', 'label': f"game{'s' if gba != 1 else ''} ahead of the {leader}" if gba else 'for first in the NFC North', 'detail': standings + div_note})
+        bfacts.append({'big': half(gba) if gba else 'Tied', 'label': f"game{'s' if gba > 1 else ''} ahead of the {leader}" if gba else 'for first in the NFC North', 'detail': standings + div_note})
     else:
-        bfacts.append({'big': half(gb), 'label': f"game{'s' if gb != 1 else ''} behind the {north[0]}", 'detail': standings + div_note})
+        bfacts.append({'big': half(gb), 'label': f"game{'s' if gb > 1 else ''} behind the {north[0]}", 'detail': standings + div_note})
     bkeys = [k for k, ps in by_game.items() if 'Bears' in (gobj[k]['away'], gobj[k]['home'])]
     on_b = sum(1 for k in bkeys for p in by_game[k] if p['pick'] == 'Bears')
     all_b = sum(len(by_game[k]) for k in bkeys)
