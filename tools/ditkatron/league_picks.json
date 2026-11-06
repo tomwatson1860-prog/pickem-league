@@ -1344,6 +1344,54 @@
 "game": 14,
 "player": "Tommy & Haley",
 "pick": "Bears"
+},
+{
+"week": 9,
+"game": 1,
+"player": "Brady",
+"pick": "Jaguars"
+},
+{
+"week": 9,
+"game": 1,
+"player": "Dad",
+"pick": "Jaguars"
+},
+{
+"week": 9,
+"game": 1,
+"player": "Jen",
+"pick": "Jaguars"
+},
+{
+"week": 9,
+"game": 1,
+"player": "Jenna",
+"pick": "Jaguars"
+},
+{
+"week": 9,
+"game": 1,
+"player": "Leet",
+"pick": "Jaguars"
+},
+{
+"week": 9,
+"game": 1,
+"player": "Michael & Katie",
+"pick": "Jaguars"
+},
+{
+"week": 9,
+"game": 1,
+"player": "Ryan",
+"pick": "Jaguars"
+},
+{
+"week": 9,
+"game": 1,
+"player": "Tommy & Haley",
+"pick": "Jaguars"
 }
 ]
 }
