@@ -449,7 +449,7 @@ def build(a):
     if a.roast:
         R = a.roast
         if R in players:
-            S.append(f"\n## {R} (running bit: they have been complaining about Ditkatron)")
+            S.append(f"\n## {R}")
             S.append(f"Record {tot[R][0]}–{tot[R][1]}, rank {rank(order, R, tot)} of {len(players)}, {lead_w - tot[R][0]} back of first. Weeks led: {sum(1 for ls in leaders if R in ls)} (" + ', '.join(f'Wk {w}' for w, ls in zip(done, leaders) if R in ls) + ').')
             S.append(f"Weekly records: " + ', '.join(f"Wk {w} {wk[(w, R)][0]}–{wk[(w, R)][1]}" for w in done) + (f"; Week {cur} so far {wk[(cur, R)][0]}–{wk[(cur, R)][1]}" if cur_final else '') + '.')
             S.append(f"Weekly top scores: {top_counts[R]}. Against the crowd: {crowd[R][0]}–{crowd[R][1]}.")
@@ -498,7 +498,7 @@ def main():
     p = sub.add_parser('prep')
     p.add_argument('--site', required=True); p.add_argument('--nfl', required=True)
     p.add_argument('--new', help='JSON list of pick-sheet rows [week, game, player, pick]')
-    p.add_argument('--now', help='ISO time, default now'); p.add_argument('--roast', default='Michael & Katie')
+    p.add_argument('--now', help='ISO time, default now'); p.add_argument('--roast', default='', help='optional: add a section of facts about one player')
     p.add_argument('--out', default='thoughts_base.json'); p.add_argument('--summary', default='thoughts_summary.md')
     u = sub.add_parser('publish')
     u.add_argument('--site', required=True); u.add_argument('--base', default='thoughts_base.json'); u.add_argument('--take', required=True)
