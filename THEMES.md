@@ -1,6 +1,6 @@
 # Seasonal themes
 
-The site can dress up for a season (Halloween, Thanksgiving, and so on). Every theme works the same way:
+The site can dress up for a season (Halloween, Thanksgiving, Christmas, and so on). Every theme works the same way:
 one script near the top of `index.html` adds a class to `<html>` (for example `class="halloween"`), and
 everything that belongs to the theme is switched on only while that class is there. With no class, the
 site is the plain everyday look.
@@ -14,17 +14,19 @@ The schedule is the `SCHEDULE` list in the first `<script>` of `index.html`:
 
 ```js
 var SCHEDULE=[
-  ["thanksgiving","2026-11-16T05:00:00Z","2026-12-01T12:00:00Z"]
+  ["thanksgiving","2026-11-16T05:00:00Z","2026-12-01T12:00:00Z"],
+  ["christmas","2026-12-01T12:00:00Z","2027-01-02T06:00:00Z"]
 ];
 ```
 
 Each row is `[class, start, end]`, with times in UTC: the start is included and the end is not. Central
 time is UTC−5 in summer and UTC−6 in winter, so midnight Central on Nov 16 is `2026-11-16T06:00:00Z`.
-The first matching row wins.
+The first matching row wins. Christmas takes over from Thanksgiving at 6 AM Central on Dec 1 and comes
+down at the end of New Year's Day (midnight Central, `2027-01-02T06:00:00Z`).
 
 - **Take a theme down:** delete its row. Its code stays dormant.
 - **Bring Halloween back:** add a row such as `["halloween","2027-10-01T05:00:00Z","2027-11-02T05:00:00Z"]`.
-- **Preview without scheduling:** add `?theme=halloween`, `?theme=thanksgiving` or `?theme=plain` to the
+- **Preview without scheduling:** add `?theme=halloween`, `?theme=thanksgiving`, `?theme=christmas` or `?theme=plain` to the
   address. A new theme's class name has to be added to that `?theme=` pattern in the same script.
 
 ## Anatomy of a theme (Halloween as the example)
@@ -48,6 +50,23 @@ and Thanksgiving uses `tg-`; a new theme should pick its own short prefix.
 Thanksgiving adds one piece Halloween doesn't have: a `tg-only` card in the page (`tg-heritage`) with
 holiday history and the holiday's games.
 
+Christmas (prefix `xm-`) follows the same pattern, with a few extras:
+
+- **Header:** an evergreen garland with bows, twinkling lights and swinging ornaments, a decorated tree and a
+  moon (`xm-only` elements in the header), and a starry sky.
+- **Snow:** six-armed snowflakes drawn once in the browser and dropped as small images; now and then a gust.
+- **Visitors:** the `Christmas extras` script (a shooting star, a tiny sleigh, a waving snowman, the
+  "Naughty or Nice Picks" sign, the snowy village at the bottom; test by hand with `window.xmSky`) and the
+  `Ditkatron 9000 in the Christmas theme` script (Santa Ditkatron, his sleigh, the elf; `window.dkx.rise('santa' | 'sleigh' | 'elf')`).
+  The two take turns so nothing overlaps.
+- **Artwork:** `img/ditkatron_xm_bust.webp`, `img/ditkatron_xm_full.webp`, `img/xm_sleigh.webp`, `img/xm_elf_stand.svg`,
+  `img/xm_elf_run.svg`, listed under `christmas` in `window.__DKX`.
+- **Font:** Mountains of Christmas (SIL Open Font License) is served from `fonts/` with its licence. The
+  browser only downloads it while the Christmas theme is on.
+- **Card:** `xm-card` on the Ditkatron Thoughts tab, "Football on Christmas", with the holiday's games.
+- **Music:** `jinglebells`, `deckhalls` and `wewish` (public-domain carols, synthesized), plus sleigh bells and a
+  robot "Ho ho ho" that only play while the music is on.
+
 ## Making a new theme
 
 1. Choose a class name and prefix (for example `christmas` and `xm-`).
@@ -61,8 +80,8 @@ holiday history and the holiday's games.
 
 ## Rules every theme follows
 
-- Everything is served from the site itself: inline SVG, `data:` icons, files in `img/`, synthesized
-  music. Nothing loads from another server.
+- Everything is served from the site itself: inline SVG, `data:` icons, files in `img/` and `fonts/`,
+  synthesized music. Nothing a theme adds loads from another server.
 - Animations respect the visitor's reduced-motion setting and pause while the tab is hidden.
 - Music never starts until the browser allows it, and the corner button turns it off for good on that device.
 - The daily Ditkatron Thoughts task never touches theme code.
