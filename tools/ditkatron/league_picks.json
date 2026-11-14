@@ -2064,6 +2064,54 @@
 "game": 15,
 "player": "Tommy & Haley",
 "pick": "Bills"
+},
+{
+"week": 10,
+"game": 1,
+"player": "Brady",
+"pick": "Giants"
+},
+{
+"week": 10,
+"game": 1,
+"player": "Dad",
+"pick": "Giants"
+},
+{
+"week": 10,
+"game": 1,
+"player": "Jen",
+"pick": "Giants"
+},
+{
+"week": 10,
+"game": 1,
+"player": "Jenna",
+"pick": "Giants"
+},
+{
+"week": 10,
+"game": 1,
+"player": "Leet",
+"pick": "Giants"
+},
+{
+"week": 10,
+"game": 1,
+"player": "Michael & Katie",
+"pick": "Commanders"
+},
+{
+"week": 10,
+"game": 1,
+"player": "Ryan",
+"pick": "Giants"
+},
+{
+"week": 10,
+"game": 1,
+"player": "Tommy & Haley",
+"pick": "Giants"
 }
 ]
 }
