@@ -2163,7 +2163,24 @@ window.dash = (() => {
 
   // ---------- My picks (only with a player link) ----------
   if (!TOKEN) return;
-  const state = { me: null, week: 0, as: '', loading: false, error: '', status: {}, pending: {} };
+  const state = { me: null, week: 0, as: '', loading: false, error: '', status: {} };
+
+  // Saving: a choice shows right away and goes into a queue. Choices made close together go to the
+  // pick sheet in one request, one request at a time, so nobody waits on the dropdowns.
+  // g.pick is what the page shows; g.saved is what the pick sheet last confirmed.
+  const queue = [];   // batches waiting to be sent: { key, week, as, picks: { game: team } }
+  let sending = null; // the batch on its way
+  let sendTimer = 0;
+  const keyOf = (d) => d.week + '|' + d.player;
+  const stKey = (key, game) => key + '|' + game;
+  const busy = () => !!sending || queue.length > 0;
+
+  // the newest choice for a game that the pick sheet hasn't confirmed yet, if any
+  function waiting(key, game) {
+    for (let i = queue.length - 1; i >= 0; i--) if (queue[i].key === key && game in queue[i].picks) return { team: queue[i].picks[game] };
+    if (sending && sending.key === key && game in sending.picks) return { team: sending.picks[game] };
+    return null;
+  }
 
   function load() {
     state.loading = true;
@@ -2177,6 +2194,9 @@ window.dash = (() => {
           // Ditkatron 9000 comments on the league but doesn't play in it
           Object.keys(d.picks || {}).forEach((g) => { d.picks[g] = d.picks[g].filter((p) => p.player !== BOT); });
           if (d.roster) d.roster = d.roster.filter((n) => n !== BOT);
+          // keep showing choices that are still on their way to the pick sheet
+          const key = keyOf(d);
+          d.games.forEach((g) => { g.saved = g.pick || ''; const w = waiting(key, g.game); if (w) g.pick = w.team; });
           state.me = d; state.week = d.week; state.error = '';
         }
         else { state.me = null; state.error = (d && d.error) || 'Something went wrong loading your picks.'; }
@@ -2187,25 +2207,78 @@ window.dash = (() => {
 
   function save(game, team) {
     const d = state.me;
-    if (!d) return;
-    state.pending[game] = team;
-    state.status[game] = { text: 'Saving…', cls: '' };
+    const g = d && d.games.find((x) => x.game === game);
+    if (!g) return;
+    const key = keyOf(d);
+    g.pick = team;
+    state.status[stKey(key, game)] = { text: 'Saving…', cls: '' };
+    let b = queue.find((x) => x.key === key);
+    if (!b) { b = { key, week: d.week, as: d.commissioner && d.player !== d.me ? d.player : '', picks: {} }; queue.push(b); }
+    b.picks[game] = team;
     render();
-    const body = { action: 'save', token: TOKEN, week: d.week, picks: {} };
-    body.picks[game] = team;
-    if (d.commissioner && d.player !== d.me) body.player = d.player;
-    fetch(API, { method: 'POST', body: JSON.stringify(body) })
-      .then((r) => r.json())
-      .then((res) => {
-        if (!res || !res.ok) { state.status[game] = { text: (res && res.error) || 'Not saved', cls: 'bad' }; return; }
-        const skipped = (res.skipped || []).find((s) => s.game === game);
-        state.me = res;
-        state.status[game] = skipped ? { text: 'Not saved: ' + skipped.reason, cls: 'bad' } : { text: team ? 'Saved' : 'Cleared', cls: 'ok' };
-        loadSeason();
-      })
-      .catch(() => { state.status[game] = { text: 'Not saved. Check your connection.', cls: 'bad' }; })
-      .finally(() => { delete state.pending[game]; render(); });
+    clearTimeout(sendTimer);
+    sendTimer = setTimeout(send, 400);  // wait a moment so quick choices go together
   }
+
+  // Re-sending a save is harmless (it writes the same pick again), so a dropped connection gets two retries.
+  function post(body, tries) {
+    return fetch(API, { method: 'POST', body: JSON.stringify(body) })
+      .then((r) => r.json())
+      .catch((err) => {
+        if (tries > 0) return new Promise((ok) => setTimeout(ok, 1500)).then(() => post(body, tries - 1));
+        throw err;
+      });
+  }
+
+  function send() {
+    clearTimeout(sendTimer);
+    if (sending || !queue.length) return;
+    const b = sending = queue.shift();
+    const body = { action: 'save', token: TOKEN, week: b.week, picks: b.picks };
+    if (b.as) body.player = b.as;
+    post(body, 2)
+      .then((res) => {
+        if (!res || !res.ok) { const msg = { text: (res && res.error) || 'Not saved', cls: 'bad' }; finish(b, () => msg); return; }
+        const skipped = {};
+        (res.skipped || []).forEach((s) => { skipped[s.game] = s.reason; });
+        finish(b, (game) => game in skipped ? { text: 'Not saved: ' + skipped[game], cls: 'bad' } : null);
+      })
+      .catch(() => finish(b, () => ({ text: 'Not saved. Check your connection.', cls: 'bad' })));
+  }
+
+  // problem(game) gives the message for a pick that didn't save, or null if it saved
+  function finish(b, problem) {
+    sending = null;
+    const d = state.me;
+    const here = !!d && keyOf(d) === b.key;
+    Object.keys(b.picks).forEach((k) => {
+      const game = +k, team = b.picks[k];
+      const newer = waiting(b.key, game);  // chosen again since this batch left; that save reports instead
+      const bad = problem(game);
+      const g = here ? d.games.find((x) => x.game === game) : null;
+      if (!bad) {
+        if (g) { g.saved = team; if (d.commissioner) showPick(d, game, team); }
+        if (!newer) state.status[stKey(b.key, game)] = { text: team ? 'Saved' : 'Cleared', cls: 'ok' };
+      } else if (!newer) {
+        if (g) g.pick = g.saved;
+        state.status[stKey(b.key, game)] = bad;
+      }
+    });
+    if (queue.length) send(); else loadSeason();
+    render();
+  }
+
+  // commissioners see everyone's picks in the table below; keep it in step with what was just saved
+  function showPick(d, game, team) {
+    const list = d.picks[game] || [];
+    const i = list.findIndex((p) => p.player === d.player);
+    if (team) { if (i >= 0) list[i] = { player: d.player, pick: team }; else list.push({ player: d.player, pick: team }); d.picks[game] = list; }
+    else if (i >= 0) { list.splice(i, 1); if (!list.length) delete d.picks[game]; }
+  }
+
+  // don't lose a choice that's still saving: send it now if the page is put away, and warn before closing
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') send(); });
+  window.addEventListener('beforeunload', (e) => { if (busy()) { send(); e.preventDefault(); e.returnValue = ''; } });
 
   function render() {
     const box = document.getElementById('mypicks-body');
@@ -2233,7 +2306,7 @@ window.dash = (() => {
     ws.id = 'mp-week';
     d.weeks.forEach((w) => { const o = new Option('Week ' + w + (w === d.currentWeek ? ' (this week)' : ''), String(w)); ws.append(o); });
     ws.value = String(d.week);
-    ws.addEventListener('change', () => { state.week = +ws.value; state.status = {}; load(); });
+    ws.addEventListener('change', () => { state.week = +ws.value; load(); });
     wl.append(ws);
     controls.append(wl);
     if (d.commissioner) {
@@ -2242,7 +2315,7 @@ window.dash = (() => {
       ps.id = 'mp-player';
       d.roster.forEach((name) => ps.append(new Option(name === d.me ? name + ' (you)' : name, name)));
       ps.value = d.player;
-      ps.addEventListener('change', () => { state.as = ps.value === d.me ? '' : ps.value; state.status = {}; load(); });
+      ps.addEventListener('change', () => { state.as = ps.value === d.me ? '' : ps.value; load(); });
       pl.append(ps);
       controls.append(pl);
     }
@@ -2261,14 +2334,13 @@ window.dash = (() => {
       const sel = el('select', 'pk-select');
       sel.setAttribute('aria-label', 'Pick for ' + g.away + ' at ' + g.home);
       sel.append(new Option('Pick a team', ''), new Option(g.away, g.away), new Option(g.home, g.home));
-      const current = g.game in state.pending ? state.pending[g.game] : g.pick;
-      sel.value = current || '';
+      sel.value = g.pick || '';
       const canEdit = !g.locked || d.commissioner;
       sel.disabled = !canEdit || state.loading;
       sel.addEventListener('change', () => save(g.game, sel.value));
       pickWrap.append(sel);
       row.append(pickWrap);
-      const st = state.status[g.game];
+      const st = state.status[stKey(keyOf(d), g.game)];
       let text = '', cls = '';
       if (st) { text = st.text; cls = st.cls; }
       else if (g.winner && g.winner !== 'TIE' && g.pick) { text = g.pick === g.winner ? 'Correct' : 'Wrong'; cls = g.pick === g.winner ? 'ok' : 'bad'; }
