@@ -174,6 +174,7 @@
   .pk-mp-state { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); text-align: right; }
   .pk-mp-state.ok { color: var(--color-ok); }
   .pk-mp-state.bad { color: var(--color-bad); }
+  .pk-mp-state.saved { font-size: 1.05rem; font-weight: 700; line-height: 1; }
   .pk-mp-msg { padding: var(--cds-pad-md); border-radius: var(--cds-radius); background: var(--color-bg); border: 1px solid var(--color-border-line); }
   .pk-mp-msg button, .pk-btn { font: inherit; font-size: var(--cds-font-size-caption); padding: .35rem .7rem; border-radius: 999px; border: 1px solid var(--color-border-line); background: var(--color-panel); color: var(--color-fg); cursor: pointer; margin-left: var(--cds-gap-sm); }
   .pk-mp-everyone { margin-top: var(--cds-gap-lg); }
@@ -2211,13 +2212,14 @@ window.dash = (() => {
     if (!g) return;
     const key = keyOf(d);
     g.pick = team;
-    state.status[stKey(key, game)] = { text: 'Saving…', cls: '' };
+    state.status[stKey(key, game)] = { text: '', cls: '', label: 'Saving' };  // no label to wait on; a check mark appears when it lands
     let b = queue.find((x) => x.key === key);
     if (!b) { b = { key, week: d.week, as: d.commissioner && d.player !== d.me ? d.player : '', picks: {} }; queue.push(b); }
     b.picks[game] = team;
     render();
+    // Send right away. Choices made while a save is on its way wait, and go together in the next one.
     clearTimeout(sendTimer);
-    sendTimer = setTimeout(send, 400);  // wait a moment so quick choices go together
+    sendTimer = setTimeout(send, 0);
   }
 
   // Re-sending a save is harmless (it writes the same pick again), so a dropped connection gets two retries.
@@ -2241,12 +2243,14 @@ window.dash = (() => {
         if (!res || !res.ok) { const msg = { text: (res && res.error) || 'Not saved', cls: 'bad' }; finish(b, () => msg); return; }
         const skipped = {};
         (res.skipped || []).forEach((s) => { skipped[s.game] = s.reason; });
-        finish(b, (game) => game in skipped ? { text: 'Not saved: ' + skipped[game], cls: 'bad' } : null);
+        const saved = Array.isArray(res.saved) ? res.saved.map(Number) : null;
+        finish(b, (game, team) => game in skipped ? { text: 'Not saved: ' + skipped[game], cls: 'bad' }
+          : saved && team && saved.indexOf(game) < 0 ? { text: 'Not saved', cls: 'bad' } : null);
       })
       .catch(() => finish(b, () => ({ text: 'Not saved. Check your connection.', cls: 'bad' })));
   }
 
-  // problem(game) gives the message for a pick that didn't save, or null if it saved
+  // problem(game, team) gives the message for a pick that didn't save, or null if it saved
   function finish(b, problem) {
     sending = null;
     const d = state.me;
@@ -2254,11 +2258,11 @@ window.dash = (() => {
     Object.keys(b.picks).forEach((k) => {
       const game = +k, team = b.picks[k];
       const newer = waiting(b.key, game);  // chosen again since this batch left; that save reports instead
-      const bad = problem(game);
+      const bad = problem(game, team);
       const g = here ? d.games.find((x) => x.game === game) : null;
       if (!bad) {
         if (g) { g.saved = team; if (d.commissioner) showPick(d, game, team); }
-        if (!newer) state.status[stKey(b.key, game)] = { text: team ? 'Saved' : 'Cleared', cls: 'ok' };
+        if (!newer) state.status[stKey(b.key, game)] = { text: '\u2713', cls: 'ok saved', label: team ? 'Saved' : 'Cleared' };
       } else if (!newer) {
         if (g) g.pick = g.saved;
         state.status[stKey(b.key, game)] = bad;
@@ -2341,12 +2345,14 @@ window.dash = (() => {
       pickWrap.append(sel);
       row.append(pickWrap);
       const st = state.status[stKey(keyOf(d), g.game)];
-      let text = '', cls = '';
-      if (st) { text = st.text; cls = st.cls; }
+      let text = '', cls = '', label = '';
+      if (st) { text = st.text; cls = st.cls; label = st.label || ''; }
       else if (g.winner && g.winner !== 'TIE' && g.pick) { text = g.pick === g.winner ? 'Correct' : 'Wrong'; cls = g.pick === g.winner ? 'ok' : 'bad'; }
       else if (g.winner === 'TIE') text = 'Tie';
       else if (g.locked) text = 'Locked';
-      row.append(el('span', 'pk-mp-state' + (cls ? ' ' + cls : ''), text));
+      const stEl = el('span', 'pk-mp-state' + (cls ? ' ' + cls : ''), text);
+      if (label) { stEl.title = label; stEl.setAttribute('aria-label', label); }
+      row.append(stEl);
       list.append(row);
     });
 
