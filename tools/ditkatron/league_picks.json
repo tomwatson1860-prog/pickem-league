@@ -2112,6 +2112,582 @@
 "game": 1,
 "player": "Tommy & Haley",
 "pick": "Giants"
+},
+{
+"week": 10,
+"game": 2,
+"player": "Brady",
+"pick": "Lions"
+},
+{
+"week": 10,
+"game": 2,
+"player": "Dad",
+"pick": "Lions"
+},
+{
+"week": 10,
+"game": 2,
+"player": "Jen",
+"pick": "Lions"
+},
+{
+"week": 10,
+"game": 2,
+"player": "Jenna",
+"pick": "Lions"
+},
+{
+"week": 10,
+"game": 2,
+"player": "Leet",
+"pick": "Lions"
+},
+{
+"week": 10,
+"game": 2,
+"player": "Michael & Katie",
+"pick": "Lions"
+},
+{
+"week": 10,
+"game": 2,
+"player": "Ryan",
+"pick": "Lions"
+},
+{
+"week": 10,
+"game": 2,
+"player": "Tommy & Haley",
+"pick": "Patriots"
+},
+{
+"week": 10,
+"game": 3,
+"player": "Brady",
+"pick": "Chiefs"
+},
+{
+"week": 10,
+"game": 3,
+"player": "Dad",
+"pick": "Chiefs"
+},
+{
+"week": 10,
+"game": 3,
+"player": "Jen",
+"pick": "Chiefs"
+},
+{
+"week": 10,
+"game": 3,
+"player": "Jenna",
+"pick": "Chiefs"
+},
+{
+"week": 10,
+"game": 3,
+"player": "Leet",
+"pick": "Chiefs"
+},
+{
+"week": 10,
+"game": 3,
+"player": "Michael & Katie",
+"pick": "Chiefs"
+},
+{
+"week": 10,
+"game": 3,
+"player": "Ryan",
+"pick": "Falcons"
+},
+{
+"week": 10,
+"game": 3,
+"player": "Tommy & Haley",
+"pick": "Falcons"
+},
+{
+"week": 10,
+"game": 4,
+"player": "Brady",
+"pick": "Texans"
+},
+{
+"week": 10,
+"game": 4,
+"player": "Dad",
+"pick": "Texans"
+},
+{
+"week": 10,
+"game": 4,
+"player": "Jen",
+"pick": "Texans"
+},
+{
+"week": 10,
+"game": 4,
+"player": "Jenna",
+"pick": "Texans"
+},
+{
+"week": 10,
+"game": 4,
+"player": "Leet",
+"pick": "Texans"
+},
+{
+"week": 10,
+"game": 4,
+"player": "Michael & Katie",
+"pick": "Browns"
+},
+{
+"week": 10,
+"game": 4,
+"player": "Ryan",
+"pick": "Texans"
+},
+{
+"week": 10,
+"game": 4,
+"player": "Tommy & Haley",
+"pick": "Texans"
+},
+{
+"week": 10,
+"game": 5,
+"player": "Brady",
+"pick": "Packers"
+},
+{
+"week": 10,
+"game": 5,
+"player": "Dad",
+"pick": "Packers"
+},
+{
+"week": 10,
+"game": 5,
+"player": "Jen",
+"pick": "Packers"
+},
+{
+"week": 10,
+"game": 5,
+"player": "Jenna",
+"pick": "Packers"
+},
+{
+"week": 10,
+"game": 5,
+"player": "Leet",
+"pick": "Packers"
+},
+{
+"week": 10,
+"game": 5,
+"player": "Michael & Katie",
+"pick": "Vikings"
+},
+{
+"week": 10,
+"game": 5,
+"player": "Ryan",
+"pick": "Packers"
+},
+{
+"week": 10,
+"game": 5,
+"player": "Tommy & Haley",
+"pick": "Vikings"
+},
+{
+"week": 10,
+"game": 6,
+"player": "Brady",
+"pick": "Colts"
+},
+{
+"week": 10,
+"game": 6,
+"player": "Dad",
+"pick": "Colts"
+},
+{
+"week": 10,
+"game": 6,
+"player": "Jen",
+"pick": "Colts"
+},
+{
+"week": 10,
+"game": 6,
+"player": "Jenna",
+"pick": "Colts"
+},
+{
+"week": 10,
+"game": 6,
+"player": "Leet",
+"pick": "Colts"
+},
+{
+"week": 10,
+"game": 6,
+"player": "Michael & Katie",
+"pick": "Colts"
+},
+{
+"week": 10,
+"game": 6,
+"player": "Ryan",
+"pick": "Colts"
+},
+{
+"week": 10,
+"game": 6,
+"player": "Tommy & Haley",
+"pick": "Colts"
+},
+{
+"week": 10,
+"game": 7,
+"player": "Brady",
+"pick": "Saints"
+},
+{
+"week": 10,
+"game": 7,
+"player": "Dad",
+"pick": "Panthers"
+},
+{
+"week": 10,
+"game": 7,
+"player": "Jen",
+"pick": "Saints"
+},
+{
+"week": 10,
+"game": 7,
+"player": "Jenna",
+"pick": "Panthers"
+},
+{
+"week": 10,
+"game": 7,
+"player": "Leet",
+"pick": "Saints"
+},
+{
+"week": 10,
+"game": 7,
+"player": "Michael & Katie",
+"pick": "Panthers"
+},
+{
+"week": 10,
+"game": 7,
+"player": "Ryan",
+"pick": "Saints"
+},
+{
+"week": 10,
+"game": 7,
+"player": "Tommy & Haley",
+"pick": "Panthers"
+},
+{
+"week": 10,
+"game": 8,
+"player": "Brady",
+"pick": "Bills"
+},
+{
+"week": 10,
+"game": 8,
+"player": "Dad",
+"pick": "Bills"
+},
+{
+"week": 10,
+"game": 8,
+"player": "Jen",
+"pick": "Bills"
+},
+{
+"week": 10,
+"game": 8,
+"player": "Jenna",
+"pick": "Bills"
+},
+{
+"week": 10,
+"game": 8,
+"player": "Leet",
+"pick": "Bills"
+},
+{
+"week": 10,
+"game": 8,
+"player": "Michael & Katie",
+"pick": "Bills"
+},
+{
+"week": 10,
+"game": 8,
+"player": "Ryan",
+"pick": "Bills"
+},
+{
+"week": 10,
+"game": 8,
+"player": "Tommy & Haley",
+"pick": "Bills"
+},
+{
+"week": 10,
+"game": 9,
+"player": "Brady",
+"pick": "Jaguars"
+},
+{
+"week": 10,
+"game": 9,
+"player": "Dad",
+"pick": "Jaguars"
+},
+{
+"week": 10,
+"game": 9,
+"player": "Jen",
+"pick": "Jaguars"
+},
+{
+"week": 10,
+"game": 9,
+"player": "Jenna",
+"pick": "Jaguars"
+},
+{
+"week": 10,
+"game": 9,
+"player": "Leet",
+"pick": "Jaguars"
+},
+{
+"week": 10,
+"game": 9,
+"player": "Michael & Katie",
+"pick": "Jaguars"
+},
+{
+"week": 10,
+"game": 9,
+"player": "Ryan",
+"pick": "Jaguars"
+},
+{
+"week": 10,
+"game": 9,
+"player": "Tommy & Haley",
+"pick": "Jaguars"
+},
+{
+"week": 10,
+"game": 10,
+"player": "Brady",
+"pick": "Rams"
+},
+{
+"week": 10,
+"game": 10,
+"player": "Dad",
+"pick": "Rams"
+},
+{
+"week": 10,
+"game": 10,
+"player": "Jen",
+"pick": "Rams"
+},
+{
+"week": 10,
+"game": 10,
+"player": "Jenna",
+"pick": "Rams"
+},
+{
+"week": 10,
+"game": 10,
+"player": "Leet",
+"pick": "Rams"
+},
+{
+"week": 10,
+"game": 10,
+"player": "Michael & Katie",
+"pick": "Rams"
+},
+{
+"week": 10,
+"game": 10,
+"player": "Ryan",
+"pick": "Rams"
+},
+{
+"week": 10,
+"game": 10,
+"player": "Tommy & Haley",
+"pick": "Rams"
+},
+{
+"week": 10,
+"game": 11,
+"player": "Brady",
+"pick": "Seahawks"
+},
+{
+"week": 10,
+"game": 11,
+"player": "Dad",
+"pick": "Seahawks"
+},
+{
+"week": 10,
+"game": 11,
+"player": "Jen",
+"pick": "Seahawks"
+},
+{
+"week": 10,
+"game": 11,
+"player": "Jenna",
+"pick": "Seahawks"
+},
+{
+"week": 10,
+"game": 11,
+"player": "Leet",
+"pick": "Seahawks"
+},
+{
+"week": 10,
+"game": 11,
+"player": "Michael & Katie",
+"pick": "Seahawks"
+},
+{
+"week": 10,
+"game": 11,
+"player": "Ryan",
+"pick": "Seahawks"
+},
+{
+"week": 10,
+"game": 11,
+"player": "Tommy & Haley",
+"pick": "Seahawks"
+},
+{
+"week": 10,
+"game": 12,
+"player": "Brady",
+"pick": "49ers"
+},
+{
+"week": 10,
+"game": 12,
+"player": "Dad",
+"pick": "49ers"
+},
+{
+"week": 10,
+"game": 12,
+"player": "Jen",
+"pick": "49ers"
+},
+{
+"week": 10,
+"game": 12,
+"player": "Jenna",
+"pick": "49ers"
+},
+{
+"week": 10,
+"game": 12,
+"player": "Leet",
+"pick": "49ers"
+},
+{
+"week": 10,
+"game": 12,
+"player": "Michael & Katie",
+"pick": "49ers"
+},
+{
+"week": 10,
+"game": 12,
+"player": "Ryan",
+"pick": "49ers"
+},
+{
+"week": 10,
+"game": 12,
+"player": "Tommy & Haley",
+"pick": "49ers"
+},
+{
+"week": 10,
+"game": 13,
+"player": "Brady",
+"pick": "Bengals"
+},
+{
+"week": 10,
+"game": 13,
+"player": "Dad",
+"pick": "Bengals"
+},
+{
+"week": 10,
+"game": 13,
+"player": "Jen",
+"pick": "Bengals"
+},
+{
+"week": 10,
+"game": 13,
+"player": "Jenna",
+"pick": "Bengals"
+},
+{
+"week": 10,
+"game": 13,
+"player": "Leet",
+"pick": "Bengals"
+},
+{
+"week": 10,
+"game": 13,
+"player": "Michael & Katie",
+"pick": "Bengals"
+},
+{
+"week": 10,
+"game": 13,
+"player": "Ryan",
+"pick": "Bengals"
+},
+{
+"week": 10,
+"game": 13,
+"player": "Tommy & Haley",
+"pick": "Bengals"
 }
 ]
 }
