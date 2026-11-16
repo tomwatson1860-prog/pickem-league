@@ -50,17 +50,27 @@ and Thanksgiving uses `tg-`; a new theme should pick its own short prefix.
 Thanksgiving adds one piece Halloween doesn't have: a `tg-only` card in the page (`tg-heritage`) with
 holiday history and the holiday's games.
 
-Christmas (prefix `xm-`) follows the same pattern, with a few extras:
+Christmas (prefix `xm-`) follows the same pattern, with a few extras. Its look is the **Chicago North Pole**,
+matching the St. Ditkatron poster: a midnight-navy sky and cards, orange and candy-cane accents, and Ditkatron
+is called **St. Ditkatron** while the theme is on.
 
-- **Header:** an evergreen garland with bows, twinkling lights and swinging ornaments, a decorated tree and a
-  moon (`xm-only` elements in the header), and a starry sky.
+- **Header:** an evergreen garland with bows, twinkling lights and swinging ornaments, and under the title the
+  Chicago North Pole scene (`xm-scene`, prefix `cnp-`): the moon with Santa's sleigh crossing it, the skyline with
+  its tallest tower and blinking beacons, a log lodge strung with lights, the candy-cane lamp post with the
+  CHICAGO NORTH POLE sign, and a snowbank across the full width. The pictures are `cnpMoon`, `cnpCity`,
+  `cnpLodge`, `cnpSign` and `cnpGround` in `window.__XMSVG`; the `Christmas extras` script puts them in the
+  header. They are drawn shapes only (no team logos).
 - **Snow:** six-armed snowflakes drawn once in the browser and dropped as small images; now and then a gust.
 - **Visitors:** the `Christmas extras` script (a shooting star, a tiny sleigh, a waving snowman, the
-  "Naughty or Nice Picks" sign, the snowy village at the bottom; test by hand with `window.xmSky`) and the
-  `Ditkatron 9000 in the Christmas theme` script (Santa Ditkatron, his sleigh, the elf; `window.dkx.rise('santa' | 'sleigh' | 'elf')`).
+  "Naughty or Nice Picks" sign, the Chicago North Pole street at the bottom; test by hand with `window.xmSky`) and the
+  `Ditkatron 9000 in the Christmas theme` script (St. Ditkatron rising, his sleigh, the elf; `window.dkx.rise('santa' | 'sleigh' | 'elf')`).
   The two take turns so nothing overlaps.
-- **Artwork:** `img/ditkatron_xm_bust.webp`, `img/ditkatron_xm_full.webp`, `img/xm_sleigh.webp`, `img/xm_elf_stand.svg`,
-  `img/xm_elf_run.svg`, listed under `christmas` in `window.__DKX`.
+- **St. Ditkatron:** the same script renames him on the Ditkatron Thoughts tab, the card's title and kicker
+  ("St. Ditkatron 9000 · The Midway Pickinator") and in the daily take as it is shown; the take itself in
+  `index.html` is not changed, so the daily task needs nothing new.
+- **Artwork:** `img/st_ditkatron_poster.webp` (the St. Ditkatron poster down to its title, on the Thoughts card),
+  `img/st_ditkatron_full.webp` (him cut out of the poster, for when he rises), `img/xm_sleigh_st.webp` (him in the
+  sleigh), `img/xm_elf_stand.svg`, `img/xm_elf_run.svg`, listed under `christmas` in `window.__DKX`.
 - **Font:** Mountains of Christmas (SIL Open Font License) is served from `fonts/` with its licence. The
   browser only downloads it while the Christmas theme is on.
 - **Card:** `xm-card` on the Ditkatron Thoughts tab, "Football on Christmas", with the holiday's games.
