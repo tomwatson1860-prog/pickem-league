@@ -3402,6 +3402,144 @@
 "game": 1,
 "player": "Tommy & Haley",
 "pick": "Rams"
+},
+{
+"week": 12,
+"game": 2,
+"player": "Brady",
+"pick": "Bears"
+},
+{
+"week": 12,
+"game": 2,
+"player": "Dad",
+"pick": "Bears"
+},
+{
+"week": 12,
+"game": 2,
+"player": "Jen",
+"pick": "Bears"
+},
+{
+"week": 12,
+"game": 2,
+"player": "Jenna",
+"pick": "Lions"
+},
+{
+"week": 12,
+"game": 2,
+"player": "Leet",
+"pick": "Bears"
+},
+{
+"week": 12,
+"game": 2,
+"player": "Michael & Katie",
+"pick": "Bears"
+},
+{
+"week": 12,
+"game": 2,
+"player": "Ryan",
+"pick": "Bears"
+},
+{
+"week": 12,
+"game": 2,
+"player": "Tommy & Haley",
+"pick": "Bears"
+},
+{
+"week": 12,
+"game": 3,
+"player": "Brady",
+"pick": "Cowboys"
+},
+{
+"week": 12,
+"game": 3,
+"player": "Dad",
+"pick": "Cowboys"
+},
+{
+"week": 12,
+"game": 3,
+"player": "Jen",
+"pick": "Cowboys"
+},
+{
+"week": 12,
+"game": 3,
+"player": "Jenna",
+"pick": "Cowboys"
+},
+{
+"week": 12,
+"game": 3,
+"player": "Leet",
+"pick": "Cowboys"
+},
+{
+"week": 12,
+"game": 3,
+"player": "Michael & Katie",
+"pick": "Cowboys"
+},
+{
+"week": 12,
+"game": 3,
+"player": "Ryan",
+"pick": "Cowboys"
+},
+{
+"week": 12,
+"game": 3,
+"player": "Tommy & Haley",
+"pick": "Cowboys"
+},
+{
+"week": 12,
+"game": 4,
+"player": "Dad",
+"pick": "Bills"
+},
+{
+"week": 12,
+"game": 4,
+"player": "Jen",
+"pick": "Bills"
+},
+{
+"week": 12,
+"game": 4,
+"player": "Jenna",
+"pick": "Bills"
+},
+{
+"week": 12,
+"game": 4,
+"player": "Leet",
+"pick": "Bills"
+},
+{
+"week": 12,
+"game": 4,
+"player": "Michael & Katie",
+"pick": "Bills"
+},
+{
+"week": 12,
+"game": 4,
+"player": "Ryan",
+"pick": "Bills"
+},
+{
+"week": 12,
+"game": 4,
+"player": "Tommy & Haley",
+"pick": "Bills"
 }
 ]
 }
